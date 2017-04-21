@@ -29,42 +29,34 @@
             width: 100%;
         }
     </style>
-    <script>
-        // Initialize collapse button
-        $(".button-collapse").sideNav();
-        // Initialize collapsible (uncomment the line below if you use the dropdown variation)
-        //$('.collapsible').collapsible();
-        // Show sideNav
-        $('.button-collapse').sideNav('show');
-        // Hide sideNav
-        $('.button-collapse').sideNav('hide');
-        $('.button-collapse').sideNav({
-                menuWidth: 300, // Default is 240
-                edge: 'right', // Choose the horizontal origin
-                closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
-            }
-        );
 
-    </script>
 </head>
 <body>
 <header>
-    <ul id="slide-out" class="side-nav fixed">
+    <ul id="slide-out" class="side-nav fixed" style="background-color: #1abc9c" >
+        <li>
+            <h1 style="text-align: center; color: white">App</h1>
+        </li>
+        <li>
+            <div class="card-panel">
+                <img src="https://s-media-cache-ak0.pinimg.com/originals/fd/f1/0f/fdf10f0f66831f90ad49f1d436142adc.jpg" alt="" class="circle responsive-img">
+            </div>
+        </li>
         <li><a href="#!">First Sidebar Link</a></li>
         <li><a href="#!">Second Sidebar Link</a></li>
     </ul>
-    <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+    <!--<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a> -->
 </header>
 
 <main>
-    <div class="container">
-        <div id="map" class="row"></div>
+    <div class="row">
+        <div id="map"></div>
         <script>
             var marker = null
             function initMap() {
-                let uluru = {lat: -32.836287, lng: -70.654307};
+                let uluru = {lat: -33.457779, lng: -70.6627};
                 let map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 11,
+                    zoom: 18,
                     center: uluru
                 });
                 map.addListener('click', function (e) {
