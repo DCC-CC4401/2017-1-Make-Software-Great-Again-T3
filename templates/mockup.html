@@ -30,20 +30,52 @@
         }
     </style>
 
+    <script>
+        function perfil() {
+            console.log("aqui");
+            $('#main').slideUp();
+            $('#perfil').slideDown();
+
+        }
+
+
+    </script>
+
+
 </head>
 <body>
 <header>
-    <ul id="slide-out" class="side-nav fixed" style="background-color: #1abc9c" >
-        <li>
-            <h1 style="text-align: center; color: white">App</h1>
-        </li>
-        <li>
-            <div class="card-panel">
-                <img src="https://s-media-cache-ak0.pinimg.com/originals/fd/f1/0f/fdf10f0f66831f90ad49f1d436142adc.jpg" alt="" class="circle responsive-img">
+    <ul id="slide-out" class="side-nav fixed" style="background-color: #1abc9c">
+        <div id="main">
+
+
+            <li>
+                <h1 style="text-align: center; color: white">App</h1>
+            </li>
+            <li>
+                <div class="card-panel">
+                    <img src="https://s-media-cache-ak0.pinimg.com/originals/fd/f1/0f/fdf10f0f66831f90ad49f1d436142adc.jpg"
+                         alt="" class="circle responsive-img" onclick="perfil()">
+                </div>
+            </li>
+            <div id="main_options">
+                <li><a href="#!">First Sidebar Link</a></li>
+                <li><a href="#!">Second Sidebar Link</a></li>
             </div>
-        </li>
-        <li><a href="#!">First Sidebar Link</a></li>
-        <li><a href="#!">Second Sidebar Link</a></li>
+        </div>
+        <div id="perfil" hidden>
+            <li><a href="#!">Login</a></li>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="login" type="login" class="validate" value="Username">
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password" type="login" class="validate" value="Password">
+                </div>
+            </div>
+        </div>
     </ul>
     <!--<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a> -->
 </header>
