@@ -57,6 +57,12 @@
             background-color: white !important;
         }
 
+        #fav_button {
+            position: absolute;
+            bottom: 3em;
+            right: 2em;
+        }
+
     </style>
 
     <script>
@@ -87,22 +93,22 @@
         var contador = 0;
         function boton_inf() {
             contador++;
-            if(contador % 3 == 0){
+            if (contador % 3 == 0) {
                 $('#button_inf').html(
                     ' <a class="btn-floating btn-large waves-effect waves-light green"' +
-                    ' style="position: absolute; right: 2em;bottom: 2em; z-index: 999999 !important;"> '+
+                    ' style="position: absolute; right: 2em;bottom: 2em; z-index: 999999 !important;"> ' +
                     '<i class="material-icons">done</i></a>')
             }
-            else if(contador % 3 == 1){
+            else if (contador % 3 == 1) {
                 $('#button_inf').html(
                     ' <a class="btn-floating btn-large waves-effect waves-light red"' +
-                    ' style="position: absolute; right: 2em;bottom: 2em; z-index: 999999 !important;"> '+
+                    ' style="position: absolute; right: 2em;bottom: 2em; z-index: 999999 !important;"> ' +
                     '<i class="material-icons">not_interested</i></a>')
             }
-            else if(contador % 3 == 2){
+            else if (contador % 3 == 2) {
                 $('#button_inf').html(
                     ' <a class="btn-floating btn-large waves-effect waves-light yellow"' +
-                    ' style="position: absolute; right: 2em;bottom: 2em; z-index: 999999 !important;"> '+
+                    ' style="position: absolute; right: 2em;bottom: 2em; z-index: 999999 !important;"> ' +
                     '<i class="material-icons">star</i></a>')
             }
         }
@@ -210,9 +216,12 @@
                 <li class="fondo">
                     <div class="card">
                         <div class="card-panel">
-                        <img src="http://www.lovemarks.com/wp-content/uploads/profile-avatars/default-avatar-tech-guy.png" alt=""
-                             class="circle responsive-img">
-                    </div>
+                            <img src="http://www.lovemarks.com/wp-content/uploads/profile-avatars/default-avatar-short-hair-girl.png"
+                                 alt=""
+                                 class="circle responsive-img">
+                            <a id="fav_button" class="btn-floating btn-large waves-effect waves-light red"><i
+                                    class="material-icons">add</i></a>
+                        </div>
                     </div>
 
                 </li>
@@ -228,7 +237,172 @@
                             href="#">Atras</a></div>
                 </li>
                 <li>
-                    <div class="collapsible-header fondo" ><a href="#">Productos</a></div>
+                    <div class="collapsible-header fondo"><a href="#">Productos</a></div>
+                    <div class="collapsible-body" style="font-size: 12px">
+                        <div class="col s12 m7">
+                            <div class="card horizontal hoverable ">
+                                <div class="card-image waves-effect waves-block waves-light">
+                                    <img class="activator"
+                                         src="http://img2.rnkr-static.com/user_node_img/50009/1000168434/C100/cool-ranch-doritos-food-photo-u1.jpg">
+                                </div>
+                                <div class="card-content" style="width: 100%">
+                <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Cool Ranch Doritos<i
+                        class="material-icons right">more_vert</i></span>
+                                    <div class="flow-text">
+                                        <span>$450</span>
+                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
+                                </div>
+                                <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4" style="font-weight: normal">Cool Ranch Doritos<i
+                        class="material-icons right">close</i></span>
+                                    <p>¿Qué clase de Doritos son éstos?</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col s12 m7">
+                            <div class="card horizontal hoverable">
+                                <div class="card-image waves-effect waves-block waves-light">
+                                    <img class="activator"
+                                         src="http://lorempixel.com/output/food-q-c-100-100-9.jpg">
+                                </div>
+                                <div class="card-content" style="width: 100%">
+                <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Lorem Burger c/Ipsum Cheese<i
+                        class="material-icons right">more_vert</i></span>
+                                    <div class="flow-text">
+                                        <span>$1500</span>
+                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
+                                </div>
+                                <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4" style="font-weight: normal">Lorem Burger c/Ipsum Cheese<i
+                        class="material-icons right">close</i></span>
+                                    <p>Lorem ipsum sit amet blah blah.</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col s12 m7">
+                            <div class="card horizontal hoverable">
+                                <div class="card-image waves-effect waves-block waves-light">
+                                    <img class="activator"
+                                         src="http://flagpole.com/i/thumbnail/Hungry_Howie_s_pizza_from_PR_company-uid14888192605552-640x360.jpg/100/100/1/25190">
+                                </div>
+                                <div class="card-content" style="width: 100%">
+                <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Pizza con Pepperoni<i
+                        class="material-icons right">more_vert</i></span>
+                                    <div class="flow-text">
+                                        <span>$2500</span>
+                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
+                                </div>
+                                <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4" style="font-weight: normal">Pizza con Pepperoni<i
+                        class="material-icons right">close</i></span>
+                                    <p>Las mejores pizzas son las que tienen mucho, muuucho pepperoni.</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col s12 m7">
+                            <div class="card horizontal hoverable">
+                                <div class="card-image waves-effect waves-block waves-light">
+                                    <img class="activator"
+                                         src="http://img2.rnkr-static.com/user_node_img/50009/1000168434/C100/cool-ranch-doritos-food-photo-u1.jpg">
+                                </div>
+                                <div class="card-content" style="width: 100%">
+                <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Cool Ranch Doritos<i
+                        class="material-icons right">more_vert</i></span>
+                                    <div class="flow-text">
+                                        <span>$450</span>
+                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
+                                </div>
+                                <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4" style="font-weight: normal">Cool Ranch Doritos<i
+                        class="material-icons right">close</i></span>
+                                    <p>¿Qué clase de Doritos son éstos?</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col s12 m7">
+                            <div class="card horizontal hoverable">
+                                <div class="card-image waves-effect waves-block waves-light">
+                                    <img class="activator"
+                                         src="http://lorempixel.com/output/food-q-c-100-100-9.jpg">
+                                </div>
+                                <div class="card-content" style="width: 100%">
+                <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Lorem Burger c/Ipsum Cheese<i
+                        class="material-icons right">more_vert</i></span>
+                                    <div class="flow-text">
+                                        <span>$1500</span>
+                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
+                                </div>
+                                <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4" style="font-weight: normal">Lorem Burger c/Ipsum Cheese<i
+                        class="material-icons right">close</i></span>
+                                    <p>Lorem ipsum sit amet blah blah.</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col s12 m7">
+                            <div class="card horizontal hoverable">
+                                <div class="card-image waves-effect waves-block waves-light">
+                                    <img class="activator"
+                                         src="http://flagpole.com/i/thumbnail/Hungry_Howie_s_pizza_from_PR_company-uid14888192605552-640x360.jpg/100/100/1/25190">
+                                </div>
+                                <div class="card-content" style="width: 100%">
+                <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Pizza con Pepperoni<i
+                        class="material-icons right">more_vert</i></span>
+                                    <div class="flow-text">
+                                        <span>$2500</span>
+                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
+                                </div>
+                                <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4" style="font-weight: normal">Pizza con Pepperoni<i
+                        class="material-icons right">close</i></span>
+                                    <p>Las mejores pizzas son las que tienen mucho, muuucho pepperoni.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+            <ul id="vendedor2" class="collapsible collapsible-accordion" hidden>
+                <li class="hide-on-med-and-down">
+                    <h3 style="text-align: center; color: white">U-Almuerzos</h3>
+                </li>
+                <li class="fondo">
+                    <div class="card">
+                        <div class="card-panel">
+                            <img src="http://www.lovemarks.com/wp-content/uploads/profile-avatars/default-avatar-tech-guy.png"
+                                 alt=""
+                                 class="circle responsive-img">
+                            <a id="fav_button" class="btn-floating btn-large waves-effect waves-light red"><i
+                                    class="material-icons">star</i></a>
+                        </div>
+                    </div>
+
+                </li>
+                <li>
+                    <div class="center-align">
+                        <h5 style="color: white"> Egipcios</h5>
+                        <h6 style="color: greenyellow">Abierto</h6>
+                        <h6 style="color: white"> Horario: 10:00 - 22:00 </h6>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header" style="background-color: white"
+                         onclick="back('#vendedor2','#main')"><a
+                            href="#">Atras</a></div>
+                </li>
+                <li>
+                    <div class="collapsible-header fondo"><a href="#">Productos</a></div>
                     <div class="collapsible-body" style="font-size: 12px">
                         <div class="col s12 m7">
                             <div class="card horizontal hoverable ">
@@ -430,7 +604,7 @@
             <script>
                 var marker = null;
                 function initMap() {
-                    let uluru = {lat: -33.457779, lng: -70.6627};
+                    let uluru = {lat: -33.457724, lng: -70.6644292};
                     let map = new google.maps.Map(document.getElementById('map'), {
                         zoom: 18,
                         center: uluru
@@ -439,14 +613,48 @@
                         e.preventDefault();
                         e.stopPropagation();
                     })
-                    var marker = new google.maps.Marker({
+                    var image = {
+                        url: 'https://cdn2.iconfinder.com/data/icons/25-food-icons/383/taco-256.png',
+                        scaledSize: new google.maps.Size(40, 40), // scaled size
+                        origin: new google.maps.Point(0, 0), // origin
+                        anchor: new google.maps.Point(0, 0) // anchor
+                    }
+                    var marker1 = new google.maps.Marker({
                         position: uluru,
                         map: map,
                         title: 'Vendedor Generico'
                     });
-                    marker.addListener('click', function (e) {
+                    var marker2 = new google.maps.Marker({
+                        position: {lat : -33.4569922, lng: -70.6645844},
+                        map: map,
+                        icon: image,
+                        title: 'Egipcios'
+                    });
+                    marker1.addListener('click', function (e) {
                         $('#main').hide();
+                        $('#perfil').hide();
+                        $('#vendedor1').hide();
+                        $('#vendedor2').hide();
+                        $('#signup').hide();
                         $('#vendedor1').slideDown();
+                        if ($('#resposiveButton').css('display') === "block") {
+
+                            $('.button-collapse').sideNav('hide');
+
+                            $('.button-collapse').sideNav('show');
+
+                        }
+
+
+                    });
+                    marker2.addListener('click', function (e) {
+                        $('#main').hide();
+                        $('#perfil').hide();
+                        $('#vendedor1').hide();
+                        $('#vendedor2').hide();
+                        $('#signup').hide();
+                        $('#vendedor2').slideDown();
+
                         if ($('#resposiveButton').css('display') === "block") {
 
                             $('.button-collapse').sideNav('hide');
