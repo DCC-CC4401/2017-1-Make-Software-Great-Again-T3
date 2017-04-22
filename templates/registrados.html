@@ -23,18 +23,39 @@
             }
         }
 
-    </style>
-    <style>
         #map {
-            position: relative;
+            /*position: relative;
             height: 100vh;
             width: 100%;
+            z-index: 99999 !important;*/
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
         }
+
+        html, body{
+            height: 100%;
+        }
+        #wrapper{
+            display: flex;
+            min-height: 100%;
+            flex-direction: column;
+        }
+        main{
+            flex: 1;
+            position: relative;
+        }
+
+
+
     </style>
 
     <script>
         $(function () {
             $('.button-collapse').sideNav();
+            $('.collapsible').collapsible();
         });
 
         function perfil() {
@@ -53,7 +74,6 @@
             $('#perfil').slideUp();
             $('#signup').slideDown();
         }
-        $('.collapsible').collapsible();
 
 
     </script>
@@ -61,8 +81,21 @@
 
 </head>
 <body>
+<div id="wrapper">
 <header>
-    <div id="slide-out" class="side-nav fixed" style="background-color: #1abc9c">
+
+    <nav class="top-nav hide-on-large-only" style="background-color: #1abc9c;">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="#" id="resposiveButton" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i
+                        class="material-icons">menu</i></a>
+                <a class="page-title">SideNav</a>
+            </div>
+        </div>
+    </nav>
+    <!--<a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only"><i class="material-icons">menu</i></a>-->
+
+    <div id="nav-mobile" class="side-nav fixed" style="background-color: #1abc9c">
         <ul id="main" class="collapsible collapsible-accordion">
             <li>
                 <h1 style="text-align: center; color: white">App</h1>
@@ -73,7 +106,6 @@
                          class="circle responsive-img" onclick="perfil()">
                 </div>
             </li>
-
             <li style="background-color: white">
                 <div class="collapsible-header">
                     <a href="#">Filtros</a>
@@ -93,6 +125,16 @@
             </li>
             <li style="background-color: white">
                 <div class="collapsible-header"><a href="#">Log Out</a></div>
+            </li>
+            <li style="background-color: white">
+                <div class="collapsible-header">
+                    <a href="#">Editar Info</a>
+                </div>
+            </li>
+            <li style="background-color: white">
+                <div class="collapsible-header">
+                    <a href="#">Agregar Menu</a>
+                </div>
             </li>
         </ul>
         <ul id="perfil" hidden>
@@ -333,13 +375,14 @@
             </li>
         </ul>
     </div>
-    <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only"><i class="material-icons">menu</i></a>
+
 </header>
 
 <main>
-    <div class="row">
-        <div id="map">
-            <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+    <div class="row" style="margin-bottom: 0" >
+        <div id="map"></div>
+        <div>
+            <a class="btn-floating btn-large waves-effect waves-light red" style="position: absolute; right: 2em;bottom: 2em; z-index: 999999 !important;"><i class="material-icons">add</i></a>
         </div>
         <script>
             var marker = null;
@@ -355,10 +398,9 @@
                     title: 'Vendedor Generico'
                 });
                 marker.addListener('click', function (e) {
-                    $('#main').slideUp();
+                    $('#main').hide();
                     $('#vendedor1').slideDown();
-                    //if($('.button-collapse').)
-                    $('.button-collapse').sideNav('show');
+                    if($('#resposiveButton').css('display') === "block") $('.button-collapse').sideNav('show');
 
                 });
             }
@@ -385,6 +427,6 @@
 </main>
 <!-- <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a> -->
 
-
+    </div>
 </body>
 </html>
