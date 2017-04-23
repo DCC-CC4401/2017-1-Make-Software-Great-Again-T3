@@ -63,6 +63,16 @@
             right: 2em;
         }
 
+        .card_2 {
+            padding-top: .5em !important;
+            padding-bottom: .5em !important;
+        }
+
+        .card_margin {
+            margin-top: 0;
+            margin-bottom: .5em;
+        }
+
     </style>
 
     <script>
@@ -149,7 +159,14 @@
                 </li>
                 <li class="fondo">
                     <div class="fondo collapsible-header">
-                        <a href="#">Filtros</a>
+                        <div class="valign-wrapper">
+                            <div class="card-image valign-wrapper">
+                                <img src="https://image.flaticon.com/icons/svg/202/202461.svg"
+                                     style="width: 22px; height: 22px ; padding-right: .5em">
+                            </div>
+                            <a href="#">Filtros</a>
+                        </div>
+
                     </div>
                     <div class="collapsible-body">
                         <ul>
@@ -162,19 +179,47 @@
 
                 </li>
                 <li class="fondo">
-                    <div class="collapsible-header"><a href="#">Favs</a></div>
-                </li>
-                <li class="fondo">
-                    <div class="collapsible-header"><a href="#">Log Out</a></div>
-                </li>
-                <li class="fondo">
                     <div class="collapsible-header">
-                        <a href="perfil.html">Editar Info</a>
+                        <div class="valign-wrapper">
+                            <div class="card-image valign-wrapper">
+                                <img src="https://image.flaticon.com/icons/svg/143/143515.svg"
+                                     style="width: 22px; height: 22px ; padding-right: .5em">
+                            </div>
+                            <a href="#">Favs</a>
+                        </div>
                     </div>
                 </li>
                 <li class="fondo">
                     <div class="collapsible-header">
-                        <a href="#">Agregar Menu</a>
+                        <div class="valign-wrapper">
+                            <div class="card-image valign-wrapper">
+                                <img src="https://image.flaticon.com/icons/svg/222/222667.svg"
+                                     style="width: 22px; height: 22px ; padding-right: .5em">
+                            </div>
+                            <a href="#">Log-Out</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="fondo">
+                    <div class="collapsible-header">
+                        <div class="valign-wrapper">
+                            <div class="card-image valign-wrapper">
+                                <img src="https://image.flaticon.com/icons/svg/148/148926.svg"
+                                     style="width: 22px; height: 22px ; padding-right: .5em">
+                            </div>
+                            <a href="perfil.html">Editar Info</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="fondo">
+                    <div class="collapsible-header">
+                        <div class="valign-wrapper">
+                            <div class="card-image valign-wrapper">
+                                <img src="https://image.flaticon.com/icons/svg/263/263994.svg"
+                                     style="width: 22px; height: 22px ; padding-right: .5em">
+                            </div>
+                            <a href="#">Agregar Menu</a>
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -229,28 +274,44 @@
                     <div class="center-align">
                         <h5 style="color: white"> Vendedor Generico</h5>
                         <h6 style="color: greenyellow">online</h6>
+                        <h6 style="color: white">Medios de Pago: Efectivo</h6>
                     </div>
                 </li>
                 <li>
                     <div class="collapsible-header" style="background-color: white"
-                         onclick="back('#vendedor1','#main')"><a
-                            href="#">Atras</a></div>
+                         onclick="back('#vendedor1','#main')">
+                        <div class="valign-wrapper">
+                            <div class="card-image valign-wrapper">
+                                <img src="https://image.flaticon.com/icons/svg/122/122637.svg"
+                                     style="width: 22px; height: 22px ; padding-right: .5em">
+                            </div>
+                            <a href="#">Back</a>
+                        </div>
+                    </div>
                 </li>
                 <li>
-                    <div class="collapsible-header fondo"><a href="#">Productos</a></div>
-                    <div class="collapsible-body" style="font-size: 12px">
+                    <div class="collapsible-header fondo">
+                        <div class="valign-wrapper">
+                            <div class="card-image valign-wrapper">
+                                <img src="https://image.flaticon.com/icons/svg/135/135763.svg"
+                                     style="width: 22px; height: 22px ; padding-right: .5em">
+                            </div>
+                            <a href="#">Productos</a>
+                        </div>
+                    </div>
+                    <div class="collapsible-body" style="background-color: #1abc9c; font-size: 12px">
                         <div class="col s12 m7">
-                            <div class="card horizontal hoverable ">
+                            <div class="card horizontal hoverable card_margin valign-wrapper " style="margin-top:  0">
                                 <div class="card-image waves-effect waves-block waves-light">
                                     <img class="activator"
                                          src="http://img2.rnkr-static.com/user_node_img/50009/1000168434/C100/cool-ranch-doritos-food-photo-u1.jpg">
                                 </div>
-                                <div class="card-content" style="width: 100%">
+                                <div class="card-content card_2" style="width: 100%">
                 <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Cool Ranch Doritos<i
                         class="material-icons right">more_vert</i></span>
                                     <div class="flow-text">
                                         <span>$450</span>
-                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
+                                        <a class="orange-text" href="#" style="float: right">Stock: 2</a></div>
                                 </div>
                                 <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4" style="font-weight: normal">Cool Ranch Doritos<i
@@ -262,17 +323,17 @@
 
 
                         <div class="col s12 m7">
-                            <div class="card horizontal hoverable">
+                            <div class="card horizontal hoverable card_margin  valign-wrapper">
                                 <div class="card-image waves-effect waves-block waves-light">
                                     <img class="activator"
                                          src="http://lorempixel.com/output/food-q-c-100-100-9.jpg">
                                 </div>
-                                <div class="card-content" style="width: 100%">
+                                <div class="card-content card_2" style="width: 100%">
                 <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Lorem Burger c/Ipsum Cheese<i
                         class="material-icons right">more_vert</i></span>
                                     <div class="flow-text">
                                         <span>$1500</span>
-                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
+                                        <a class="orange-text" href="#" style="float: right">Stock: 2</a></div>
                                 </div>
                                 <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4" style="font-weight: normal">Lorem Burger c/Ipsum Cheese<i
@@ -284,17 +345,17 @@
 
 
                         <div class="col s12 m7">
-                            <div class="card horizontal hoverable">
+                            <div class="card horizontal hoverable card_margin  valign-wrapper">
                                 <div class="card-image waves-effect waves-block waves-light">
                                     <img class="activator"
                                          src="http://flagpole.com/i/thumbnail/Hungry_Howie_s_pizza_from_PR_company-uid14888192605552-640x360.jpg/100/100/1/25190">
                                 </div>
-                                <div class="card-content" style="width: 100%">
+                                <div class="card-content card_2" style="width: 100%">
                 <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Pizza con Pepperoni<i
                         class="material-icons right">more_vert</i></span>
                                     <div class="flow-text">
                                         <span>$2500</span>
-                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
+                                        <a class="orange-text" href="#" style="float: right">Stock: 2</a></div>
                                 </div>
                                 <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4" style="font-weight: normal">Pizza con Pepperoni<i
@@ -306,17 +367,17 @@
 
 
                         <div class="col s12 m7">
-                            <div class="card horizontal hoverable">
+                            <div class="card horizontal hoverable card_margin  valign-wrapper">
                                 <div class="card-image waves-effect waves-block waves-light">
                                     <img class="activator"
                                          src="http://img2.rnkr-static.com/user_node_img/50009/1000168434/C100/cool-ranch-doritos-food-photo-u1.jpg">
                                 </div>
-                                <div class="card-content" style="width: 100%">
+                                <div class="card-content card_2" style="width: 100%">
                 <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Cool Ranch Doritos<i
                         class="material-icons right">more_vert</i></span>
                                     <div class="flow-text">
                                         <span>$450</span>
-                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
+                                        <a class="orange-text" href="#" style="float: right">Stock: 2</a></div>
                                 </div>
                                 <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4" style="font-weight: normal">Cool Ranch Doritos<i
@@ -325,47 +386,23 @@
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="col s12 m7">
-                            <div class="card horizontal hoverable">
+                            <div class="card horizontal hoverable card_margin  valign-wrapper">
                                 <div class="card-image waves-effect waves-block waves-light">
                                     <img class="activator"
                                          src="http://lorempixel.com/output/food-q-c-100-100-9.jpg">
                                 </div>
-                                <div class="card-content" style="width: 100%">
+                                <div class="card-content card_2" style="width: 100%">
                 <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Lorem Burger c/Ipsum Cheese<i
                         class="material-icons right">more_vert</i></span>
                                     <div class="flow-text">
                                         <span>$1500</span>
-                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
+                                        <a class="orange-text" href="#" style="float: right">Stock: 2</a></div>
                                 </div>
                                 <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4" style="font-weight: normal">Lorem Burger c/Ipsum Cheese<i
                         class="material-icons right">close</i></span>
                                     <p>Lorem ipsum sit amet blah blah.</p>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col s12 m7">
-                            <div class="card horizontal hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="activator"
-                                         src="http://flagpole.com/i/thumbnail/Hungry_Howie_s_pizza_from_PR_company-uid14888192605552-640x360.jpg/100/100/1/25190">
-                                </div>
-                                <div class="card-content" style="width: 100%">
-                <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Pizza con Pepperoni<i
-                        class="material-icons right">more_vert</i></span>
-                                    <div class="flow-text">
-                                        <span>$2500</span>
-                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
-                                </div>
-                                <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4" style="font-weight: normal">Pizza con Pepperoni<i
-                        class="material-icons right">close</i></span>
-                                    <p>Las mejores pizzas son las que tienen mucho, muuucho pepperoni.</p>
                                 </div>
                             </div>
                         </div>
@@ -394,28 +431,44 @@
                         <h5 style="color: white"> Egipcios</h5>
                         <h6 style="color: greenyellow">Abierto</h6>
                         <h6 style="color: white"> Horario: 10:00 - 22:00 </h6>
+                        <h6 style="color: white">Medios de Pago: Efectivo, Tarjeta</h6>
                     </div>
                 </li>
                 <li>
                     <div class="collapsible-header" style="background-color: white"
-                         onclick="back('#vendedor2','#main')"><a
-                            href="#">Atras</a></div>
+                         onclick="back('#vendedor2','#main')">
+                        <div class="valign-wrapper">
+                            <div class="card-image valign-wrapper">
+                                <img src="https://image.flaticon.com/icons/svg/122/122637.svg"
+                                     style="width: 22px; height: 22px ; padding-right: .5em">
+                            </div>
+                            <a href="#">Back</a>
+                        </div>
+                    </div>
                 </li>
                 <li>
-                    <div class="collapsible-header fondo"><a href="#">Productos</a></div>
-                    <div class="collapsible-body" style="font-size: 12px">
+                    <div class="collapsible-header fondo ">
+                        <div class="valign-wrapper">
+                            <div class="card-image valign-wrapper">
+                                <img src="https://image.flaticon.com/icons/svg/135/135763.svg"
+                                     style="width: 22px; height: 22px ; padding-right: .5em">
+                            </div>
+                            <a href="#">Productos</a>
+                        </div>
+                    </div>
+                    <div class="collapsible-body" style="background-color: #1abc9c; font-size: 12px">
                         <div class="col s12 m7">
-                            <div class="card horizontal hoverable ">
+                            <div class="card horizontal hoverable card_margin valign-wrapper " style="margin-top:  0">
                                 <div class="card-image waves-effect waves-block waves-light">
                                     <img class="activator"
                                          src="http://img2.rnkr-static.com/user_node_img/50009/1000168434/C100/cool-ranch-doritos-food-photo-u1.jpg">
                                 </div>
-                                <div class="card-content" style="width: 100%">
+                                <div class="card-content card_2" style="width: 100%">
                 <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Cool Ranch Doritos<i
                         class="material-icons right">more_vert</i></span>
                                     <div class="flow-text">
                                         <span>$450</span>
-                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
+                                        <a class="orange-text" href="#" style="float: right">Stock: 2</a></div>
                                 </div>
                                 <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4" style="font-weight: normal">Cool Ranch Doritos<i
@@ -427,17 +480,17 @@
 
 
                         <div class="col s12 m7">
-                            <div class="card horizontal hoverable">
+                            <div class="card horizontal hoverable card_margin  valign-wrapper">
                                 <div class="card-image waves-effect waves-block waves-light">
                                     <img class="activator"
                                          src="http://lorempixel.com/output/food-q-c-100-100-9.jpg">
                                 </div>
-                                <div class="card-content" style="width: 100%">
+                                <div class="card-content card_2" style="width: 100%">
                 <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Lorem Burger c/Ipsum Cheese<i
                         class="material-icons right">more_vert</i></span>
                                     <div class="flow-text">
                                         <span>$1500</span>
-                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
+                                        <a class="orange-text" href="#" style="float: right">Stock: 2</a></div>
                                 </div>
                                 <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4" style="font-weight: normal">Lorem Burger c/Ipsum Cheese<i
@@ -449,17 +502,17 @@
 
 
                         <div class="col s12 m7">
-                            <div class="card horizontal hoverable">
+                            <div class="card horizontal hoverable card_margin  valign-wrapper">
                                 <div class="card-image waves-effect waves-block waves-light">
                                     <img class="activator"
                                          src="http://flagpole.com/i/thumbnail/Hungry_Howie_s_pizza_from_PR_company-uid14888192605552-640x360.jpg/100/100/1/25190">
                                 </div>
-                                <div class="card-content" style="width: 100%">
+                                <div class="card-content card_2" style="width: 100%">
                 <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Pizza con Pepperoni<i
                         class="material-icons right">more_vert</i></span>
                                     <div class="flow-text">
                                         <span>$2500</span>
-                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
+                                        <a class="orange-text" href="#" style="float: right">Stock: 2</a></div>
                                 </div>
                                 <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4" style="font-weight: normal">Pizza con Pepperoni<i
@@ -471,17 +524,17 @@
 
 
                         <div class="col s12 m7">
-                            <div class="card horizontal hoverable">
+                            <div class="card horizontal hoverable card_margin  valign-wrapper">
                                 <div class="card-image waves-effect waves-block waves-light">
                                     <img class="activator"
                                          src="http://img2.rnkr-static.com/user_node_img/50009/1000168434/C100/cool-ranch-doritos-food-photo-u1.jpg">
                                 </div>
-                                <div class="card-content" style="width: 100%">
+                                <div class="card-content card_2" style="width: 100%">
                 <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Cool Ranch Doritos<i
                         class="material-icons right">more_vert</i></span>
                                     <div class="flow-text">
                                         <span>$450</span>
-                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
+                                        <a class="orange-text" href="#" style="float: right">Stock: 2</a></div>
                                 </div>
                                 <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4" style="font-weight: normal">Cool Ranch Doritos<i
@@ -490,20 +543,18 @@
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="col s12 m7">
-                            <div class="card horizontal hoverable">
+                            <div class="card horizontal hoverable card_margin  valign-wrapper">
                                 <div class="card-image waves-effect waves-block waves-light">
                                     <img class="activator"
                                          src="http://lorempixel.com/output/food-q-c-100-100-9.jpg">
                                 </div>
-                                <div class="card-content" style="width: 100%">
+                                <div class="card-content card_2" style="width: 100%">
                 <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Lorem Burger c/Ipsum Cheese<i
                         class="material-icons right">more_vert</i></span>
                                     <div class="flow-text">
                                         <span>$1500</span>
-                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
+                                        <a class="orange-text" href="#" style="float: right">Stock: 2</a></div>
                                 </div>
                                 <div class="card-reveal">
                 <span class="card-title grey-text text-darken-4" style="font-weight: normal">Lorem Burger c/Ipsum Cheese<i
@@ -513,27 +564,6 @@
                             </div>
                         </div>
 
-
-                        <div class="col s12 m7">
-                            <div class="card horizontal hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="activator"
-                                         src="http://flagpole.com/i/thumbnail/Hungry_Howie_s_pizza_from_PR_company-uid14888192605552-640x360.jpg/100/100/1/25190">
-                                </div>
-                                <div class="card-content" style="width: 100%">
-                <span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Pizza con Pepperoni<i
-                        class="material-icons right">more_vert</i></span>
-                                    <div class="flow-text">
-                                        <span>$2500</span>
-                                        <a class="orange-text" href="#" style="float: right">LIKEAR!</a></div>
-                                </div>
-                                <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4" style="font-weight: normal">Pizza con Pepperoni<i
-                        class="material-icons right">close</i></span>
-                                    <p>Las mejores pizzas son las que tienen mucho, muuucho pepperoni.</p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </li>
 
@@ -602,7 +632,7 @@
                         class="material-icons">done</i></a>
             </div>
             <script>
-                var marker = null;
+                let marker = null;
                 function initMap() {
                     let uluru = {lat: -33.457724, lng: -70.6644292};
                     let map = new google.maps.Map(document.getElementById('map'), {
@@ -613,19 +643,20 @@
                         e.preventDefault();
                         e.stopPropagation();
                     })
-                    var image = {
-                        url: 'https://cdn2.iconfinder.com/data/icons/25-food-icons/383/taco-256.png',
+                    let image = {
+                        //url: 'https://cdn2.iconfinder.com/data/icons/25-food-icons/383/taco-256.png',
+                        url: 'https://freeiconshop.com/wp-content/uploads/edd/star-curved-flat.png',
                         scaledSize: new google.maps.Size(40, 40), // scaled size
                         origin: new google.maps.Point(0, 0), // origin
                         anchor: new google.maps.Point(0, 0) // anchor
-                    }
-                    var marker1 = new google.maps.Marker({
+                    };
+                    let marker1 = new google.maps.Marker({
                         position: uluru,
                         map: map,
                         title: 'Vendedor Generico'
                     });
-                    var marker2 = new google.maps.Marker({
-                        position: {lat : -33.4569922, lng: -70.6645844},
+                    let marker2 = new google.maps.Marker({
+                        position: {lat: -33.4569922, lng: -70.6645844},
                         map: map,
                         icon: image,
                         title: 'Egipcios'
@@ -633,7 +664,6 @@
                     marker1.addListener('click', function (e) {
                         $('#main').hide();
                         $('#perfil').hide();
-                        $('#vendedor1').hide();
                         $('#vendedor2').hide();
                         $('#signup').hide();
                         $('#vendedor1').slideDown();
@@ -651,7 +681,6 @@
                         $('#main').hide();
                         $('#perfil').hide();
                         $('#vendedor1').hide();
-                        $('#vendedor2').hide();
                         $('#signup').hide();
                         $('#vendedor2').slideDown();
 
