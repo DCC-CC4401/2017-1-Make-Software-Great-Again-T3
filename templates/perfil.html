@@ -32,13 +32,19 @@
             $('#default_profile').slideUp();
             $('#change_password').slideDown();
         }
+        function back(input, output) {
+            console.log(input);
+            console.log(output);
+            $(input).slideUp();
+            $(output).slideDown();
+        }
     </script>
 
 </head>
 <body>
-<div class="container valign-wrapper">
+<div class="container">
     <div class="col s8" style="position: relative">
-        <div class="card">
+        <div class="card" style="width: 22em">
             <div class="card-image">
                 <div class="card" style="position: absolute;top: 1em;left: 1em;z-index: 1 !important;width: 3.5em;">
                     <div class="center-align valign-wrapper">
@@ -49,44 +55,37 @@
                 </div>
                 <img src="http://www.lovemarks.com/wp-content/uploads/profile-avatars/default-avatar-nerd-pug.png"
                      alt=""
-                     class="circle responsive-img" style="width: 20em; height: 20em">
+                     class="circle responsive-img">
                 <a class="btn-floating btn-large waves-effect waves-light red"
                    style="position: absolute;bottom: .5em;right: 1em;"><i class="material-icons">mode_edit</i></a>
             </div>
 
-            <ul id="change_password" hidden>
-                <li>
-                    <div class="row">
-                        <div class="col s12">
-                            <div class="card">
-                                <div class="card-content">
-                                    <span class="card-title">Cambiar contraseña</span>
-                                    <div class="row" style="background-color: white">
-                                        <div class="input-field col s12">
-                                            <input id="old_password" type="text" class="validate"
-                                                   placeholder="Contraseña antigua">
-                                        </div>
-                                    </div>
-                                    <div class="row" style="background-color: white">
-                                        <div class="input-field col s12">
-                                            <input id="new_password" type="password" class="validate"
-                                                   placeholder="Contraseña nueva">
-                                        </div>
-                                    </div>
+            <div id="change_password" style="width: inherit" hidden>
 
-                                    <div class="card-action">
-
-                                        <a href="#">Cambiar</a>
-                                        <a href="perfil.html">Atras</a>
-                                    </div>
-                                </div>
-                            </div>
-
+                <div class="card-content">
+                    <span class="card-title">Cambiar contraseña</span>
+                    <div class="row" style="background-color: white">
+                        <div class="input-field col s12">
+                            <input id="old_password" type="text" class="validate"
+                                   placeholder="Contraseña antigua">
+                        </div>
+                    </div>
+                    <div class="row" style="background-color: white">
+                        <div class="input-field col s12">
+                            <input id="new_password" type="password" class="validate"
+                                   placeholder="Contraseña nueva">
                         </div>
                     </div>
 
-                </li>
-            </ul>
+                    <div class="card-action">
+
+                        <a href="#">Cambiar</a>
+                        <a onclick="back('#change_password','#default_profile')">Atras</a>
+                    </div>
+                </div>
+
+
+            </div>
             <ul id="default_profile">
                 <div class="card-content">
 
@@ -99,13 +98,14 @@
 
                 </div>
                 <div class="card-action">
-                    <a href="#">Guardar</a>
-                    <a onclick="changePasswordProfile()">Cambiar contraseña</a>
-                    <a href="registrados.html">Atras</a>
+                    <a href="#" style="font-size: .9em !important;">Guardar</a>
+                    <a onclick="changePasswordProfile() " style="font-size: .9em !important;">Cambiar Contraseña</a>
+                    <a href="registrados.html" style="font-size: .9em !important;">Atras</a>
                 </div>
             </ul>
         </div>
 
     </div>
+</div>
 </body>
 </html>
