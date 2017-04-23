@@ -26,8 +26,14 @@
             justify-content: center;
         }
 
-
     </style>
+    <script>
+        function changePasswordProfile() {
+            $('#default_profile').slideUp();
+            $('#change_password').slideDown();
+        }
+    </script>
+
 </head>
 <body>
 <div class="container valign-wrapper">
@@ -47,22 +53,59 @@
                 <a class="btn-floating btn-large waves-effect waves-light red"
                    style="position: absolute;bottom: .5em;right: 1em;"><i class="material-icons">mode_edit</i></a>
             </div>
-            <div class="card-content">
 
-                <span class="card-title">Perfil</span>
-                <p>Nombre de Usuario: Bla123</p>
-                <p>Nombre : Juan Perez</p>
-                <p>Contraseña: ****** </p>
-                <p>Nombre Local: Local Genérico</p>
-                <p>Horario de Atención : 10:00 - 20:00</p>
-                <p>Medios de Pago: Efectivo</p>
+            <ul id="change_password" hidden>
+                <li>
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <span class="card-title">Cambiar contraseña</span>
+                                    <div class="row" style="background-color: white">
+                                        <div class="input-field col s12">
+                                            <input id="old_password" type="text" class="validate"
+                                                   placeholder="Contraseña antigua">
+                                        </div>
+                                    </div>
+                                    <div class="row" style="background-color: white">
+                                        <div class="input-field col s12">
+                                            <input id="new_password" type="password" class="validate"
+                                                   placeholder="Contraseña nueva">
+                                        </div>
+                                    </div>
 
-            </div>
-            <div class="card-action">
-                <a href="#">Guardar</a>
-                <a href="registrados.html">Atras</a>
-            </div>
+                                    <div class="card-action">
+
+                                        <a href="#">Cambiar</a>
+                                        <a href="perfil.html">Atras</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </li>
+            </ul>
+            <ul id="default_profile">
+                <div class="card-content">
+
+                    <span class="card-title">Perfil</span>
+                    <p>Nombre de Usuario: Bla123</p>
+                    <p>Nombre : Juan Perez</p>
+                    <p>Nombre Local: Local Genérico</p>
+                    <p>Horario de Atención : 10:00 - 20:00</p>
+                    <p>Medios de Pago: Efectivo</p>
+
+                </div>
+                <div class="card-action">
+                    <a href="#">Guardar</a>
+                    <a onclick="changePasswordProfile()">Cambiar contraseña</a>
+                    <a href="registrados.html">Atras</a>
+                </div>
+            </ul>
         </div>
+
     </div>
 </body>
 </html>
