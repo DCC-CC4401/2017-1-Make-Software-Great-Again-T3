@@ -61,12 +61,14 @@
             position: absolute;
             bottom: 3em;
             right: 2em;
+            padding: 0 0 !important;
         }
 
-        #login_button{
+        #login_button {
             position: absolute;
             bottom: 3.5em;
             right: 2em;
+            padding: 0 0 !important;
         }
 
         .card_2 {
@@ -86,9 +88,34 @@
             $('.button-collapse').sideNav({
                 draggable: true
             });
-            $('.collapsible').collapsible();
-        });
+            $('.button-collapse').on('hide', function () {
 
+            });
+            $('.collapsible').collapsible();
+
+
+        });
+        let res_contador = 0;
+        function backResponsive() {
+            $('#main').slideDown();
+            $('#perfil').hide();
+            $('#vendedor1').hide();
+            $('#signup').hide();
+            $('#vendedor2').hide();
+            $('.button-collapse').sideNav('show');
+
+            /*res_contador++;
+             console.log(res_contador);
+             if (res_contador % 2 == 0) {
+
+             $('#main').slideDown();
+             $('#perfil').hide();
+             $('#vendedor1').hide();
+             $('#signup').hide();
+             $('#vendedor2').hide();
+             }*/
+
+        }
         function perfil() {
             console.log("aqui");
             $('#main').slideUp();
@@ -140,9 +167,12 @@
         <nav class="top-nav hide-on-large-only" style="background-color: #1abc9c;">
             <div class="container">
                 <div class="nav-wrapper">
-                    <a href="#" id="resposiveButton" data-activates="nav-mobile"
-                       class="button-collapse top-nav full hide-on-large-only"><i
+                    <a href="#" id="responsiveButton" data-activates="nav-mobile"
+                       class="button-collapse top-nav full hide-on-large-only" ><i
                             class="material-icons">menu</i></a>
+                    <div style="position: absolute; height: inherit; width: 4em; z-index: 1; z-index: 1" onclick="backResponsive()"></div>
+
+
                     <a class="page-title">U-Almuerzos</a>
                 </div>
             </div>
@@ -577,7 +607,7 @@
                 </li>
 
             </ul>
-            <ul id="signup" class="collapsible collapsible-accordion" hidden    >
+            <ul id="signup" class="collapsible collapsible-accordion" hidden>
                 <li>
                     <div class="row">
                         <div class="col s12">
@@ -676,9 +706,10 @@
                         $('#vendedor2').hide();
                         $('#signup').hide();
                         $('#vendedor1').slideDown();
-                        if ($('#resposiveButton').css('display') === "block") {
 
-                            $('.button-collapse').sideNav('hide');
+                        if ($('#responsiveButton').css('display') === "block") {
+
+                            //$('.button-collapse').sideNav('hide');
 
                             $('.button-collapse').sideNav('show');
 
@@ -693,8 +724,8 @@
                         $('#signup').hide();
                         $('#vendedor2').slideDown();
 
-                        if ($('#resposiveButton').css('display') === "block") {
-
+                        if ($('#responsiveButton').css('display') === "block") {
+                            //console.log('egipcios');
                             $('.button-collapse').sideNav('hide');
 
                             $('.button-collapse').sideNav('show');
