@@ -123,8 +123,6 @@
 
         }
         function back(input, output) {
-            console.log(input);
-            console.log(output);
             $(input).slideUp();
             $(output).slideDown();
         }
@@ -207,7 +205,7 @@
                                  alt=""
                                  class="circle responsive-img">
 
-                            <a id="login_button" class="btn-floating btn-large waves-effect waves-light red"><i
+                            <a id="login_button" class="btn-floating btn-large waves-effect waves-light green"><i
                                     class="material-icons" onclick="perfil()">input</i></a>
                         </div>
                     </div>
@@ -719,6 +717,12 @@
                         icon: gps
                     });
 
+                    let genericMarker = {
+                        url: 'http://www.amyhissom.com/ELGT/wp-content/uploads/2015/05/vendor_icon.png',
+                        scaledSize: new google.maps.Size(30, 30), // scaled size
+                        origin: new google.maps.Point(0, 0), // origin
+                        anchor: new google.maps.Point(0, 0) // anchor
+                    };
 
                     // Try HTML5 geolocation.
                     if (navigator.geolocation) {
@@ -757,12 +761,13 @@
                         url: 'https://freeiconshop.com/wp-content/uploads/edd/star-curved-flat.png',
                         scaledSize: new google.maps.Size(30, 30), // scaled size
                         origin: new google.maps.Point(0, 0), // origin
-                        anchor: new google.maps.Point(0, 0) // anchor
+                        anchor: new google.maps.Point(15, 15) // anchor
                     };
                     let marker1 = new google.maps.Marker({
                         position: uluru,
                         map: map,
-                        title: 'Vendedor Generico'
+                        title: 'Vendedor Generico',
+                        icon : genericMarker
                     });
                     let marker2 = new google.maps.Marker({
                         position: {lat: -33.4569922, lng: -70.6645844},
