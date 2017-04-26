@@ -70,6 +70,7 @@
             background: #ECECEC;
             opacity: 0.9;
             display: none;
+            z-index: 1;
         }
 
         /*body {
@@ -99,16 +100,16 @@
             $('.tooltipped').tooltip({delay: 50});
         });
         function menuBlanco() {
-            $('#fondoBlanco').show();
+            $('#fondoBlanco').toggle();
         }
 
 
     </script>
 
 </head>
-<body>
+<body style="background-color: #e2fffb">
 <header>
-    <nav class="top-nav">
+    <nav class="top-nav" style="background-color: #1abc9c">
         <div class="container">
             <div class="nav-wrapper">
                 <a class="brand-logo center">Editar productos</a>
@@ -120,10 +121,13 @@
     <div class="row">
         <div class="col s12 m6 offset-m3">
             <div class="card horizontal">
+
                 <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator"
+                    <img class="activator "
                          src="http://3.bp.blogspot.com/-p29CGVu_22Q/VcEIostZOQI/AAAAAAAAgZc/lpFp91hkPzw/s1600/CameraNext.png"
                          style="width: 100px; height: 80px">
+
+
                 </div>
                 <div class="card-content" style="width: 100%">
                     <!--<span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Cool Ranch Doritos<i
@@ -156,18 +160,29 @@
                             <textarea id="description" class="materialize-textarea"></textarea>
                             <label for="description">Descripción</label>
                         </div>
+                        <div class="col"><a class="orange-text inline" href="#" style="float: right">ELIMINAR</a></div>
 
-                        <a class="orange-text" href="#" style="float: right">ELIMINAR</a></div>
+                        <div class="file-field input-field inline col" style="margin: 0">
+                                <a class="orange-text">CAMBIAR FOTO</a>
+                                <input type="file">
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
 
+
+        <div class="row">
         <div class="col s12 m6 offset-m3">
             <div class="card horizontal">
+
                 <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator"
+                    <img class="activator "
                          src="http://3.bp.blogspot.com/-p29CGVu_22Q/VcEIostZOQI/AAAAAAAAgZc/lpFp91hkPzw/s1600/CameraNext.png"
                          style="width: 100px; height: 80px">
+
+
                 </div>
                 <div class="card-content" style="width: 100%">
                     <!--<span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Cool Ranch Doritos<i
@@ -200,18 +215,28 @@
                             <textarea id="description" class="materialize-textarea"></textarea>
                             <label for="description">Descripción</label>
                         </div>
+                        <div class="col"><a class="orange-text inline" href="#" style="float: right">ELIMINAR</a></div>
 
-                        <a class="orange-text" href="#" style="float: right">ELIMINAR</a></div>
+                        <div class="file-field input-field inline col" style="margin: 0">
+                                <a class="orange-text">CAMBIAR FOTO</a>
+                                <input type="file">
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
 
+        <div class="row">
         <div class="col s12 m6 offset-m3">
             <div class="card horizontal">
+
                 <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator"
+                    <img class="activator "
                          src="http://3.bp.blogspot.com/-p29CGVu_22Q/VcEIostZOQI/AAAAAAAAgZc/lpFp91hkPzw/s1600/CameraNext.png"
                          style="width: 100px; height: 80px">
+
+
                 </div>
                 <div class="card-content" style="width: 100%">
                     <!--<span class="card-title activator grey-text text-darken-4" style="font-weight: normal">Cool Ranch Doritos<i
@@ -244,20 +269,28 @@
                             <textarea id="description" class="materialize-textarea"></textarea>
                             <label for="description">Descripción</label>
                         </div>
+                        <div class="col"><a class="orange-text inline" href="#" style="float: right">ELIMINAR</a></div>
 
-                        <a class="orange-text" href="#" style="float: right">ELIMINAR</a></div>
+                        <div class="file-field input-field inline col" style="margin: 0">
+                                <a class="orange-text">CAMBIAR FOTO</a>
+                                <input type="file">
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
-
-    </div>
 
 
     <div id="fondoBlanco" class="backdrop_gray hide-on-large-only" hidden></div>
 
-    <div class="fixed-action-btn " style="bottom:24px; right:24px;"  onmouseover="menuBlanco()" onmouseleave="$('#fondoBlanco').hide()">
+    <div class="fixed-action-btn click-to-toggle" style="bottom:24px; right:24px;" onclick="menuBlanco()">
         <a class="btn-floating btn-large red"><i class="large material-icons">mode_edit</i></a>
         <ul>
+            <li>
+                <a href="#" class="btn-floating blue"><i class="material-icons">settings_backup_restore</i></a>
+                <a href="#" class="btn-floating mobile-fab-tip">Descartar Cambios</a> <!--tooltip-->
+            </li>
             <li>
                 <a href="#" class="btn-floating red"><i class="material-icons">add</i></a>
                 <a href="#" class="btn-floating mobile-fab-tip">Agregar producto</a> <!--tooltip-->
@@ -266,6 +299,8 @@
                 <a href="#" class="btn-floating green"><i class="material-icons">done</i></a>
                 <a href="#" class="btn-floating mobile-fab-tip">Guardar y salir</a> <!--tooltip-->
             </li>
+
+
         </ul>
     </div>
 </main>
