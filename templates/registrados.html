@@ -87,6 +87,11 @@
         $(document).ready(function () {
             $('select').material_select();
         });
+        $(document).ready(function () {
+            // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+            $('.modal').modal();
+        });
+
         $(function () {
             $('.button-collapse').sideNav({
                 draggable: true
@@ -140,13 +145,13 @@
             if (contador % 3 == 0) {
                 $('#button_inf').html(
                     ' <a class="btn-floating btn-large waves-effect waves-light green"' +
-                    ' style="position: absolute; right: 2em;bottom: 2em; z-index: 999999 !important;"> ' +
+                    ' style="position: absolute; right: 2em;bottom: 2em; z-index: 999999 !important;" href="#modal1"> ' +
                     '<i class="material-icons">done</i></a>')
             }
             else if (contador % 3 == 1) {
                 $('#button_inf').html(
                     ' <a class="btn-floating btn-large waves-effect waves-light red"' +
-                    ' style="position: absolute; right: 2em;bottom: 2em; z-index: 999999 !important;"> ' +
+                    ' style="position: absolute; right: 2em;bottom: 2em; z-index: 999999 !important;" href="#modal2"> ' +
                     '<i class="material-icons">not_interested</i></a>')
             }
             else if (contador % 3 == 2) {
@@ -473,7 +478,11 @@
                 <li class="fondo">
                     <div class="card">
                         <div class="card-panel">
-                            <img src="http://www.lovemarks.com/wp-content/uploads/profile-avatars/default-avatar-tech-guy.png"
+                            <!-- <img src="http://www.lovemarks.com/wp-content/uploads/profile-avatars/default-avatar-tech-guy.png"
+                                 alt=""
+                                 class="circle responsive-img"> -->
+
+                            <img src="https://s29.postimg.org/hx647x9sn/jabba.png"
                                  alt=""
                                  class="circle responsive-img">
                             <a id="fav_button" class="btn-floating btn-large waves-effect waves-light red"><i
@@ -692,10 +701,31 @@
     <main>
         <div class="row" style="margin-bottom: 0">
             <div id="map"></div>
-            <div id="button_inf" onclick="boton_inf()">
+            <div id="button_inf">
                 <a class="btn-floating btn-large waves-effect waves-light green"
-                   style="position: absolute; right: 2em;bottom: 2em; z-index: 999999 !important;"><i
+                   style="position: absolute; right: 2em;bottom: 2em; z-index: 999999 !important;" href="#modal1"><i
                         class="material-icons">done</i></a>
+            </div>
+            <div id="modal1" class="modal">
+                <div class="modal-content">
+                    <h4>¿ Desea hacer check in ?</h4>
+
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat" onclick="boton_inf()">Aceptar</a>
+                    <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                </div>
+            </div>
+
+            <div id="modal2" class="modal">
+                <div class="modal-content">
+                    <h4>¿ Desea hacer check out ?</h4>
+
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat" onclick="boton_inf()">Aceptar</a>
+                    <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                </div>
             </div>
             <script>
                 let marker = null;
