@@ -98,33 +98,10 @@
         $(document).ready(function () {
             $('.tooltipped').tooltip({delay: 50});
         });
+        function menuBlanco() {
+            $('#fondoBlanco').show();
+        }
 
-        $(function () {
-            $(".fab,.backdrop_gray").click(function () {
-                if ($(".backdrop_gray").is(":visible")) {
-                    $(".backdrop_gray").fadeOut(125);
-                    $(".fab.child")
-                        .stop()
-                        .animate({
-                            bottom: $("#masterfab").css("bottom"),
-                            opacity: 0
-                        }, 125, function () {
-                            $(this).hide();
-                        });
-                } else {
-                    $(".backdrop_gray").fadeIn(125);
-                    $(".fab.child").each(function () {
-                        $(this)
-                            .stop()
-                            .show()
-                            .animate({
-                                bottom: (parseInt($("#masterfab").css("bottom")) + parseInt($("#masterfab").outerHeight()) + 70 * $(this).data("subitem") - $(".fab.child").outerHeight()) + "px",
-                                opacity: 1
-                            }, 125);
-                    });
-                }
-            });
-        });
 
     </script>
 
@@ -274,35 +251,11 @@
         </div>
 
     </div>
-    <!--<div class="fixed-action-btn">
-        <a class="btn-floating btn-large waves-effect waves-light red z-depth-4"><i
-                class="material-icons">mode_edit</i></a>
-        <ul>
-            <li><a class="btn-floating tooltipped red" data-position="left" data-delay="50"
-                   data-tooltip="Agregar producto"><i class="material-icons">add</i></a></li>
-            <li><a class="btn-floating tooltipped green" data-position="left" data-delay="50"
-                   data-tooltip="Guardar y salir"><i class="material-icons">done</i></a></li>
 
-        </ul>
-    </div>-->
 
-    <div class="backdrop_gray"></div> <!--
+    <div id="fondoBlanco" class="backdrop_gray hide-on-large-only" hidden></div>
 
-        <div class="fab blue child btn-floating" data-subitem="1">C
-            <span class="btn-floating fab-tip">C</span>
-        </div>
-
-        <div class="fab blue child btn-floating" data-tooltip="I am B" data-subitem="2">B
-            <span class="btn-floating fab-tip">B</span>
-        </div>
-
-        <div class="fab blue child btn-floating" data-tooltip="I am A" data-subitem="3">A
-            <span class="btn-floating fab-tip">A</span>
-        </div>
-
-        <div class="fab" id="masterfab"><span>+</span></div>
-        -->
-    <div class="fixed-action-btn " style="bottom:24px; right:24px;">
+    <div class="fixed-action-btn " style="bottom:24px; right:24px;"  onmouseover="menuBlanco()" onmouseleave="$('#fondoBlanco').hide()">
         <a class="btn-floating btn-large red"><i class="large material-icons">mode_edit</i></a>
         <ul>
             <li>
