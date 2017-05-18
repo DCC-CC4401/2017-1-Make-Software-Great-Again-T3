@@ -1,20 +1,38 @@
-from django.shortcuts import render, render_to_response
-from django.http import HttpResponse
-import datetime
-
-# Create your views here.
-
+from django.contrib import auth
+from django.contrib.auth import authenticate
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.template import RequestContext
-from django.views.decorators.csrf import csrf_protect
+from django.urls import reverse
+
+from app.Forms import LoginForm
 
 
 def index(req):
     return render(req, 'app/index.html', {})
 
 
-def login(req):
-    return render(req, 'app/login.html')
+def login(request):
+    form = LoginForm(request.POST)
+    if form.is_valid() and request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        # print username, password, user
+        if user is not None:
+            if user.is_active:
+                auth.login(request, user)
+                return HttpResponseRedirect('home.html')
+            else:
+                return render(request, 'app/login.html', {
+                    'login_message': 'The user has been removed', 'form': form, })
+        else:
+            return render(request, 'app/login.html', {
+                'login_message': 'Enter the username and password correctly', 'form': form, })
+    else:
+        form = LoginForm()
+    return render(request, 'app/login.html', {
+        'form': form,
+    })
 
 
 def signup(req):
@@ -27,3 +45,16 @@ def seller_profile_page(req):
 
 def products_administration(req):
     return render(req, 'app/gestion-productos.html', {})
+
+
+def home(request):
+    if request.user.is_authenticated():
+        username = request.user.username
+        return render(request, 'app/home.html', {'user': username})
+    else:
+        return HttpResponseRedirect('app/login.html')
+
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect(reverse('index'))

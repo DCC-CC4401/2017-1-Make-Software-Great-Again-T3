@@ -9,15 +9,45 @@
         </div>
         <a href="#!user"><img style="margin-top: 16%;" class="circle"
                               src="../static/img/AvatarPenguin.png"></a>
-        <a href="#!name"><span style="margin-left: 5%;" class="white-text name">Invitado</span></a>
+        <a href="#!name"><span style="margin-left: 5%;" class="white-text name">{{ user }}</span></a>
     </div>
 {% endblock %}
 
 {% block side %}
-    <li><a href="{% url 'index' %}"><i class="material-icons">home</i>Inicio</a></li>
-    <li><a href="{% url 'login' %}"><i class="material-icons">account_circle</i>Iniciar Sesión</a></li>
+    <li><a href="{% url 'home' %}"><i class="material-icons">home</i>Inicio</a></li>
+    <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
     <li>
         <div class="divider"></div>
+    </li>
+    <li><a class="subheader">Activo</a></li>
+    <li>
+        <div class="switch" style="margin-left: 80px;">
+            <label>
+                No<input type="checkbox"><span class="lever"></span>Si
+            </label>
+        </div>
+    </li>
+    <li><a class="subheader">Filtros</a></li>
+    <li>
+        <div class="switch" style="margin-left: 10px;">
+            <label>
+                <input type="checkbox"><span class="lever"></span>Sólo mostrar favoritos
+            </label>
+        </div>
+    </li>
+    <li>
+        <div class="switch" style="margin-left: 10px;">
+            <label>
+                <input type="checkbox"><span class="lever"></span>Snacks
+            </label>
+        </div>
+    </li>
+    <li>
+        <div class="switch" style="margin-left: 10px;">
+            <label>
+                <input type="checkbox"><span class="lever"></span>Almuerzos
+            </label>
+        </div>
     </li>
 {% endblock %}
 {% block content %}
