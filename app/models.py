@@ -2,7 +2,8 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 '''
     User:
@@ -30,9 +31,6 @@ class Vendor(models.Model):
     user = models.OneToOneField(AppUser, on_delete = models.CASCADE)
     ubication = models.CharField(max_length=200)
 
-    class Meta:
-        abstract = True
-
 class AmbulantVendor(Vendor):
     pass
 
@@ -41,9 +39,16 @@ class StaticVendor(Vendor):
 
 class Buyer(models.Model):
     user = models.OneToOneField(AppUser, on_delete = models.CASCADE)
+    #favorites_ambulant = models.ManyToManyField(AmbulantVendor)
+    #favorites_static = models.ManyToManyField(StaticVendor)
     favorites = models.ManyToManyField(Vendor)
 
 class Product(models.Model):
+
+    # Work around for Abstract Class foreign keys.
+    # It may be changed for a Generic foreign key.
+    #ambulant_vendor = models.ForeignKey(AmbulantVendor, on_delete = models.CASCADE)
+    #static_vendor = models.ForeignKey(StaticVendor, on_delete = models.CASCADE)
     vendor = models.ForeignKey(Vendor, on_delete = models.CASCADE)
     name = models.CharField(max_length=50)
     photo = models.ImageField()
@@ -53,5 +58,9 @@ class Product(models.Model):
     price = models.IntegerField()
 
 class Statistics(models.Model):
-    vendor = models.ForeignKey(Vendor, on_delete = models.CASCADE)
-    stat_file = model.FileField()
+    # Work around for Abstract Class foreign keys.
+    # It may be changed for a Generic foreign key.
+#    ambulant_vendor = models.ForeignKey(AmbulantVendor, on_delete = models.CASCADE)
+ #   static_vendor = models.ForeignKey(StaticVendor, on_delete = models.CASCADE)
+    vendor = models.ForeignKey(Vendor, on_delete = models.CASCADE)  
+    stat_file = models.FileField()
