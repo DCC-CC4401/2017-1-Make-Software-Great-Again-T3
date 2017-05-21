@@ -31,8 +31,6 @@ header, main, footer {
 }
 
 .navbar-fixed {
-    margin-left: 10px;
-    margin-right: 20px;
     z-index: 9999;
 }
 
