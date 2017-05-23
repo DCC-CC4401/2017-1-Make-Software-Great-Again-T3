@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from app.models import AppUser
 
 from app.Forms import LoginForm
 
@@ -17,6 +18,7 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
+        # app_user = AppUser.objects.filter(user=user)
         # print username, password, user
         if user is not None:
             if user.is_active:
@@ -50,7 +52,12 @@ def products_administration(req):
 def home(request):
     if request.user.is_authenticated():
         username = request.user.username
-        return render(request, 'app/home.html', {'user': username})
+        app_user = AppUser.objects.filter(user=request.user)
+        # print app_user[0].user_type
+        if app_user == 'C':
+            return render(request, 'app/home.html', {'user': username})
+        else:
+            return render(request, 'app/vendedor-profile-page.html', {'user': username})
     else:
         return HttpResponseRedirect('app/login.html')
 
