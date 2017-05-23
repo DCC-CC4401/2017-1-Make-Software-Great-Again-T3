@@ -53,8 +53,8 @@ def home(request):
     if request.user.is_authenticated():
         username = request.user.username
         app_user = AppUser.objects.filter(user=request.user)
-        # print app_user[0].user_type
-        if app_user == 'C':
+        # print app_user[0].user_type, type(app_user[0].user_type)
+        if app_user[0].user_type == u'C':
             return render(request, 'app/home.html', {'user': username})
         else:
             return render(request, 'app/vendedor-profile-page.html', {'user': username})
