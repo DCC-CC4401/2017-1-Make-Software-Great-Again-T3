@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from app.models import AppUser, StaticVendor, AmbulantVendor
+from app.models import AppUser, StaticVendor, AmbulantVendor, Product
 
 from app.Forms import LoginForm
 
@@ -58,6 +58,21 @@ def home(request):
             return render(request, 'app/home.html', {'user': username})
         elif app_user[0].user_type == u'VF':
             vendor = StaticVendor.objects.filter(user=app_user)[0]
+
+            products = []
+            raw_products = Product.objects.filter(vendor=vendor)
+            for i, p in enumerate(raw_products):
+                tmp = {
+                    'icon': p.icon,
+                    'name': p.name,
+                    'id': 'modal' + str(i),
+                    'image': p.photo,
+                    'category': 1,
+                    'stock': p.stock,
+                    'desc': p.description
+                }
+                products.append(tmp)
+
             data = {
                 'user': username,
                 'name': app_user[0].user.first_name,
@@ -66,7 +81,8 @@ def home(request):
                 'payment': vendor.payment,
                 'fav': vendor.times_favorited,
                 'schedule': vendor.schedule,
-                'type': 'Vendedor Fijo'
+                'type': 'Vendedor Fijo',
+                'products': products
             }
             return render(request, 'app/vendedor-profile-page.html', data)
         else:

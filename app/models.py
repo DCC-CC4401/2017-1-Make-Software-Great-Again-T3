@@ -32,7 +32,8 @@ class Vendor(models.Model):
     # stats
     times_favorited = models.IntegerField()
     user = models.OneToOneField(AppUser, on_delete=models.CASCADE)
-    ubication = models.CharField(max_length=200)
+    lat = models.DecimalField(max_digits=10, decimal_places=2)
+    lng = models.DecimalField(max_digits=10, decimal_places=2)
 
 
 class AmbulantVendor(Vendor):
@@ -56,6 +57,7 @@ class Product(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     photo = models.ImageField()
+    icon = models.ImageField()
     category = models.ManyToManyField(Category)
     description = models.CharField(max_length=200)
     stock = models.IntegerField()
