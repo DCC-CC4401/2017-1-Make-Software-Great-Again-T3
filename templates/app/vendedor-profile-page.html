@@ -96,10 +96,10 @@
 
                 <div class="row show-on-medium-and-down hide-on-med-and-up">
                     <div class="col s4 offset-s2">
-                        <h4 class="card-title grey-text flow-text text-darken-4">Yolanda Martinez</h4>
-                        <p class="medium-small flow-text grey-text">&ensp;Vendedor Fijo</p>
+                        <h4 class="card-title grey-text flow-text text-darken-4">{{ name }} &ensp;{{ last_name }}</h4>
+                        <p class="medium-small flow-text grey-text">{{ type }}</p>
                         <p class="flow-text text-darken-4" style="font-size: 0.88rem;">
-                            &ensp;Horario: <a class="light-green-text">12:30-14:15</a>
+                            Horario: <a class="light-green-text">{{ schedule }}</a>
                         </p>
                         <div class="switch" style="margin-left: 10px;">
                             <label>
@@ -108,19 +108,19 @@
                                 <!--<input type="checkbox"><span class="lever"></span>-->
                                 <h6><i class="material-icons amber-text">grade</i>
                                     <span class=" grey-text flow-text text-darken-4"
-                                          style="font-size:22px; line-height:25px;">42</span>
+                                          style="font-size:22px; line-height:25px;">{{ fav }}</span>
                                 </h6>
                             </label>
                         </div>
                     </div>
                     <div class="col s3 m2 l12 offset-s1">
                         <p class="flow-text text-darken-4">Estado</p>
-                        <p class="medium-small flow-text light-green-text">Disponible</p>
+                        <p class="medium-small flow-text light-green-text">{{ state }}</p>
                     </div>
 
                     <div class="col s3 m2 l12 offset-s1"> <!--offset-s2-->
                         <p class=" grey-text flow-text text-darken-4" style="font-size: 1.3rem;">Formas de pago</p>
-                        <p class="medium-small flow-text grey-text">Efectivo</p>
+                        <p class="medium-small flow-text grey-text">{{ payment }}</p>
                     </div>
 
                     <div class="col s4 offset-s8 right-align"> <!--offset-s4-->

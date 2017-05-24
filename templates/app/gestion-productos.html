@@ -1,4 +1,33 @@
 {% extends 'app/base.html' %}
+{% block profile_info %}
+    <div class="userView">
+        <i class="material-icons right grey-text text-lighten-2"
+           style="position: absolute; bottom: -0.5em; right: 0.5em; padding: 0 0 !important;">settings</i>
+        <div class="background" style="height:175px;">
+            <img src="../static/img/background4.png">
+        </div>
+        <a href="#!user"><img style="margin-top: 16%;" class="circle"
+                              src="../static/img/AvatarPenguin.png"></a>
+        <a href="#!name"><span style="margin-left: 5%;" class="white-text name">{{ user }}</span></a>
+    </div>
+{% endblock %}
+
+{% block side %}
+    <li><a href="{% url 'home' %}"><i class="material-icons">home</i>Inicio</a></li>
+    <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
+    <li>
+        <div class="divider"></div>
+    </li>
+    <li><a class="subheader">Activo</a></li>
+    <li>
+        <div class="switch" style="margin-left: 80px;">
+            <label>
+                No<input type="checkbox"><span class="lever"></span>Si
+            </label>
+        </div>
+    </li>
+
+{% endblock %}
 {% block content %}
 
     <div class="section"></div>
@@ -30,7 +59,7 @@
                     <div class='input-field col s12 m12'>
                         &ensp;Precio del producto:
                         <div class="input-field inline">
-                            <input placeholder="1300" class='validate' type='text' name='precio' id='precio'/>
+                            <input placeholder="1300" class='validate' type='number' name='precio' id='precio'/>
                             <label style="text-align: center" for='precio'></label>
                         </div>
                     </div>
@@ -39,27 +68,33 @@
                     <div class='input-field col s12 m12'>
                         &ensp;Stock del producto:
                         <div class="input-field inline">
-                            <input placeholder="42" class='validate' type='text' name='stock' id='stock'/>
+                            <input placeholder="42" class='validate' type='number' name='stock' id='stock'/>
                             <label style="text-align: center" for='stock'></label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <form class="col s12">
+                    <div class="col s12">
                         <div class="row">
                             <div class="input-field col s12 m12">
-                                <i class="material-icons prefix">&emsp;mode_edit</i>
+
                                 <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
-                                <label for="icon_prefix2">&emsp;Descripción</label>
+                                <label for="icon_prefix2">
+                                    <div class="row">
+                                        <div class="col s6"><i class="material-icons prefix col s3">mode_edit</i></div>
+                                        <div class="col s6">Descripción</div>
+                                    </div>
+
+                                </label>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
-                <div>
+                <div class="section">
                     Selecciona una imagen previa:
                 </div>
 
-                <div class="col s12 l6">
+                <div class="row ">
                     <input class="with-gap" name="group1" type="radio" id="test1"/>
                     <label for="test1"><img style="max-width: 50px;" src="../static/img/bread.png"></label>
                     <input class="with-gap" name="group2" type="radio" id="test2"/>
@@ -71,7 +106,7 @@
                     <input class="with-gap" name="group2" type="radio" id="test5"/>
                     <label for="test5"><img style="max-width: 50px;" src="../static/img/chicken2.png"></label>
                 </div>
-                <div class="col s12 l6">
+                <div class="row">
                     <input class="with-gap" name="group1" type="radio" id="test6"/>
                     <label for="test6"><img style="max-width: 50px;" src="../static/img/chocolate.png"></label>
                     <input class="with-gap" name="group2" type="radio" id="test7"/>
@@ -83,7 +118,7 @@
                     <input class="with-gap" name="group2" type="radio" id="test10"/>
                     <label for="test10"><img style="max-width: 50px;" src="../static/img/jelly.png"></label>
                 </div>
-                <div class="col s12 l6">
+                <div class="row ">
                     <input class="with-gap" name="group1" type="radio" id="test11"/>
                     <label for="test11"><img style="max-width: 50px;" src="../static/img/fish.png"></label>
                     <input class="with-gap" name="group2" type="radio" id="test12"/>
@@ -95,7 +130,7 @@
                     <input class="with-gap" name="group2" type="radio" id="test15"/>
                     <label for="test15"><img style="max-width: 50px;" src="../static/img/juice.png"></label>
                 </div>
-                <div class="col s12 l6">
+                <div class="row ">
                     <input class="with-gap" name="group1" type="radio" id="test16"/>
                     <label for="test16"><img style="max-width: 50px;" src="../static/img/lettuce.png"></label>
                     <input class="with-gap" name="group2" type="radio" id="test17"/>
@@ -107,30 +142,24 @@
 
                 </div>
 
-            </form>
-
-            <div id="file-upload" class="section">
-                <!--Default version-->
-                <div class="row section">
-                    <div class="col s8 m4 l3">
-                        <p>&emsp;&emsp;Imagen del</p>
-                        <p>&emsp;&emsp;&ensp;producto:</p>
+                <div id="file-upload" class="row">
+                    <!--Default version-->
+                    <div class="col m3">
+                        <p>Imagen del</p>
+                        <p>producto:</p>
                     </div>
-                    <div class="col s8 m8 l9">
+                    <div class="col m9">
                         <div class="dropify-wrapper touch-fallback">
                             <div class="dropify-message">
-                                <div class="row hide-on-med-and-down">
-                                    <div class="col s9 m7 l7">
-                                        <i class="material-icons center-align">mdi_file_cloud_upload</i>
+                                <div class="row">
+                                    <div class="col s4"></div>
+                                    <div class="col s4">
+                                        <i class="material-icons tiny">cloud_upload</i>
                                     </div>
+                                    <div class="col s4"></div>
                                 </div>
-                                <div class="row show-on-medium-and-down hide-on-med-and-up">
-                                    <div class="col s6">
-                                        <i class="material-icons tiny show-on-medium-and-down center-align">mdi_file_cloud_upload</i>
-                                    </div>
-                                </div>
-                                <p>Arrastre y suelte un archivo aquí o haga click</p>
-                                <p class="dropify-error">Sorry, this file is too large</p>
+                                <p class="center-align">Arrastre y suelte un archivo aquí o haga click</p>
+                                <p class="dropify-error center-align">Sorry, this file is too large</p>
                             </div>
                             <input type="file" id="input-file-now" class="dropify" data-default-file="">
                             <button type="button" class="dropify-clear">Remove</button>
@@ -146,14 +175,14 @@
                             </div>
                         </div>
                     </div>
+
+
                 </div>
                 <div class='row'>
                     <a class='col l5 offset-l4 btn btn-large waves-effect button teal'
-                       href="{% url 'seller_profile_page' %}">&emsp; &emsp;Agregar<i
+                       href="{% url 'seller_profile_page' %}">Agregar<i
                             class="material-icons right">send</i></a>
                 </div>
-            </div>
-
             </form>
         </div>
     </div>
