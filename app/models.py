@@ -52,6 +52,9 @@ class Buyer(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.name
+
 
 class Product(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
@@ -62,6 +65,9 @@ class Product(models.Model):
     description = models.CharField(max_length=200)
     stock = models.IntegerField()
     price = models.IntegerField()
+
+    #def __str__(self):
+    #    ''.join(map(lambda x: str(x), self.category))
 
 
 class Statistics(models.Model):

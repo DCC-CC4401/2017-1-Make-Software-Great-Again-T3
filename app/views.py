@@ -62,6 +62,7 @@ def home(request):
             products = []
             raw_products = Product.objects.filter(vendor=vendor)
             for i, p in enumerate(raw_products):
+                print p
                 tmp = {
                     'icon': p.icon,
                     'name': p.name,
@@ -69,7 +70,8 @@ def home(request):
                     'image': p.photo,
                     'category': 1,
                     'stock': p.stock,
-                    'desc': p.description
+                    'desc': p.description,
+                    'price': p.price
                 }
                 products.append(tmp)
 
