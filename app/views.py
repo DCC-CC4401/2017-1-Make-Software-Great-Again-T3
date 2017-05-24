@@ -62,13 +62,12 @@ def home(request):
             products = []
             raw_products = Product.objects.filter(vendor=vendor)
             for i, p in enumerate(raw_products):
-                print p
                 tmp = {
                     'icon': p.icon,
                     'name': p.name,
                     'id': 'modal' + str(i),
                     'image': p.photo,
-                    'category': 1,
+                    'category': p.category_str(),
                     'stock': p.stock,
                     'desc': p.description,
                     'price': p.price

@@ -41,8 +41,9 @@ def add_product(data):
     p = Product(vendor=user, name=data['name'], photo=data['photo'], icon=data['icon'],
                 description=data['des'], stock=data['stock'], price=data['price'])
     p.save()
-    cat = [Category.objects.get(name=i) for i in data['category']]
-    p.category.add(*cat)
+    for i in data['category']:
+        p.category.add(Category.objects.get(name=i))
+    p.save()
 
 
 def add_category(cat):
