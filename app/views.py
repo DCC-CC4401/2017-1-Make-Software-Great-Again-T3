@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from app.models import AppUser
+from app.models import AppUser, StaticVendor, AmbulantVendor
 
 from app.Forms import LoginForm
 
@@ -56,8 +56,32 @@ def home(request):
         # print app_user[0].user_type, type(app_user[0].user_type)
         if app_user[0].user_type == u'C':
             return render(request, 'app/home.html', {'user': username})
+        elif app_user[0].user_type == u'VF':
+            vendor = StaticVendor.objects.filter(user=app_user)[0]
+            data = {
+                'user': username,
+                'name': app_user[0].user.first_name,
+                'last_name': app_user[0].user.last_name,
+                'state': 'Activo' if vendor.state == 'A' else 'Inactivo',
+                'payment': vendor.payment,
+                'fav': vendor.times_favorited,
+                'schedule': vendor.schedule,
+                'type': 'Vendedor Fijo'
+            }
+            return render(request, 'app/vendedor-profile-page.html', data)
         else:
-            return render(request, 'app/vendedor-profile-page.html', {'user': username})
+            vendor = AmbulantVendor.objects.filter(user=app_user)[0]
+            data = {
+                'user': username,
+                'name': app_user[0].user.first_name,
+                'last_name': app_user[0].user.last_name,
+                'state': 'Activo' if vendor.state == 'A' else 'Inactivo',
+                'payment': vendor.payment,
+                'fav': vendor.times_favorited,
+                'schedule': "",
+                'type': 'Vendedor Ambulante'
+            }
+            return render(request, 'app/vendedor-profile-page.html', data)
     else:
         return HttpResponseRedirect('app/login.html')
 

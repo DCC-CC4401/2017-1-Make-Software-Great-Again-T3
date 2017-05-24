@@ -27,7 +27,8 @@ class AppUser(models.Model):
 class Vendor(models.Model):
     payment = models.CharField(max_length=100)
     has_stock = models.BooleanField()
-    state = (('A', 'Active'), ('I', 'Inactive'))
+    state_dicc = (('A', 'Active'), ('I', 'Inactive'))
+    state = models.CharField(max_length=1, choices=state_dicc)
     # stats
     times_favorited = models.IntegerField()
     user = models.OneToOneField(AppUser, on_delete=models.CASCADE)
