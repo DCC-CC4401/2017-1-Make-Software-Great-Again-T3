@@ -1,15 +1,15 @@
 {% extends 'app/base.html' %}
-
+{% load static %}
 {% block profile_info %}
     <div class="userView">
         <i class="material-icons right grey-text text-lighten-2"
            style="position: absolute; bottom: -0.5em; right: 0.5em; padding: 0 0 !important;">settings</i>
         <div class="background" style="height:175px;">
-            <img src="../static/img/background4.png">
+            <img src="{% static 'img/background4.png' %}">
         </div>
-        <a href="#!user"><img style="margin-top: 16%;" class="circle"
-                              src="../static/img/AvatarPenguin.png"></a>
-        <a href="#!name"><span style="margin-left: 5%;" class="white-text name">Invitado</span></a>
+        <a href="#"><img style="margin-top: 16%;" class="circle"
+                              src="{% static 'img/AvatarPenguin.png' %}"></a>
+        <a href="#"><span style="margin-left: 5%;" class="white-text name">Invitado</span></a>
     </div>
 {% endblock %}
 
@@ -29,7 +29,7 @@
 
         <div class="container">
             <div class="z-depth-1 grey lighten-4 row"
-                 style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+                 style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0 48px; border: 1px solid #EEE;">
 
                 <form class="col s12" method="post" action="{% url 'login' %}">
                     {% csrf_token %}
@@ -46,7 +46,7 @@
                             <label style="text-align: center;" for='password'>Ingresa tu contraseña</label>
                         </div>
                         <label style='float: right;'>
-                            <a class='red-text text-accent-2' href='#!'><b>¿Olvidaste tu contraseña?</b></a>
+                            <a class='red-text text-accent-2' href='#'><b>¿Olvidaste tu contraseña?</b></a>
                         </label>
                     </div>
                     <div class='row'>
@@ -73,7 +73,4 @@
         <div class="section"></div>
         <div class="section"></div>
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-    <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 {% endblock %}

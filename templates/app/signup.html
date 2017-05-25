@@ -1,14 +1,15 @@
 {% extends 'app/base.html' %}
+{% load static %}
 {% block profile_info %}
     <div class="userView">
         <i class="material-icons right grey-text text-lighten-2"
            style="position: absolute; bottom: -0.5em; right: 0.5em; padding: 0 0 !important;">settings</i>
         <div class="background" style="height:175px;">
-            <img src="../static/img/background4.png">
+            <img src="{% static 'img/background4.png' %}">
         </div>
-        <a href="#!user"><img style="margin-top: 16%;" class="circle"
-                              src="../static/img/AvatarPenguin.png"></a>
-        <a href="#!name"><span style="margin-left: 5%;" class="white-text name">Invitado</span></a>
+        <a href="#"><img style="margin-top: 16%;" class="circle"
+                              src="{% static 'img/AvatarPenguin.png' %}"></a>
+        <a href="#"><span style="margin-left: 5%;" class="white-text name">Invitado</span></a>
     </div>
 {% endblock %}
 
@@ -29,7 +30,7 @@
 
         $(function () {
             $('#account_type').on('change', function () {
-                let selected = $('#account_type').find('option:selected').val()
+                let selected = $('#account_type').find('option:selected').val();
                 if (selected == 1) {
                     $('#hours').slideDown();
                     $('#vendor_info').slideDown();
@@ -140,16 +141,16 @@
                     <div class="col s12 l6">
                         <input class="with-gap" name="group1" type="radio" id="test1"/>
                         <label for="test1"><img style="max-width: 50px;"
-                                                src="../static/img/AvatarVendedor1.png"></label>
+                                                src="{% static 'img/AvatarVendedor1.png' %}"></label>
                         <input class="with-gap" name="group1" type="radio" id="test2"/>
                         <label for="test2"><img style="max-width: 50px;"
-                                                src="../static/img/AvatarVendedor2.png"></label>
+                                                src="{% static 'img/AvatarVendedor2.png' %}g"></label>
                         <input class="with-gap" name="group1" type="radio" id="test3"/>
                         <label for="test3"><img style="max-width: 50px;"
-                                                src="../static/img/AvatarVendedor3.png"></label>
+                                                src="{% static 'img/AvatarVendedor3.png' %}"></label>
                         <input class="with-gap" name="group1" type="radio" id="test4"/>
                         <label for="test4"><img style="max-width: 50px;"
-                                                src="../static/img/AvatarVendedor4.png"></label>
+                                                src="{% static 'img/AvatarVendedor4.png' %}"></label>
                     </div>
                 </div>
 

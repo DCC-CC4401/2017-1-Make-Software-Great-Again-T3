@@ -109,6 +109,7 @@ def home(request):
 
             data = {
                 'user': username,
+                'image': app_user[0].photo,
                 'name': app_user[0].user.first_name,
                 'last_name': app_user[0].user.last_name,
                 'state': 'Activo' if vendor.state == 'A' else 'Inactivo',
@@ -133,18 +134,18 @@ def edit_account(request):
         form = EditVendorForm(request.POST, request.FILES)
         user = User.objects.get(username=request.user.username)
         app_user = AppUser.objects.get(user=user)
+
         if form.is_valid() and request.method == 'POST':
             user.first_name = request.POST['name']
             user.last_name = request.POST['last_name']
-            if request.POST['image'] != u'':
-                # print request.POST['image'], type(request.POST['image'])
-                app_user.photo = u'../static/img/' + request.POST['image']
+            if request.FILES is not None:
+                app_user.photo = form.cleaned_data['photo']
                 app_user.save()
             user.save()
             return HttpResponseRedirect('home.html')
         else:
             form = EditVendorForm(initial={'name': request.user.first_name, 'last_name': request.user.last_name})
-        data = {'form': form, 'image': app_user.photo}
+        data = {'form': form, 'photo': app_user.photo}
         return render(request, 'app/edit_account.html', data)
     else:
         return HttpResponseRedirect(reverse('index'))

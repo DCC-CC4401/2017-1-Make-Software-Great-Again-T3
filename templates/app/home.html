@@ -1,15 +1,16 @@
 {% extends 'app/base.html' %}
+{% load static %}
 
 {% block profile_info %}
     <div class="userView">
         <i class="material-icons right grey-text text-lighten-2"
            style="position: absolute; bottom: -0.5em; right: 0.5em; padding: 0 0 !important;">settings</i>
         <div class="background" style="height:175px;">
-            <img src="../static/img/background4.png">
+            <img src="{% static "img/background4.png" %}">
         </div>
-        <a href="#!user"><img style="margin-top: 16%;" class="circle"
-                              src="../static/img/AvatarPenguin.png"></a>
-        <a href="#!name"><span style="margin-left: 5%;" class="white-text name">{{ user }}</span></a>
+        <a href="#"><img style="margin-top: 16%;" class="circle"
+                              src="{% static 'img/AvatarPenguin.png' %}"></a>
+        <a href="#"><span style="margin-left: 5%;" class="white-text name">{{ user }}</span></a>
     </div>
 {% endblock %}
 
@@ -57,15 +58,15 @@
 
     <script>
         function initMap() {
-            var infoWindow;
-            var beau850 = {lat: -33.457785, lng: -70.663808};
-            var map = new google.maps.Map(document.getElementById('map'), {
+            let infoWindow;
+            let beau850 = {lat: -33.457785, lng: -70.663808};
+            let map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 19,
                 center: beau850
             });
             infoWindow = new google.maps.InfoWindow;
 
-            var info = '<div id="content">' +
+            let info = '<div id="content">' +
                 '<div id="siteNotice">' +
                 '</div>' +
                 '<div><p style="float: left;"><img src="../static/img/AvatarVendedor4.png" width="50" hspace="10"></p>' +
@@ -82,34 +83,34 @@
                 '</div>' +
                 '</div>';
 
-            var infoVendedor = new google.maps.InfoWindow({
+            let infoVendedor = new google.maps.InfoWindow({
                 content: info,
                 maxWidth: 400
             });
 
 
-            var marker = new google.maps.Marker({
+            let marker = new google.maps.Marker({
                 position: beau850,
                 map: map
             });
 
-            var marker2 = new google.maps.Marker({
+            let marker2 = new google.maps.Marker({
                 position: {lat: -33.457885, lng: -70.663808},
                 map: map
             });
 
-            var marker3 = new google.maps.Marker({
+            let marker3 = new google.maps.Marker({
                 position: {lat: -33.458085, lng: -70.663808},
                 map: map,
                 icon: '../static/img/star.png'
             });
 
-            var marker4 = new google.maps.Marker({
+            let marker4 = new google.maps.Marker({
                 position: {lat: -33.458158, lng: -70.663678},
                 map: map
             });
 
-            var marker5 = new google.maps.Marker({
+            let marker5 = new google.maps.Marker({
                 position: {lat: -33.457658, lng: -70.663778},
                 map: map
             });
@@ -123,7 +124,7 @@
                     var pos = {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
-                    }
+                    };
                     map.setCenter(pos);
                 }, function () {
                     handleLocationError(true, infoWindow, map.getCenter());

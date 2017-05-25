@@ -1,14 +1,16 @@
 {% extends 'app/base.html' %}
+{% load static %}
+
 {% block profile_info %}
     <div class="userView">
         <i class="material-icons right grey-text text-lighten-2"
            style="position: absolute; bottom: -0.5em; right: 0.5em; padding: 0 0 !important;">settings</i>
         <div class="background" style="height:175px;">
-            <img src="../static/img/background4.png">
+            <img src="{% static 'img/background4.png'%}">
         </div>
-        <a href="#!user"><img style="margin-top: 16%;" class="circle"
-                              src="{{ image }}" height="42" width="42"></a>
-        <a href="#!name"><span style="margin-left: 5%;" class="white-text name">{{ user }}</span></a>
+        <a href="#"><img style="margin-top: 16%;" class="circle"
+                              src="/media/{{ image }}"  height="42" width="42"></a>
+        <a href="#"><span style="margin-left: 5%;" class="white-text name">{{ user }}</span></a>
     </div>
 {% endblock %}
 
@@ -42,17 +44,17 @@
         <div class="col s12 m8">
             <div id="profile-page-header" class="card">
                 <div class="card-image waves-effect waves-block waves-light">
-                    <img class="activator" src="../static/img/food-background3.png" alt="user background">
+                    <img class="activator" src="{% static 'img/food-background3.png' %}" alt="user background">
                 </div>
                 <div class="row hide-on-small-and-down">
                     <a class="card-profile-image-large">
-                        <img style="margin-top: 20%;" src="{{ image }}" alt="profile image"
+                        <img style="margin-top: 20%;" src="/media/{{ image }}" alt="profile image"
                              class="circle z-depth-2 responsive-img activator">
                     </a>
                 </div>
                 <div class="row show-on-small hide-on-med-and-up">
                     <a class="card-profile-image-small">
-                        <img src="{{ image }}" alt="profile image"
+                        <img src="/media/{{ image }}" alt="profile image"
                              class="circle z-depth-2 responsive-img activator">
                     </a>
                 </div>
@@ -156,7 +158,7 @@
                                                  src="{{ product.image }}">
                                         </div>
                                         <div class="modal-footer">
-                                            <a href="#!"
+                                            <a href="#"
                                                class="modal-action modal-close waves-effect waves-green btn-flat"><i
                                                     class="large material-icons">close</i></a>
                                         </div>

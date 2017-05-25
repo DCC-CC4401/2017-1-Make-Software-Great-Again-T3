@@ -15,7 +15,9 @@ class LoginForm(forms.Form):
 class EditVendorForm(forms.Form):
     name = forms.CharField(max_length=255, required=False)
     last_name = forms.CharField(max_length=255, required=False)
-    image = forms.ImageField(required=False, widget=forms.FileInput(attrs= {'class': 'dropify'}))
+    photo = forms.ImageField(required=False, widget=forms.FileInput(attrs= {'class': 'dropify'}))
 
     class Meta:
-        model = Vendor
+        model = AppUser
+
+
