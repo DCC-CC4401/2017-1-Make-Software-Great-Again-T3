@@ -65,7 +65,7 @@ def test():
         'password': '1234',
         'name': 'Juan',
         'last_name': 'Perex',
-        'photo': None,
+        'photo': '../static/img/AvatarVendedor6.png',
         'type': 'VF',
         'payment': 'efectivo, tarjeta',
         'stack': True,

@@ -10,6 +10,6 @@ urlpatterns = [
     url(r'^home', views.home, name='home'),
     url(r'^signup$', views.signup, name='signup'),
     url(r'^logout$', views.logout, name='logout'),
-    url(r'^vendedor$', views.seller_profile_page, name='seller_profile_page'),
     url(r'^productos$', views.products_administration, name='products_administration'),
+    url(r'^edit_account$', views.edit_account, name='edit_account')
 ]

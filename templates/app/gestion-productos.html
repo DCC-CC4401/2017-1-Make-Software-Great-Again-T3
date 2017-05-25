@@ -7,7 +7,7 @@
             <img src="../static/img/background4.png">
         </div>
         <a href="#!user"><img style="margin-top: 16%;" class="circle"
-                              src="../static/img/AvatarPenguin.png"></a>
+                              src="{{ image }}" height="42" width="42"></a>
         <a href="#!name"><span style="margin-left: 5%;" class="white-text name">{{ user }}</span></a>
     </div>
 {% endblock %}
@@ -180,7 +180,7 @@
                 </div>
                 <div class='row'>
                     <a class='col l5 offset-l4 btn btn-large waves-effect button teal'
-                       href="{% url 'seller_profile_page' %}">Agregar<i
+                       href="{% url 'home' %}">Agregar<i
                             class="material-icons right">send</i></a>
                 </div>
             </form>

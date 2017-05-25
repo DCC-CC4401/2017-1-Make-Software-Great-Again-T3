@@ -18,7 +18,7 @@ from django.contrib.auth.models import User
 class AppUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
-    photo = models.ImageField(null=True)
+    photo = models.ImageField(upload_to='../static/img')
     user_type_dicc = (('C', 'Comprador'), ('VF', 'Vendedor Fijo'), ('VA', 'Vendedor Ambulante'))
     user_type = models.CharField(max_length=2, choices=user_type_dicc)
 

@@ -7,7 +7,7 @@
             <img src="../static/img/background4.png">
         </div>
         <a href="#!user"><img style="margin-top: 16%;" class="circle"
-                              src="../static/img/AvatarPenguin.png"></a>
+                              src="{{ image }}" height="42" width="42"></a>
         <a href="#!name"><span style="margin-left: 5%;" class="white-text name">{{ user }}</span></a>
     </div>
 {% endblock %}
@@ -46,13 +46,13 @@
                 </div>
                 <div class="row hide-on-small-and-down">
                     <a class="card-profile-image-large">
-                        <img style="margin-top: 20%;" src="../static/img/AvatarVendedor6.png" alt="profile image"
+                        <img style="margin-top: 20%;" src="{{ image }}" alt="profile image"
                              class="circle z-depth-2 responsive-img activator">
                     </a>
                 </div>
                 <div class="row show-on-small hide-on-med-and-up">
                     <a class="card-profile-image-small">
-                        <img src="../static/img/AvatarVendedor6.png" alt="profile image"
+                        <img src="{{ image }}" alt="profile image"
                              class="circle z-depth-2 responsive-img activator">
                     </a>
                 </div>
@@ -88,7 +88,7 @@
                     </div>
 
                     <div class="col s3 l2 hide-on-med-and-down right-align">
-                        <a class="btn-floating activator waves-effect waves-light darken-2">
+                        <a href="{% url 'edit_account' %}" class="btn-floating activator waves-effect waves-light darken-2">
                             <i class="material-icons">mode_edit</i>
                         </a>
                     </div>
@@ -124,7 +124,7 @@
                     </div>
 
                     <div class="col s4 offset-s8 right-align"> <!--offset-s4-->
-                        <a class="btn-floating activator waves-effect waves-light darken-2">
+                        <a href="{% url 'edit_account' %}" class="btn-floating activator waves-effect waves-light darken-2">
                             <i class="material-icons">mode_edit</i>
                         </a>
                     </div>
