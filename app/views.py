@@ -4,10 +4,9 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from app.models import AppUser, StaticVendor, AmbulantVendor, Product
-from django.views.static import serve
+from app.models import AppUser, StaticVendor, AmbulantVendor, Product, Vendor
 
-from app.Forms import LoginForm, EditVendorForm
+from app.Forms import LoginForm, EditVendorForm, EditProductForm
 
 
 def index(req):
@@ -73,7 +72,8 @@ def home(request):
                     'category': p.category_str(),
                     'stock': p.stock,
                     'desc': p.description,
-                    'price': p.price
+                    'price': p.price,
+                    'pid': p.id
                 }
                 products.append(tmp)
 
@@ -103,7 +103,8 @@ def home(request):
                     'category': p.category_str(),
                     'stock': p.stock,
                     'desc': p.description,
-                    'price': p.price
+                    'price': p.price,
+                    'pid': p.id
                 }
                 products.append(tmp)
 
@@ -121,7 +122,7 @@ def home(request):
             }
             return render(request, 'app/vendedor-profile-page.html', data)
     else:
-        return HttpResponseRedirect('app/login.html')
+        return HttpResponseRedirect('login.html')
 
 
 def logout(request):
@@ -138,14 +139,50 @@ def edit_account(request):
         if form.is_valid() and request.method == 'POST':
             user.first_name = request.POST['name']
             user.last_name = request.POST['last_name']
-            if request.FILES is not None:
+            if form.cleaned_data['photo'] is not None:
                 app_user.photo = form.cleaned_data['photo']
                 app_user.save()
             user.save()
-            return HttpResponseRedirect('home.html')
+            return HttpResponseRedirect('home')
         else:
             form = EditVendorForm(initial={'name': request.user.first_name, 'last_name': request.user.last_name})
         data = {'form': form, 'photo': app_user.photo}
         return render(request, 'app/edit_account.html', data)
+    else:
+        return HttpResponseRedirect(reverse('index'))
+
+
+def stock(request):
+    return None
+
+
+def edit_products(request, pid):
+    if request.user.is_authenticated():
+        user = User.objects.get(username=request.user.username)
+        app_user = AppUser.objects.get(user=user)
+
+        if app_user.user_type != 'C':
+            vendor = Vendor.objects.get(user=app_user)
+            products = Product.objects.filter(vendor=vendor)
+            try:
+                product = products.get(id=pid)
+                form = EditProductForm(request.POST, request.FILES)
+                if request.method == 'POST' and form.is_valid():
+                    product.name = form.cleaned_data['name']
+                    product.price = form.cleaned_data['price']
+                    product.stock = form.cleaned_data['stock']
+                    product.description = form.cleaned_data['des']
+                    if form.cleaned_data['photo'] is not None:
+                        product.photo = form.cleaned_data['photo']
+                    product.save()
+                    return HttpResponseRedirect(reverse('home'))
+                else:
+                    form = EditProductForm(initial={'name': product.name, 'price': product.price,
+                                                    'stock': product.stock, 'des': product.description})
+                    data = {'form': form, 'image': product.photo, 'photo': app_user.photo}
+                    return render(request, 'app/edit_product.html', data)
+            except:
+                return HttpResponseRedirect(reverse('home'))
+
     else:
         return HttpResponseRedirect(reverse('index'))

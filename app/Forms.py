@@ -1,6 +1,6 @@
 from django import forms
 
-from app.models import AppUser, Vendor
+from app.models import AppUser, Vendor, Product
 
 
 class LoginForm(forms.Form):
@@ -15,9 +15,18 @@ class LoginForm(forms.Form):
 class EditVendorForm(forms.Form):
     name = forms.CharField(max_length=255, required=False)
     last_name = forms.CharField(max_length=255, required=False)
-    photo = forms.ImageField(required=False, widget=forms.FileInput(attrs= {'class': 'dropify'}))
+    photo = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': 'dropify'}))
 
     class Meta:
         model = AppUser
 
 
+class EditProductForm(forms.Form):
+    name = forms.CharField(max_length=255, required=False)
+    price = forms.IntegerField(min_value=0, required=False)
+    stock = forms.IntegerField(min_value=0, required=False)
+    des = forms.CharField(required=False, widget=forms.Textarea(attrs={'class': 'materialize-textarea'}))
+    photo = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': 'dropify'}))
+
+    class Meta:
+        model = Product

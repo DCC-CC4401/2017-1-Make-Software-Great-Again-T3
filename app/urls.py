@@ -11,5 +11,8 @@ urlpatterns = [
     url(r'^signup$', views.signup, name='signup'),
     url(r'^logout$', views.logout, name='logout'),
     url(r'^productos$', views.products_administration, name='products_administration'),
-    url(r'^edit_account$', views.edit_account, name='edit_account')
+    url(r'^edit_account$', views.edit_account, name='edit_account'),
+    url(r'^edit_product/(?P<pid>[0-9]+)/$', views.edit_products, name='edit_products'),
+    url(r'^stock$', views.stock, name='stock')
+
 ]

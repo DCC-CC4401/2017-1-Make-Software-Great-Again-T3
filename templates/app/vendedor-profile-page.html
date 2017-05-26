@@ -6,10 +6,10 @@
         <i class="material-icons right grey-text text-lighten-2"
            style="position: absolute; bottom: -0.5em; right: 0.5em; padding: 0 0 !important;">settings</i>
         <div class="background" style="height:175px;">
-            <img src="{% static 'img/background4.png'%}">
+            <img src="{% static 'img/background4.png' %}">
         </div>
         <a href="#"><img style="margin-top: 16%;" class="circle"
-                              src="/media/{{ image }}"  height="42" width="42"></a>
+                         src="/media/{{ image }}" height="42" width="42"></a>
         <a href="#"><span style="margin-left: 5%;" class="white-text name">{{ user }}</span></a>
     </div>
 {% endblock %}
@@ -90,7 +90,8 @@
                     </div>
 
                     <div class="col s3 l2 hide-on-med-and-down right-align">
-                        <a href="{% url 'edit_account' %}" class="btn-floating activator waves-effect waves-light darken-2">
+                        <a href="{% url 'edit_account' %}"
+                           class="btn-floating activator waves-effect waves-light darken-2">
                             <i class="material-icons">mode_edit</i>
                         </a>
                     </div>
@@ -126,7 +127,8 @@
                     </div>
 
                     <div class="col s4 offset-s8 right-align"> <!--offset-s4-->
-                        <a href="{% url 'edit_account' %}" class="btn-floating activator waves-effect waves-light darken-2">
+                        <a href="{% url 'edit_account' %}"
+                           class="btn-floating activator waves-effect waves-light darken-2">
                             <i class="material-icons">mode_edit</i>
                         </a>
                     </div>
@@ -172,9 +174,16 @@
                                         <li>Categoria: {{ product.category }}</li>
                                         <li>Stock: {{ product.stock }}</li>
                                         <li>Descripción: {{ product.desc }}
-                                            <p class="right-align"><a class="waves-effect waves-light"
-                                                                      href="#{{ product.id }}">Ver imagen</a></p>
+                                            <div class="row">
+                                                <p class="left-align col m6"><a class="waves-effect waves-light"
+                                                                         href="{% url 'edit_products' pid=product.pid %}">Editar</a>
+                                                <p class="right-align col m6"><a class="waves-effect waves-light"
+                                                                          href="{{ product.id }}">Ver imagen</a></p>
+
+                                                </p>
+                                            </div>
                                         </li>
+
                                     </ul>
                                 </div>
                             </div>

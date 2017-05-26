@@ -8,7 +8,7 @@
             <img src="{% static 'img/background4.png' %}">
         </div>
         <a href="#"><img style="margin-top: 16%;" class="circle"
-                              src="/media/{{ photo }}"  height="42" width="42"></a>
+                         src="/media/{{ photo }}" height="42" width="42"></a>
         <a href="#"><span style="margin-left: 5%;" class="white-text name">{{ user }}</span></a>
     </div>
 {% endblock %}
@@ -33,7 +33,7 @@
 
     <div class="section"></div>
 
-    <h4 class="teal-text" style="text-align: center;">Editar Perfil</h4>
+    <h4 class="teal-text" style="text-align: center;">Editar Item</h4>
     <div class="section"></div>
 
     <div class="container">
@@ -42,36 +42,69 @@
 
             <form class="col s12 m12" method="post" enctype = multipart/form-data>{% csrf_token %}
                 <div class='row'>
-                    <div class='col s12 m12'>
+                    <div class='col s16 m12'>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col m6">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="{{ image }}" style="width: 100%; height: auto">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col m6">
+                        <div class='row'>
+                            <div class='input-field col s12 m12'>
+                                &ensp;Nombre del producto:
+                                <div class="input-field inline ">
+                                    {{ form.name }}
+                                    <label style="text-align: center" for='name'></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='row'>
+                            <div class='input-field col s12 m12'>
+                                &ensp;Precio del producto:
+                                <div class="input-field inline">
+                                    {{ form.price }}
+                                    <label style="text-align: center" for='price'></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='input-field col s12 m12'>
+                                &ensp;Stock del producto:
+                                <div class="input-field inline">
+                                    {{ form.stock }}
+                                    <label style="text-align: center" for='stock'></label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class='row'>
-                    <div class='input-field col s12 m12'>
-                        &ensp;Nombre :
-                        <div class="input-field inline ">
-                            {{ form.name }}
-                            <label style="text-align: center" for='name'></label>
-                        </div>
-                    </div>
-                </div>
-                 <div class='row'>
-                    <div class='input-field col s12 m12'>
-                        &ensp;Apellido :
-                        <div class="input-field inline ">
-                            {{ form.last_name }}
-                            <label style="text-align: center" for='last_name'></label>
-                        </div>
-                    </div>
-                </div>
-                <div>
+                <div class="row">
                     <div class="col s12">
-                        <p>Foto de Perfil</p>
+                        <div class="row">
+                            <div class="input-field col s12 m12">
+                                {{ form.des}}
+                                <label for="icon_prefix2">
+                                    <div class="row">
+                                        <div class="col s6"><i class="material-icons prefix col s3">mode_edit</i></div>
+                                        <div class="col s6">Descripción</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="section">
+                    <p>Cambiar Foto:</p>
                 </div>
                 <div id="file-upload" class="row">
                     <!--Default version-->
-
                     <div class="col s12">
                         <div class="dropify-wrapper touch-fallback">
                             <div class="dropify-message">
@@ -85,7 +118,6 @@
                                 <p class="center-align">Arrastre y suelte un archivo aquí o haga click</p>
                                 <p class="dropify-error center-align">Sorry, this file is too large</p>
                             </div>
-                            <!--<input type="file" id="input-file-now" class="dropify" data-default-file="">-->
                             {{ form.photo }}
                             <button type="button" class="dropify-clear">Remove</button>
                             <div class="dropify-preview"><span class="dropify-render"></span>
@@ -101,9 +133,8 @@
                         </div>
                     </div>
 
-
                 </div>
-                <div class='row'>
+                 <div class='row'>
                     <a class='col m6 btn btn-large waves-effect button teal red'
                        href="{% url 'home' %}">Cancelar<i
                             class="material-icons right">not_interested</i></a>
