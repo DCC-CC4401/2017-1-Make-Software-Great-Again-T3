@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from app.models import AppUser, StaticVendor, AmbulantVendor, Product, Vendor, Buyer
 
 from app.Forms import LoginForm, EditVendorForm, EditProductForm
+from app.models import AppUser, StaticVendor, Product, Vendor, Buyer
 
 
 def index(req):
@@ -250,5 +250,5 @@ TODO: hacer el update
 """
 
 
-def update():
+def update(vendor):
     pass
