@@ -1,7 +1,11 @@
 {% extends 'app/base_vendor.html' %}
 {% load static %}
 {% block content %}
-
+    <script>
+        $(document).ready(function () {
+            $('select').material_select();
+        });
+    </script>
     <div class="section"></div>
 
     <h4 class="teal-text" style="text-align: center;">Editar Perfil</h4>
@@ -11,7 +15,7 @@
         <div class="z-depth-1 grey lighten-4 row"
              style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0 48px; border: 1px solid #EEE;">
 
-            <form class="col s12 m12" method="post" enctype = multipart/form-data>{% csrf_token %}
+            <form class="col s12 m12" method="post" enctype=multipart/form-data>{% csrf_token %}
                 <div class='row'>
                     <div class='col s12 m12'>
                     </div>
@@ -26,7 +30,7 @@
                         </div>
                     </div>
                 </div>
-                 <div class='row'>
+                <div class='row'>
                     <div class='input-field col s12 m12'>
                         &ensp;Apellido :
                         <div class="input-field inline ">
@@ -35,6 +39,26 @@
                         </div>
                     </div>
                 </div>
+                <div class='row'>
+                    <div class='input-field col s12 m12'>
+                        &ensp;Métodos de pago :
+                        {{ form.payment }}
+                    </div>
+                </div>
+                {% if is_static %}
+                    <div class='row'>
+                        <div class='input-field col s12 m12'>
+                            &ensp;Hora de Inicio :
+                            {{ form.t_init }}
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='input-field col s12 m12'>
+                            &ensp;Hora de Termino :
+                            {{ form.t_finish }}
+                        </div>
+                    </div>
+                {% endif %}
                 <div>
                     <div class="col s12">
                         <p>Foto de Perfil</p>

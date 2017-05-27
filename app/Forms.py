@@ -1,6 +1,6 @@
 from django import forms
 
-from app.models import AppUser, Vendor, Product
+from app.models import AppUser, Vendor, Product, PaymentMethod
 
 
 class LoginForm(forms.Form):
@@ -16,6 +16,13 @@ class EditVendorForm(forms.Form):
     name = forms.CharField(max_length=255, required=False)
     last_name = forms.CharField(max_length=255, required=False)
     photo = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': 'dropify'}))
+    choices = []
+    for i in PaymentMethod.objects.all().values():
+        choices.append((i['name'], i['name']))
+    payment = forms.MultipleChoiceField(widget=forms.SelectMultiple(attrs={'class': 'multiple'}), choices=choices,
+                                        required=False)
+    t_init = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}), required=False)
+    t_finish = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}), required=False)
 
     class Meta:
         model = AppUser

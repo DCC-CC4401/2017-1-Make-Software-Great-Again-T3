@@ -1,3 +1,4 @@
+import datetime
 from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
@@ -6,7 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from app.Forms import LoginForm, EditVendorForm, EditProductForm
-from app.models import AppUser, StaticVendor, Product, Vendor, Buyer
+from app.models import AppUser, StaticVendor, Product, Vendor, Buyer, PaymentMethod
 
 
 def index(req):
@@ -120,10 +121,37 @@ def edit_account(request):
             if form.cleaned_data['photo'] is not None:
                 app_user.photo = form.cleaned_data['photo']
                 app_user.save()
+            vendor = Vendor.objects.get(user=app_user)
+            if app_user.user_type == 'VF':
+                svendor = StaticVendor.objects.get(user=app_user)
+                svendor.t_start = form.cleaned_data['t_init']
+                svendor.t_finish = form.cleaned_data['t_finish']
+                svendor.save()
+
+            pay = form.cleaned_data['payment']
+            vendor.payment.clear()
+            for i in pay:
+                vendor.payment.add(PaymentMethod.objects.get(name=i))
+            vendor.save()
             user.save()
             return HttpResponseRedirect('home')
         else:
-            form = EditVendorForm(initial={'name': request.user.first_name, 'last_name': request.user.last_name})
+            t_init = None
+            t_finish = None
+            if app_user.user_type == 'VF':
+                ven = StaticVendor.objects.get(user=app_user)
+                t_init = ven.t_start
+                t_finish = ven.t_finish
+            vendor = Vendor.objects.get(user=app_user)
+            pay = vendor.payment.values()
+            payment = {}
+            for i in pay:
+                payment[i['name']] = i['name']
+            print payment
+            form = EditVendorForm(initial={'name': request.user.first_name, 'last_name': request.user.last_name,
+                                           'payment': payment, 't_init': t_init,
+                                           't_finish': t_finish
+                                           })
         data = {'form': form, 'image': app_user.photo, 'is_static': True if app_user.user_type == 'VF' else False}
         return render(request, 'app/edit_account.html', data)
     else:
@@ -250,5 +278,15 @@ TODO: hacer el update
 """
 
 
-def update(vendor):
-    pass
+def update(ven):
+    t = datetime.datetime.now().time()
+    if ven.user.user_type == 'VF':
+        vendor = StaticVendor.objects.get(user=ven.user)
+        now = datetime.time(hour=t.hour, minute=t.minute)
+        if vendor.t_start <= now <= vendor.t_finish and vendor.state == 'I':
+            vendor.state = 'A'
+        if not vendor.t_start <= now <= vendor.t_finish and vendor.state == 'A':
+            vendor.state = 'I'
+        vendor.save()
+
+
