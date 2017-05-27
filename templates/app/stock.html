@@ -1,0 +1,84 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block profile_info %}
+    <div class="userView">
+        <i class="material-icons right grey-text text-lighten-2"
+           style="position: absolute; bottom: -0.5em; right: 0.5em; padding: 0 0 !important;">settings</i>
+        <div class="background" style="height:175px;">
+            <img src="{% static 'img/background4.png' %}">
+        </div>
+        <a href="#"><img style="margin-top: 16%;" class="circle"
+                         src="/media/{{ image }}" height="42" width="42"></a>
+        <a href="#"><span style="margin-left: 5%;" class="white-text name">{{ user }}</span></a>
+    </div>
+{% endblock %}
+
+{% block side %}
+    <li><a href="{% url 'home' %}"><i class="material-icons">home</i>Inicio</a></li>
+    <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
+    <li>
+        <div class="divider"></div>
+    </li>
+    <li><a class="subheader">Activo</a></li>
+    <li>
+        <div class="switch" style="margin-left: 80px;">
+            <label>
+                No<input type="checkbox"><span class="lever"></span>Si
+            </label>
+        </div>
+    </li>
+
+{% endblock %}
+
+{% block content %}
+
+    <script>
+        $(document).ready(function () {
+            $('.modal').modal();
+        });
+
+    </script>
+    <div class="section"></div>
+
+    <h4 class="teal-text" style="text-align: center;">Editar Stock</h4>
+    <div class="section"></div>
+    <div id="profile-page-content" class="row">
+        <div id="profile-page-wall" class="col s12 m8">
+            <div class="z-depth-1 section">
+                <div class="row" style="flex-wrap: wrap">
+                    {% for product in products %}
+                        <div class="col m6 l4">
+                            <div class="card">
+                                <div class="teal lighten-2 card-image waves-effect waves-block waves-light">
+                                    <img class="activator responsive-img center-block"
+                                         style="max-width: 30%; margin-top:20px; margin-bottom:20px;"
+                                         src="{{ product.icon }}">
+                                </div>
+                                <div class="card-content">
+                                    <div class="row">
+                                        <span class="card-title activator grey-text text-darken-4">{{ product.name }}</span>
+                                        <h6 class="col m4">Stock</h6>
+                                    </div>
+
+                                    <div class="row ">
+                                        <a class="waves-effect waves-teal btn-flat stock-button col m4" style="font-size: 32px;
+    font-weight: 600; padding: 0 1.5rem!important; text-align: center">&ndash;</a>
+                                        <p class="col m4" style="text-align: center"><a class="teal-text" style="font-size: 20px;">{{ product.stock }}</a></p>
+                                        <a class="waves-effect waves-teal btn-flat stock-button col m4" style="font-size: 32px;
+    font-weight: 600; padding: 0 1.5rem!important; text-align: center">+</a>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
