@@ -1,35 +1,5 @@
-{% extends 'app/base.html' %}
+{% extends 'app/base_vendor.html' %}
 {% load static %}
-
-{% block profile_info %}
-    <div class="userView">
-        <i class="material-icons right grey-text text-lighten-2"
-           style="position: absolute; bottom: -0.5em; right: 0.5em; padding: 0 0 !important;">settings</i>
-        <div class="background" style="height:175px;">
-            <img src="{% static 'img/background4.png' %}">
-        </div>
-        <a href="#"><img style="margin-top: 16%;" class="circle"
-                         src="/media/{{ image }}" height="42" width="42"></a>
-        <a href="#"><span style="margin-left: 5%;" class="white-text name">{{ user }}</span></a>
-    </div>
-{% endblock %}
-
-{% block side %}
-    <li><a href="{% url 'home' %}"><i class="material-icons">home</i>Inicio</a></li>
-    <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
-    <li>
-        <div class="divider"></div>
-    </li>
-    <li><a class="subheader">Activo</a></li>
-    <li>
-        <div class="switch" style="margin-left: 80px;">
-            <label>
-                No<input type="checkbox"><span class="lever"></span>Si
-            </label>
-        </div>
-    </li>
-
-{% endblock %}
 
 {% block content %}
 
@@ -63,9 +33,11 @@
                         <div class="col s3 offset-s2 hide-on-med-and-down">
                             <h4 class="card-title grey-text flow-text text-darken-4 center-align">{{ name }} &ensp;{{ last_name }}</h4>
                             <p class="medium-small flow-text grey-text center-align">{{ type }}</p>
-                            <p class="flow-text text-darken-4 center-align" style="font-size: 0.88rem;">
-                                Horario: <a class="light-green-text center-align">{{ schedule }}</a>
-                            </p>
+                            {% if is_static %}
+                                <p class="flow-text text-darken-4 center-align" style="font-size: 0.88rem;">
+                                    Horario: <a class="light-green-text center-align">{{ schedule }}</a>
+                                </p>
+                            {% endif %}
                         </div>
                         <div class="col s3 l2 hide-on-med-and-down">
                             <h4 class="card-title flow-text text-darken-4">Estado</h4>
@@ -101,9 +73,11 @@
                     <div class="col s4 offset-s2">
                         <h4 class="card-title grey-text flow-text text-darken-4">{{ name }} &ensp;{{ last_name }}</h4>
                         <p class="medium-small flow-text grey-text">{{ type }}</p>
-                        <p class="flow-text text-darken-4" style="font-size: 0.88rem;">
-                            Horario: <a class="light-green-text">{{ schedule }}</a>
-                        </p>
+                        {% if is_static %}
+                            <p class="flow-text text-darken-4" style="font-size: 0.88rem;">
+                                Horario: <a class="light-green-text">{{ schedule }}</a>
+                            </p>
+                        {% endif %}
                         <div class="switch" style="margin-left: 10px;">
                             <label>
                                 <p class="card-title grey-text flow-text text-darken-4" style="font-size: 1.3rem;">
@@ -176,9 +150,10 @@
                                         <li>Descripción: {{ product.desc }}
                                             <div class="row">
                                                 <p class="left-align col m6"><a class="waves-effect waves-light"
-                                                                         href="{% url 'edit_products' pid=product.pid %}">Editar</a>
+                                                                                href="{% url 'edit_products' pid=product.pid %}">Editar</a>
                                                 <p class="right-align col m6"><a class="waves-effect waves-light"
-                                                                          href="{{ product.id }}">Ver imagen</a></p>
+                                                                                 href="{{ product.id }}">Ver imagen</a>
+                                                </p>
 
                                                 </p>
                                             </div>

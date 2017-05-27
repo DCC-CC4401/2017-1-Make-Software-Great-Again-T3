@@ -46,7 +46,12 @@ def products_administration(request):
     if request.user.is_authenticated():
         user = User.objects.get(username=request.user.username)
         app_user = AppUser.objects.get(user=user)
-        return render(request, 'app/gestion-productos.html', {'image': app_user.photo})
+        if app_user.user_type != 'C':
+            return render(request, 'app/gestion-productos.html',
+                          {'image': app_user.photo, 'user': user.username,
+                           'is_static': True if app_user.user_type == 'VF' else False})
+        else:
+            return HttpResponseRedirect(reverse('home'))
     else:
         return HttpResponseRedirect(reverse('index'))
 
@@ -80,6 +85,7 @@ def home(request):
                 'user': username,
                 'image': app_user.photo,
                 'name': app_user.user.first_name,
+                'is_static': True if vendor.user.user_type == 'VF' else False,
                 'last_name': app_user.user.last_name,
                 'state': 'Activo' if vendor.state == 'A' else 'Inactivo',
                 'payment': vendor.payment_str(),
@@ -105,6 +111,8 @@ def edit_account(request):
         user = User.objects.get(username=request.user.username)
         app_user = AppUser.objects.get(user=user)
 
+        if app_user.user_type == u'C':
+            return HttpResponseRedirect(reverse('home'))
         if form.is_valid() and request.method == 'POST':
             user.first_name = request.POST['name']
             user.last_name = request.POST['last_name']
@@ -115,7 +123,7 @@ def edit_account(request):
             return HttpResponseRedirect('home')
         else:
             form = EditVendorForm(initial={'name': request.user.first_name, 'last_name': request.user.last_name})
-        data = {'form': form, 'photo': app_user.photo}
+        data = {'form': form, 'image': app_user.photo, 'is_static': True if app_user.user_type == 'VF' else False}
         return render(request, 'app/edit_account.html', data)
     else:
         return HttpResponseRedirect(reverse('index'))
@@ -124,12 +132,12 @@ def edit_account(request):
 def stock(request):
     if request.user.is_authenticated():
         username = request.user.username
-        app_user = AppUser.objects.filter(user=request.user)
+        app_user = AppUser.objects.get(user=request.user)
         # print app_user[0].user_type, type(app_user[0].user_type)
-        if app_user[0].user_type == u'C':
+        if app_user.user_type == u'C':
             return render(request, 'app/home.html', {'user': username})
         else:
-            vendor = Vendor.objects.filter(user=app_user)[0]
+            vendor = Vendor.objects.get(user=app_user)
             products = []
             raw_products = Product.objects.filter(vendor=vendor)
             for i, p in enumerate(raw_products):
@@ -148,7 +156,8 @@ def stock(request):
 
             data = {
                 'user': username,
-                'image': app_user[0].photo,
+                'image': app_user.photo,
+                'is_static': True if app_user.user_type == 'VF' else False,
                 'products': products
             }
             return render(request, 'app/stock.html', data)
@@ -179,7 +188,7 @@ def edit_products(request, pid):
                 else:
                     form = EditProductForm(initial={'name': product.name, 'price': product.price,
                                                     'stock': product.stock, 'des': product.description})
-                    data = {'form': form, 'image': product.photo, 'photo': app_user.photo}
+                    data = {'form': form, 'photo': product.photo, 'image': app_user.photo}
                     return render(request, 'app/edit_product.html', data)
             except:
                 return HttpResponseRedirect(reverse('home'))
