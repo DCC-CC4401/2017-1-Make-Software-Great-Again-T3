@@ -65,6 +65,7 @@ def home(request):
             return render(request, 'app/home.html', {'user': username})
         else:
             vendor = Vendor.objects.get(user=app_user)
+            update(vendor)
             products = []
             raw_products = Product.objects.filter(vendor=vendor)
             for i, p in enumerate(raw_products):
@@ -201,6 +202,7 @@ def vendor_c(request, pid):
     data = {'is_fav': False}
     try:
         vendor = Vendor.objects.get(id=pid)
+        update(vendor)
         if request.user.is_authenticated():
             user = AppUser.objects.get(user=request.user)
             data['auth'] = True
@@ -241,3 +243,12 @@ def vendor_c(request, pid):
         return render(request, 'app/vendor_info.html', data)
     except:
         return HttpResponseRedirect(404)
+
+
+"""
+TODO: hacer el update
+"""
+
+
+def update():
+    pass
