@@ -54,44 +54,12 @@ def products_administration(request):
 def home(request):
     if request.user.is_authenticated():
         username = request.user.username
-        app_user = AppUser.objects.filter(user=request.user)
+        app_user = AppUser.objects.get(user=request.user)
         # print app_user[0].user_type, type(app_user[0].user_type)
-        if app_user[0].user_type == u'C':
+        if app_user.user_type == u'C':
             return render(request, 'app/home.html', {'user': username})
-        elif app_user[0].user_type == u'VF':
-            vendor = StaticVendor.objects.filter(user=app_user)[0]
-
-            products = []
-            raw_products = Product.objects.filter(vendor=vendor)
-            for i, p in enumerate(raw_products):
-                tmp = {
-                    'icon': p.icon,
-                    'name': p.name,
-                    'id': 'modal' + str(i),
-                    'image': p.photo,
-                    'category': p.category_str(),
-                    'stock': p.stock,
-                    'desc': p.description,
-                    'price': p.price,
-                    'pid': p.id
-                }
-                products.append(tmp)
-
-            data = {
-                'user': username,
-                'image': app_user[0].photo,
-                'name': app_user[0].user.first_name,
-                'last_name': app_user[0].user.last_name,
-                'state': 'Activo' if vendor.state == 'A' else 'Inactivo',
-                'payment': vendor.payment,
-                'fav': vendor.times_favorited,
-                'schedule': vendor.schedule,
-                'type': 'Vendedor Fijo',
-                'products': products
-            }
-            return render(request, 'app/vendedor-profile-page.html', data)
         else:
-            vendor = AmbulantVendor.objects.filter(user=app_user)[0]
+            vendor = Vendor.objects.get(user=app_user)
             products = []
             raw_products = Product.objects.filter(vendor=vendor)
             for i, p in enumerate(raw_products):
@@ -110,14 +78,15 @@ def home(request):
 
             data = {
                 'user': username,
-                'image': app_user[0].photo,
-                'name': app_user[0].user.first_name,
-                'last_name': app_user[0].user.last_name,
+                'image': app_user.photo,
+                'name': app_user.user.first_name,
+                'last_name': app_user.user.last_name,
                 'state': 'Activo' if vendor.state == 'A' else 'Inactivo',
-                'payment': vendor.payment,
+                'payment': vendor.payment_str(),
                 'fav': vendor.times_favorited,
-                'schedule': "",
-                'type': 'Vendedor Fijo',
+                'schedule': StaticVendor.objects.get(
+                    user=vendor.user).schedule() if vendor.user.user_type == 'VF' else "",
+                'type': 'Vendedor Fijo' if vendor.user.user_type == 'VF' else 'Vendedor Ambulante',
                 'products': products
             }
             return render(request, 'app/vendedor-profile-page.html', data)
@@ -254,10 +223,10 @@ def vendor_c(request, pid):
         data['name'] = vendor.user.user.first_name
         data['last_name'] = vendor.user.user.last_name
         data['state'] = 'Activo' if vendor.state == 'A' else 'Inactivo'
-        data['payment'] = vendor.payment,
-        data['fav'] = vendor.times_favorited,
-        data['schedule'] = StaticVendor.objects.get(user=vendor.user).schedule if vendor.user.user_type == 'VF' else "",
-        data['type'] = 'Vendedor Fijo' if vendor.user.user_type == 'VF' else 'Vendedor Ambulante',
+        data['payment'] = vendor.payment
+        data['fav'] = vendor.times_favorited
+        data['schedule'] = StaticVendor.objects.get(user=vendor.user).schedule if vendor.user.user_type == 'VF' else ""
+        data['type'] = 'Vendedor Fijo' if vendor.user.user_type == 'VF' else 'Vendedor Ambulante'
         data['products'] = products
 
         return render(request, 'app/vendor_info.html', data)

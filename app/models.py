@@ -25,9 +25,13 @@ class AppUser(models.Model):
     user_type = models.CharField(max_length=2, choices=user_type_dicc)
 
 
+class PaymentMethod(models.Model):
+    name = models.CharField(max_length=30)
+
+
 # Abstract base class for both vendor types
 class Vendor(models.Model):
-    payment = models.CharField(max_length=100)
+    payment = models.ManyToManyField(PaymentMethod)
     has_stock = models.BooleanField()
     state_dicc = (('A', 'Active'), ('I', 'Inactive'))
     state = models.CharField(max_length=1, choices=state_dicc)
@@ -37,13 +41,23 @@ class Vendor(models.Model):
     lat = models.DecimalField(max_digits=10, decimal_places=2)
     lng = models.DecimalField(max_digits=10, decimal_places=2)
 
+    def payment_str(self):
+        temp = []
+        for i in self.payment.values():
+            temp.append(i['name'])
+        return ' '.join(temp)
+
 
 class AmbulantVendor(Vendor):
     pass
 
 
 class StaticVendor(Vendor):
-    schedule = models.CharField(max_length=200)
+    t_start = models.TimeField()
+    t_finish = models.TimeField()
+
+    def schedule(self):
+        return self.t_start.strftime('%H:%M') + '-' + self.t_finish.strftime('%H:%M')
 
 
 class Buyer(models.Model):

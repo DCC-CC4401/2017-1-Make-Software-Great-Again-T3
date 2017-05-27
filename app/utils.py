@@ -1,9 +1,10 @@
 # coding=utf-8
 
 from django.contrib.auth.models import User
-from app.models import AppUser, AmbulantVendor, Vendor, Category
+from app.models import AppUser, AmbulantVendor, Vendor, Category, PaymentMethod
 from app.models import StaticVendor
 from app.models import Product
+import datetime
 
 
 def add_user(data):
@@ -23,16 +24,26 @@ def add_app_user(data):
 def add_S_vendor(data):
     add_app_user(data)
     user = AppUser.objects.get(user=User.objects.get(username=data['username']))
-    p = StaticVendor(user=user, payment=data['payment'], has_stock=data['stack'], state=data['state'],
-                     times_favorited=data['fav'], lat=data['lan'], lng=data['lng'], schedule=data['schedule'])
+
+    t_start = datetime.datetime.strptime(data['schedule'][0], '%H:%M').time()
+    t_finish = datetime.datetime.strptime(data['schedule'][1], '%H:%M').time()
+    p = StaticVendor(user=user, has_stock=data['stack'], state=data['state'],
+                     times_favorited=data['fav'], lat=data['lan'], lng=data['lng'],
+                     t_start=t_start, t_finish=t_finish)
+    p.save()
+    for i in data['payment']:
+        p.payment.add(PaymentMethod.objects.get(name=i))
     p.save()
 
 
 def add_A_vendor(data):
     add_app_user(data)
     user = AppUser.objects.get(user=User.objects.get(username=data['username']))
-    p = AmbulantVendor(user=user, payment=data['payment'], has_stock=data['stack'], state=data['state'],
+    p = AmbulantVendor(user=user, has_stock=data['stack'], state=data['state'],
                        times_favorited=data['fav'], lat=data['lan'], lng=data['lng'])
+    p.save()
+    for i in data['payment']:
+        p.payment.add(PaymentMethod.objects.get(name=i))
     p.save()
 
 
@@ -51,6 +62,11 @@ def add_category(cat):
     p.save()
 
 
+def add_payment(pay):
+    p = PaymentMethod(name=pay)
+    p.save()
+
+
 def test():
     User.objects.create_superuser('buyer', 'bal@123.ck', '1234')
     user = User.objects.get(username='buyer')
@@ -59,6 +75,9 @@ def test():
 
     add_category('Almuerzos')
     add_category('Snack')
+    add_payment('tarjeta')
+    add_payment('efectivo')
+
     data1 = {
         'username': 'vendor',
         'email': 'test@prueba.cl',
@@ -67,13 +86,13 @@ def test():
         'last_name': 'Perex',
         'photo': None,
         'type': 'VF',
-        'payment': 'efectivo, tarjeta',
+        'payment': ['efectivo', 'tarjeta'],
         'stack': True,
         'state': 'A',
         'fav': 42,
         'lan': 0.0,
         'lng': 0.0,
-        'schedule': '12:00-13:00'
+        'schedule': ['12:00', '13:00']
     }
     add_S_vendor(data1)
 
@@ -84,7 +103,7 @@ def test():
         'icon': '../static/img/pizza.png',
         'category': ['Almuerzos'],
         'des': 'Deliciosa pizza hecha con masa casera, viene disponible en 3 tipos:',
-        'stock':20,
+        'stock': 20,
         'price': 1300
     }
     product_2 = {
