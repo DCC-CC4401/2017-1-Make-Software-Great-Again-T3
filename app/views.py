@@ -108,13 +108,19 @@ def logout(request):
 
 
 def edit_account(request):
+    choices = []
+    for i in PaymentMethod.objects.all().values():
+        choices.append((i['name'], i['name']))
+
     if request.user.is_authenticated():
         form = EditVendorForm(request.POST, request.FILES)
+        form.fields['payment'].choices = choices
         user = User.objects.get(username=request.user.username)
         app_user = AppUser.objects.get(user=user)
 
         if app_user.user_type == u'C':
             return HttpResponseRedirect(reverse('home'))
+
         if form.is_valid() and request.method == 'POST':
             user.first_name = request.POST['name']
             user.last_name = request.POST['last_name']
@@ -147,11 +153,12 @@ def edit_account(request):
             payment = {}
             for i in pay:
                 payment[i['name']] = i['name']
-            print payment
+
             form = EditVendorForm(initial={'name': request.user.first_name, 'last_name': request.user.last_name,
                                            'payment': payment, 't_init': t_init,
                                            't_finish': t_finish
                                            })
+            form.fields['payment'].choices = choices
         data = {'form': form, 'image': app_user.photo, 'is_static': True if app_user.user_type == 'VF' else False}
         return render(request, 'app/edit_account.html', data)
     else:
@@ -273,11 +280,6 @@ def vendor_c(request, pid):
         return HttpResponseRedirect(404)
 
 
-"""
-TODO: hacer el update
-"""
-
-
 def update(ven):
     t = datetime.datetime.now().time()
     if ven.user.user_type == 'VF':
@@ -288,5 +290,3 @@ def update(ven):
         if not vendor.t_start <= now <= vendor.t_finish and vendor.state == 'A':
             vendor.state = 'I'
         vendor.save()
-
-
