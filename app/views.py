@@ -118,6 +118,7 @@ def home(request):
                 'is_static': True if vendor.user.user_type == 'VF' else False,
                 'last_name': app_user.user.last_name,
                 'state': 'Activo' if vendor.state == 'A' else 'Inactivo',
+                'is_active': True if vendor.state == 'A' else False,
                 'payment': vendor.payment_str(),
                 'fav': vendor.times_favorited,
                 'schedule': StaticVendor.objects.get(
@@ -187,7 +188,8 @@ def edit_account(request):
                                            't_finish': t_finish
                                            })
             form.fields['payment'].choices = choices
-        data = {'form': form, 'image': app_user.photo, 'is_static': True if app_user.user_type == 'VF' else False}
+        data = {'form': form, 'image': app_user.photo, 'is_static': True if app_user.user_type == 'VF' else False,
+                'is_active': True if vendor.state == 'A' else False}
         return render(request, 'app/edit_account.html', data)
     else:
         return HttpResponseRedirect(reverse('index'))
@@ -220,6 +222,7 @@ def stock(request):
 
             data = {
                 'user': username,
+                'is_active': True if vendor.state == 'A' else False,
                 'image': app_user.photo,
                 'is_static': True if app_user.user_type == 'VF' else False,
                 'products': products
@@ -252,7 +255,8 @@ def edit_products(request, pid):
                 else:
                     form = EditProductForm(initial={'name': product.name, 'price': product.price,
                                                     'stock': product.stock, 'des': product.description})
-                    data = {'form': form, 'photo': product.photo, 'image': app_user.photo}
+                    data = {'form': form, 'photo': product.photo, 'image': app_user.photo,
+                            'is_active': True if vendor.state == 'A' else False}
                     return render(request, 'app/edit_product.html', data)
             except:
                 return HttpResponseRedirect(reverse('home'))
@@ -262,7 +266,7 @@ def edit_products(request, pid):
 
 
 def vendor_c(request, pid):
-    data = {'is_fav': False, 'id': pid}
+    data = {'is_fav': False, 'id': pid, 'is_active': False}
     try:
         vendor = Vendor.objects.get(id=pid)
         update(vendor)
@@ -275,6 +279,8 @@ def vendor_c(request, pid):
                 buyer = Buyer.objects.get(user=user)
                 if buyer.favorites.filter(user=vendor.user).values().count() != 0:
                     data['is_fav'] = True
+            else:
+                data['is_active'] = True if Vendor.objects.get(user=user).state == 'A' else False,
         else:
             data['auth'] = False
 
