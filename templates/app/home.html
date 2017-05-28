@@ -15,19 +15,13 @@
 {% endblock %}
 
 {% block side %}
+
     <li><a href="{% url 'home' %}"><i class="material-icons">home</i>Inicio</a></li>
     <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
     <li>
         <div class="divider"></div>
     </li>
-    <li><a class="subheader">Activo</a></li>
-    <li>
-        <div class="switch" style="margin-left: 80px;">
-            <label>
-                No<input type="checkbox"><span class="lever"></span>Si
-            </label>
-        </div>
-    </li>
+
     <li><a class="subheader">Filtros</a></li>
     <li>
         <div class="switch" style="margin-left: 10px;">

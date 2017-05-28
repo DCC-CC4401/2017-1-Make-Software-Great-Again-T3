@@ -3,6 +3,7 @@ from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
@@ -234,7 +235,7 @@ def edit_products(request, pid):
 
 
 def vendor_c(request, pid):
-    data = {'is_fav': False}
+    data = {'is_fav': False, 'id': pid}
     try:
         vendor = Vendor.objects.get(id=pid)
         update(vendor)
@@ -245,9 +246,8 @@ def vendor_c(request, pid):
             data['u_image'] = user.photo
             if user.user_type == 'C':
                 buyer = Buyer.objects.get(user=user)
-                for i in buyer.favorites.values():
-                    if i == vendor:
-                        data['is_fav'] = True
+                if buyer.favorites.filter(user=vendor.user).values().count() != 0:
+                    data['is_fav'] = True
         else:
             data['auth'] = False
 
@@ -293,5 +293,24 @@ def update(ven):
         vendor.save()
 
 
-def check_in(request):
-    return None
+def like(request):
+    print "aqui"
+    data = {'is_fav_now': False}
+    pid = request.POST.get('id', None)
+    vendor = Vendor.objects.get(id=pid)
+    if request.user.is_authenticated():
+
+        if Buyer.objects.filter(user=AppUser.objects.get(user=request.user)).values().count() != 0:
+            buyer = Buyer.objects.get(user=AppUser.objects.get(user=request.user))
+            if buyer.favorites.filter(user=vendor.user).values().count() != 0:
+                buyer.favorites.remove(vendor)
+                vendor.times_favorited -= 1
+                data['is_fav_now'] = False
+            else:
+                buyer.favorites.add(vendor)
+                vendor.times_favorited += 1
+                data['is_fav_now'] = True
+            buyer.save()
+            vendor.save()
+    data['favorites'] = vendor.times_favorited
+    return JsonResponse(data)
