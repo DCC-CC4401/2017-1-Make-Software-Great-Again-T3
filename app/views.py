@@ -269,9 +269,10 @@ def vendor_c(request, pid):
         data['name'] = vendor.user.user.first_name
         data['last_name'] = vendor.user.user.last_name
         data['state'] = 'Activo' if vendor.state == 'A' else 'Inactivo'
-        data['payment'] = vendor.payment
+        data['payment'] = vendor.payment_str()
         data['fav'] = vendor.times_favorited
         data['schedule'] = StaticVendor.objects.get(user=vendor.user).schedule if vendor.user.user_type == 'VF' else ""
+        data['is_ambulant'] = True if vendor.user.user_type == 'VA' else False
         data['type'] = 'Vendedor Fijo' if vendor.user.user_type == 'VF' else 'Vendedor Ambulante'
         data['products'] = products
 
@@ -290,3 +291,7 @@ def update(ven):
         if not vendor.t_start <= now <= vendor.t_finish and vendor.state == 'A':
             vendor.state = 'I'
         vendor.save()
+
+
+def check_in(request):
+    return None
