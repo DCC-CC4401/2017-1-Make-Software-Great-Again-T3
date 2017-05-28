@@ -143,3 +143,6 @@ compiled/
 *.bak
 
 static/*
+app/migrations/*
+db.sqlite3
+media/*
