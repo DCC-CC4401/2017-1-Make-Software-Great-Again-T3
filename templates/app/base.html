@@ -19,6 +19,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
     <!--<script src="http://materializecss.com/templates/starter-template/js/init.js"></script>-->
 
+    {% load static %}
+    <script src="{% static "js/cookies.js" %}"></script>
+
     <script>
         $(function () {
             $('.button-collapse').sideNav();

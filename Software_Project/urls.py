@@ -24,7 +24,8 @@ from app import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^app/', include('app.urls')),
-    url(r'^ajax/like/$', views.like, name='like')
+    url(r'^ajax/like/$', views.like, name='like'),
+    url(r'^ajax/check_in/$', views.check_in, name='check_in')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

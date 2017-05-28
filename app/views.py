@@ -347,3 +347,17 @@ def like(request):
             vendor.save()
     data['favorites'] = vendor.times_favorited
     return JsonResponse(data)
+
+
+def check_in(request):
+    print("check in")
+
+    user = AppUser.objects.get(user=request.user)
+    vendor = Vendor.objects.get(user=user)
+
+    vendor.state = 'A' if vendor.state == 'I' else 'I'
+    vendor.save()
+
+    return JsonResponse({
+       'is_active': vendor.state == 'A'
+    })
