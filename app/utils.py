@@ -61,9 +61,11 @@ def add_category(cat):
     p = Category(name=cat)
     p.save()
 
+
 def add_product_icon(data):
-    p_icon = ProductIcon(name=data['name'],icon=data['icon'])
+    p_icon = ProductIcon(name=data['name'], icon=data['icon'])
     p_icon.save()
+
 
 def add_payment(pay):
     p = PaymentMethod(name=pay)
@@ -78,7 +80,7 @@ def add_buyer(data):
 
 
 def test():
-    User.objects.create_superuser(username='admin',email='bal@123.ck',password='1234')
+    User.objects.create_superuser(username='admin', email='bal@123.ck', password='1234')
 
     add_category('Almuerzos')
     add_category('Snack')
@@ -86,25 +88,25 @@ def test():
 
     # Add all the original icons
     icon_dict_list = [
-        {'name': 'bread', 'icon': '../static/img/bread.png'},
-        {'name': 'breakfast', 'icon': '../static/img/breakfast.png'},
-        {'name': 'burger', 'icon': '../static/img/burger.png'},
-        {'name': 'chicken', 'icon': '../static/img/chicken.png'},
-        {'name': 'chicken2', 'icon': '../static/img/chicken2.png'},
-        {'name': 'chocolate', 'icon': '../static/img/chocolate.png'},
-        {'name': 'coke', 'icon': '../static/img/coke.png'},
-        {'name': 'cupcake', 'icon': '../static/img/cupcake.png'},
-        {'name': 'donut', 'icon': '../static/img/donut.png'},
-        {'name': 'jelly', 'icon': '../static/img/jelly.png'},
-        {'name': 'fish', 'icon': '../static/img/fish.png'},
-        {'name': 'fries', 'icon': '../static/img/fries.png'},
-        {'name': 'hot-dog', 'icon': '../static/img/hot-dog.png'},
-        {'name': 'icecream', 'icon': '../static/img/icecream.png'},
-        {'name': 'juice', 'icon': '../static/img/juice.png'},
-        {'name': 'lettuce', 'icon': '../static/img/lettuce.png'},
-        {'name': 'pizza', 'icon': '../static/img/pizza.png'},
-        {'name': 'spaguetti', 'icon': '../static/img/spaguetti.png'},
-        {'name': 'rice', 'icon': '../static/img/rice.png'}
+        {'name': 'bread', 'icon': 'static/img/bread.png'},
+        {'name': 'breakfast', 'icon': 'static/img/breakfast.png'},
+        {'name': 'burger', 'icon': 'static/img/burger.png'},
+        {'name': 'chicken', 'icon': 'static/img/chicken.png'},
+        {'name': 'chicken2', 'icon': 'static/img/chicken2.png'},
+        {'name': 'chocolate', 'icon': 'static/img/chocolate.png'},
+        {'name': 'coke', 'icon': 'static/img/coke.png'},
+        {'name': 'cupcake', 'icon': 'static/img/cupcake.png'},
+        {'name': 'donut', 'icon': 'static/img/donut.png'},
+        {'name': 'jelly', 'icon': 'static/img/jelly.png'},
+        {'name': 'fish', 'icon': 'static/img/fish.png'},
+        {'name': 'fries', 'icon': 'static/img/fries.png'},
+        {'name': 'hot-dog', 'icon': 'static/img/hot-dog.png'},
+        {'name': 'icecream', 'icon': 'static/img/icecream.png'},
+        {'name': 'juice', 'icon': 'static/img/juice.png'},
+        {'name': 'lettuce', 'icon': 'static/img/lettuce.png'},
+        {'name': 'pizza', 'icon': 'static/img/pizza.png'},
+        {'name': 'spaguetti', 'icon': 'static/img/spaguetti.png'},
+        {'name': 'rice', 'icon': 'static/img/rice.png'}
     ]
     for idata in icon_dict_list:
         add_product_icon(idata)
@@ -166,7 +168,7 @@ def test():
     product_1 = {
         'username': 'vendor1',
         'name': 'Pizza',
-        'photo': '../static/img/pepperoni1.jpg',
+        'photo': None,
         'icon': 'pizza',
         'category': ['Almuerzos'],
         'des': 'Deliciosa pizza hecha con masa casera, viene disponible en 3 tipos:',
@@ -176,7 +178,7 @@ def test():
     product_2 = {
         'username': 'vendor2',
         'name': 'Menú de arroz',
-        'photo': '../static/img/pollo1.jpg',
+        'photo': None,
         'icon': 'rice',
         'category': ['Almuerzos'],
         'des': 'Almuerzo de arroz con pollo arvejado.',
@@ -186,7 +188,7 @@ def test():
     product_3 = {
         'username': 'vendor1',
         'name': 'Jugo',
-        'photo': '../static/img/jugo1.jpg',
+        'photo': None,
         'icon': 'juice',
         'category': ['Snack'],
         'des': 'Jugo en caja sabor durazno.',

@@ -68,10 +68,12 @@ class Buyer(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=30)
 
+
 # Icons are saved to avoid saving the same image many times.
 class ProductIcon(models.Model):
     name = models.CharField(max_length=30)
     icon = models.ImageField()
+
 
 class Product(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)

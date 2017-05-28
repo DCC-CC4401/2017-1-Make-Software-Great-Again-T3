@@ -53,29 +53,29 @@ def products_administration(request):
             try:
                 # Check form
                 form = AddProductForm(request.POST, request.FILES)
-            
+
                 if request.method == 'POST' and form.is_valid():
                     name = form.cleaned_data['name']
                     price = form.cleaned_data['price']
                     stock = form.cleaned_data['stock']
-                    #icon = request.Post.get('icon-button')
+                    # icon = request.Post.get('icon-button')
                     category = None
                     description = form.cleaned_data['des']
                     photo = None
                     if form.cleaned_data['photo'] is not None:
                         photo = form.cleaned_data['photo']
                     data = {
-                        'username' : request.user.username,
+                        'username': request.user.username,
                         'name': name, 'price': price,
                         'stock': stock, 'des': description,
                         'icon': 'bread', 'photo': photo,
                         'category': ['Almuerzos']
-                        }
+                    }
                     add_product(data)
                     return HttpResponseRedirect(reverse('home'))
                 else:
                     form = AddProductForm()
-                    data = {'form': form}#, 'photo': product.photo, 'image': app_user.photo}
+                    data = {'form': form}  # , 'photo': product.photo, 'image': app_user.photo}
                     return render(request, 'app/gestion-productos.html', data)
             except:
                 return HttpResponseRedirect(reverse('home'))
@@ -97,8 +97,9 @@ def home(request):
             products = []
             raw_products = Product.objects.filter(vendor=vendor)
             for i, p in enumerate(raw_products):
+                print p.icon.icon.url
                 tmp = {
-                    'icon': p.icon,
+                    'icon': p.icon.icon.url[13:],
                     'name': p.name,
                     'id': 'modal' + str(i),
                     'image': p.photo,
@@ -205,7 +206,7 @@ def stock(request):
             raw_products = Product.objects.filter(vendor=vendor)
             for i, p in enumerate(raw_products):
                 tmp = {
-                    'icon': p.icon,
+                    'icon':  p.icon.icon.url[13:],
                     'name': p.name,
                     'id': 'modal' + str(i),
                     'image': p.photo,
@@ -281,7 +282,7 @@ def vendor_c(request, pid):
         raw_products = Product.objects.filter(vendor=vendor)
         for i, p in enumerate(raw_products):
             tmp = {
-                'icon': p.icon,
+                'icon':  p.icon.icon.url[13:],
                 'name': p.name,
                 'id': 'modal' + str(i),
                 'image': p.photo,
@@ -304,7 +305,7 @@ def vendor_c(request, pid):
 
         return render(request, 'app/vendor_info.html', data)
     except:
-        return HttpResponseRedirect(404)
+       return HttpResponseRedirect(404)
 
 
 def update(ven):
