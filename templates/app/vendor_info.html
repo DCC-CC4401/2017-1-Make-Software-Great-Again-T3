@@ -10,11 +10,11 @@
         </div>
         {% if auth %}
             <a href="#"><img style="margin-top: 16%;" class="circle"
-                         src="/media/{{ u_image }}" height="42" width="42"></a>
+                             src="/media/{{ u_image }}" height="42" width="42"></a>
             <a href="#"><span style="margin-left: 5%;" class="white-text name">{{ user }}</span></a>
         {% else %}
             <a href="#"><img style="margin-top: 16%;" class="circle"
-                              src="{% static 'img/AvatarPenguin.png' %}"></a>
+                             src="{% static 'img/AvatarPenguin.png' %}"></a>
             <a href="#"><span style="margin-left: 5%;" class="white-text name">Invitado</span></a>
         {% endif %}
     </div>
@@ -25,21 +25,21 @@
         <li><a href="{% url 'home' %}"><i class="material-icons">home</i>Inicio</a></li>
         <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
     {% else %}
-         <li><a href="{% url 'index' %}"><i class="material-icons">home</i>Inicio</a></li>
+        <li><a href="{% url 'index' %}"><i class="material-icons">home</i>Inicio</a></li>
         <li><a href="{% url 'login' %}"><i class="material-icons">account_circle</i>Iniciar Sesión</a></li>
     {% endif %}
     <li>
         <div class="divider"></div>
     </li>
     <li><a class="subheader">Filtros</a></li>
-    {% if auth and is_ambulant%}
-    <li>
-        <div class="switch" style="margin-left: 10px;">
-            <label>
-                <input type="checkbox"><span class="lever"></span>Sólo mostrar favoritos
-            </label>
-        </div>
-    </li>
+    {% if auth and is_ambulant %}
+        <li>
+            <div class="switch" style="margin-left: 10px;">
+                <label>
+                    <input type="checkbox"><span class="lever"></span>Sólo mostrar favoritos
+                </label>
+            </div>
+        </li>
     {% endif %}
     <li>
         <div class="switch" style="margin-left: 10px;">
@@ -64,7 +64,54 @@
         $(document).ready(function () {
             $('.modal').modal();
         });
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                function getCookie(name) {
+                    var cookieValue = null;
+                    if (document.cookie && document.cookie != '') {
+                        var cookies = document.cookie.split(';');
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = jQuery.trim(cookies[i]);
+                            // Does this cookie string begin with the name we want?
+                            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
 
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                    // Only send the token to relative URLs i.e. locally.
+                    xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                }
+            }
+        });
+        function like() {
+            console.log('click');
+            $.ajax({
+                type: "POST",
+                url: '/ajax/like/',
+                data: {
+                    id: {{ id }},
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response['is_fav_now']){
+                        $('#star0').addClass('amber-text');
+                        $('#star1').addClass('amber-text')
+                    }
+                    else{
+                        $('#star0').removeClass('amber-text');
+                        $('#star1').removeClass('amber-text')
+                    }
+                    let fav = response['favorites'];
+                    $('#like0').text(fav);
+                    $('#like1').text(fav);
+                }
+            });
+        }
     </script>
 
     <div class="row">
@@ -107,10 +154,18 @@
                             <div class="switch" style="margin-left: 10px;">
                                 <label>
                                     <h4 class="card-title grey-text flow-text text-darken-4">Favorito</h4>
-                                    <h6><i class="material-icons amber-text">grade</i>
-                                        <span class=" grey-text flow-text text-darken-4"
-                                              style="font-size:24px; line-height:35px;">{{ fav }}</span>
-                                    </h6>
+                                    {% if is_fav %}
+                                        <h6 onclick="like()"><i class="material-icons amber-text" id="star0">grade</i>
+                                            <span class=" grey-text flow-text text-darken-4"
+                                                  style="font-size:24px; line-height:35px;" id="like0">{{ fav }}</span>
+                                        </h6>
+                                    {% else %}
+                                        <h6 onclick="like()"><i class="material-icons" id="star0">grade</i>
+                                            <span class=" grey-text flow-text text-darken-4"
+                                                  style="font-size:24px; line-height:35px;" id="like0">{{ fav }}</span>
+                                        </h6>
+                                    {% endif %}
+
                                 </label>
                             </div>
                         </div>
@@ -129,10 +184,18 @@
                                 <p class="card-title grey-text flow-text text-darken-4" style="font-size: 1.3rem;">
                                     Favorito</p>
                                 <!--<input type="checkbox"><span class="lever"></span>-->
-                                <h6><i class="material-icons amber-text">grade</i>
-                                    <span class=" grey-text flow-text text-darken-4"
-                                          style="font-size:22px; line-height:25px;">{{ fav }}</span>
-                                </h6>
+                                {% if is_fav %}
+                                    <h6 onclick="like()"><i class="material-icons amber-text" id="star1">grade</i>
+                                        <span class=" grey-text flow-text text-darken-4"
+                                              style="font-size:22px; line-height:25px;" id="like1">{{ fav }}</span>
+                                    </h6>
+                                {% else %}
+                                    <h6 onclick="like()"><i class="material-icons" id="star1">grade</i>
+                                        <span class=" grey-text flow-text text-darken-4"
+                                              style="font-size:22px; line-height:25px;" id="like1">{{ fav }}</span>
+                                    </h6>
+                                {% endif %}
+
                             </label>
                         </div>
                     </div>
@@ -196,7 +259,8 @@
                                         <li>Descripción: {{ product.desc }}
                                             <div class="row">
                                                 <p class="right-align col m6"><a class="waves-effect waves-light"
-                                                                          href="{{ product.id }}">Ver imagen</a></p>
+                                                                                 href="{{ product.id }}">Ver imagen</a>
+                                                </p>
 
                                                 </p>
                                             </div>

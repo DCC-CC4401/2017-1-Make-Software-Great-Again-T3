@@ -19,10 +19,12 @@ from django.contrib import admin
 from django.conf.urls.static import static
 
 from Software_Project import settings
+from app import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^app/', include('app.urls')),
+    url(r'^ajax/like/$', views.like, name='like')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
