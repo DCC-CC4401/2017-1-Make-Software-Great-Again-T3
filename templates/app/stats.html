@@ -1,0 +1,76 @@
+{% extends 'app/base_vendor.html' %}
+{% load static %}
+{% block content %}
+    <script>
+        $(document).ready(function () {
+            $('select').material_select();
+        });
+    </script>
+    <link href="{% static 'css/c3.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'js/d3.v3.js' %}" charset="utf-8"></script>
+    <script src="{% static 'js/c3.min.js' %}"></script>
+    <div class="section"></div>
+    <h4 class="teal-text" style="text-align: center;">Estadisticas</h4>
+    <div class="section"></div>
+
+    <div class="container">
+        <div class="z-depth-1 grey lighten-4 row"
+             style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0 48px; border: 1px solid #EEE;">
+            <div class="col s12 m12">
+                <div class="row">
+                    <div id="chart"></div>
+                </div>
+                <div class="row">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Ganancias en los Ultimos 7 Dias</th>
+                            <th>Producto mas vendido</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <td>$10000</td>
+                            <td>Pizza</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <script>
+
+        var chart = c3.generate({
+            bindto: '#chart',
+            data: {
+                x: 'x',
+                columns: [
+                    ['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06', '2013-01-07', '2013-01-08', '2013-01-09', '2013-01-10', '2013-01-11', '2013-01-12'],
+                    ['Ganancias los ultimos 7 dias', 30, 200, 100, 400, 150, 250, 30, 200, 100, 400, 150, 250]
+                ],
+                type: 'bar'
+            },
+            axis: {
+                x: {
+                    type: 'timeseries',
+                    tick: {
+                        format: '%Y-%m-%d'
+                    }
+                }
+            },
+            bar: {
+                width: {
+                    ratio: 0.5 // this makes bar width 50% of length between ticks
+                }
+                // or
+                //width: 100 // this makes bar width 100px
+            }
+        });
+    </script>
+
+
+{% endblock %}

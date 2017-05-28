@@ -208,7 +208,7 @@ def stock(request):
             raw_products = Product.objects.filter(vendor=vendor)
             for i, p in enumerate(raw_products):
                 tmp = {
-                    'icon':  p.icon.icon.url[13:],
+                    'icon': p.icon.icon.url[13:],
                     'name': p.name,
                     'id': 'modal' + str(i),
                     'image': p.photo,
@@ -288,7 +288,7 @@ def vendor_c(request, pid):
         raw_products = Product.objects.filter(vendor=vendor)
         for i, p in enumerate(raw_products):
             tmp = {
-                'icon':  p.icon.icon.url[13:],
+                'icon': p.icon.icon.url[13:],
                 'name': p.name,
                 'id': 'modal' + str(i),
                 'image': p.photo,
@@ -311,7 +311,7 @@ def vendor_c(request, pid):
 
         return render(request, 'app/vendor_info.html', data)
     except:
-       return HttpResponseRedirect(404)
+        return HttpResponseRedirect(404)
 
 
 def update(ven):
@@ -361,3 +361,7 @@ def check_in(request):
     return JsonResponse({
        'is_active': vendor.state == 'A'
     })
+
+
+def stats(request):
+    return render(request, 'app/stats.html')

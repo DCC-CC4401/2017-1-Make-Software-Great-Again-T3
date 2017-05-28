@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^edit_product/(?P<pid>[0-9]+)/$', views.edit_products, name='edit_products'),
     url(r'^stock$', views.stock, name='stock'),
     url(r'^vendor/(?P<pid>[0-9]+)/$', views.vendor_c, name='vendor_for_users'),
+    url(r'^stats/$', views.stats, name='stats'),
 ]
