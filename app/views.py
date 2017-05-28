@@ -2,12 +2,12 @@ import datetime
 from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
-from app.Forms import LoginForm, EditVendorForm, EditProductForm
-from app.models import AppUser, StaticVendor, Product, Vendor, Buyer, PaymentMethod
+from app.Forms import LoginForm, EditVendorForm, EditProductForm, AddProductForm
+from app.models import AppUser, StaticVendor, Product, Vendor, Buyer, PaymentMethod, ProductIcon
 
 
 def index(req):
@@ -44,6 +44,46 @@ def signup(req):
 
 
 def products_administration(request):
+    from app.utils import add_product
+    if request.user.is_authenticated():
+        user = User.objects.get(username=request.user.username)
+        app_user = AppUser.objects.get(user=user)
+        # Only vendors can add products
+        if app_user.user_type != 'C':
+            try:
+                # Check form
+                form = AddProductForm(request.POST, request.FILES)
+            
+                if request.method == 'POST' and form.is_valid():
+                    name = form.cleaned_data['name']
+                    price = form.cleaned_data['price']
+                    stock = form.cleaned_data['stock']
+                    #icon = request.Post.get('icon-button')
+                    category = None
+                    description = form.cleaned_data['des']
+                    photo = None
+                    if form.cleaned_data['photo'] is not None:
+                        photo = form.cleaned_data['photo']
+                    data = {
+                        'username' : request.user.username,
+                        'name': name, 'price': price,
+                        'stock': stock, 'des': description,
+                        'icon': 'bread', 'photo': photo,
+                        'category': ['Almuerzos']
+                        }
+                    add_product(data)
+                    return HttpResponseRedirect(reverse('home'))
+                else:
+                    form = AddProductForm()
+                    data = {'form': form}#, 'photo': product.photo, 'image': app_user.photo}
+                    return render(request, 'app/gestion-productos.html', data)
+            except:
+                return HttpResponseRedirect(reverse('home'))
+
+    else:
+        return HttpResponseRedirect(reverse('index'))
+
+'''
     if request.user.is_authenticated():
         user = User.objects.get(username=request.user.username)
         app_user = AppUser.objects.get(user=user)
@@ -55,7 +95,7 @@ def products_administration(request):
             return HttpResponseRedirect(reverse('home'))
     else:
         return HttpResponseRedirect(reverse('index'))
-
+'''
 
 def home(request):
     if request.user.is_authenticated():

@@ -11,6 +11,16 @@ class LoginForm(forms.Form):
         model = AppUser
         # email.widget.attrs.update({'class': 'validate', 'placeholder': 'email'})
 
+class AddProductForm(forms.Form):
+    name = forms.CharField(max_length=255, required=True)
+    price = forms.IntegerField(min_value=0, required=True)
+    stock = forms.IntegerField(min_value=0, required=True)
+    des = forms.CharField(required=True, widget=forms.Textarea(attrs={'class': 'materialize-textarea'}))
+    photo = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': 'dropify'}))
+    #form = forms.ImageField(required=True, widget=forms.FileInput(attrs={'class': 'dropify'}))
+    class Meta:
+        model = Product
+
 
 class EditVendorForm(forms.Form):
     name = forms.CharField(max_length=255, required=False)

@@ -68,12 +68,17 @@ class Buyer(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=30)
 
+# Icons are saved to avoid saving the same image many times.
+class ProductIcon(models.Model):
+    name = models.CharField(max_length=30)
+    icon = models.ImageField()
 
 class Product(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     photo = models.ImageField()
-    icon = models.ImageField()
+    # Foreign key as "equivalent" to ManyToOne for icon->product
+    icon = models.ForeignKey(ProductIcon)
     category = models.ManyToManyField(Category)
     description = models.CharField(max_length=200)
     stock = models.IntegerField()
