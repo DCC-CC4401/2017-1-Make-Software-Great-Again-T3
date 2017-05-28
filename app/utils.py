@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from django.contrib.auth.models import User
-from app.models import AppUser, AmbulantVendor, Vendor, Category, PaymentMethod
+from app.models import AppUser, AmbulantVendor, Vendor, Category, PaymentMethod, Buyer
 from app.models import StaticVendor
 from app.models import Product
 import datetime
@@ -67,23 +67,30 @@ def add_payment(pay):
     p.save()
 
 
-def test():
-    User.objects.create_superuser('buyer', 'bal@123.ck', '1234')
-    user = User.objects.get(username='buyer')
-    p = AppUser(user=user, photo=None, user_type='C')
+def add_buyer(data):
+    add_app_user(data)
+    user = AppUser.objects.get(user=User.objects.get(username=data['username']))
+    p = Buyer.objects.create(user=user)
     p.save()
+
+
+def test():
+    User.objects.create_superuser('admin', 'bal@123.ck', '1234')
 
     add_category('Almuerzos')
     add_category('Snack')
+    add_category('Postres')
+
     add_payment('tarjeta')
     add_payment('efectivo')
+    add_payment('junaeb')
 
     data1 = {
-        'username': 'vendor',
+        'username': 'vendor1',
         'email': 'test@prueba.cl',
         'password': '1234',
-        'name': 'Juan',
-        'last_name': 'Perex',
+        'name': 'Daniel',
+        'last_name': 'Aguirre',
         'photo': None,
         'type': 'VF',
         'payment': ['efectivo', 'tarjeta'],
@@ -96,8 +103,40 @@ def test():
     }
     add_S_vendor(data1)
 
+    data2 = {
+        'username': 'buyer',
+        'email': 'test@prueba.cl',
+        'password': '1234',
+        'name': 'Robinson',
+        'last_name': 'Castro',
+        'photo': None,
+        'type': 'C',
+    }
+    add_buyer(data2)
+    buyer = Buyer.objects.get(user=AppUser.objects.get(user=User.objects.get(username=data2['username'])))
+    buyer.favorites.add(Vendor.objects.get(user=
+                                           AppUser.objects.get(user=User.objects.get(username=data1['username']))))
+    buyer.save()
+
+    data3 = {
+        'username': 'vendor2',
+        'email': 'test@prueba.cl',
+        'password': '1234',
+        'name': 'Andres',
+        'last_name': 'Olivares',
+        'photo': None,
+        'type': 'VA',
+        'payment': ['efectivo'],
+        'stack': True,
+        'state': 'I',
+        'fav': 42,
+        'lan': 0.0,
+        'lng': 0.0,
+    }
+    add_A_vendor(data3)
+
     product_1 = {
-        'username': 'vendor',
+        'username': 'vendor1',
         'name': 'Pizza',
         'photo': '../static/img/pepperoni1.jpg',
         'icon': '../static/img/pizza.png',
@@ -107,7 +146,7 @@ def test():
         'price': 1300
     }
     product_2 = {
-        'username': 'vendor',
+        'username': 'vendor2',
         'name': 'Menú de arroz',
         'photo': '../static/img/pollo1.jpg',
         'icon': '../static/img/rice.png',
@@ -117,7 +156,7 @@ def test():
         'price': 2500
     }
     product_3 = {
-        'username': 'vendor',
+        'username': 'vendor1',
         'name': 'Jugo',
         'photo': '../static/img/jugo1.jpg',
         'icon': '../static/img/juice.png',
