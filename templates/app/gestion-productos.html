@@ -1,26 +1,5 @@
 {% extends 'app/base_vendor.html' %}
 {% load static %}
-
-{% block javascript %}
-
-<!-- jquery imports  
-<script src="{% static "js/jquery-1.11.1.js" %}"></script>
-<script src="{% static "js/rango-jquery.js" %}"></script> -->
-
-<!-- jquery download 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"> </script>
-
-<script>
-(document).ready(function(){
-    $(#icon-matrix)
-});
-
-
-
-
-</script>-->
-
-{% endblock %}
 {% block content %}
 
     <div class="section"></div>
@@ -32,7 +11,7 @@
         <div class="z-depth-1 grey lighten-4 row"
              style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0 48px; border: 1px solid #EEE;">
 
-            <form class="col s12 m12" method="post"
+            <form id="add-prod" class="col s12 m12" method="post"
             enctype = multipart/form-data>{%csrf_token%}
                 <div class='row'>
                     <div class='col s12 m12'>
@@ -68,17 +47,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class='row'>
                     <div class="col s12">
+                        <a class='dropdown-button btn' href='#' data-beloworigin='true' data-activates='dropdown-cat'>Categoría</a>
+                          <ul id='dropdown-cat' class='dropdown-content'>
+                            {% for category in categories %}
+                                <li><a href="#!">{{ category.name }}</a></li>
+                                <li class="divider"></li>
+                            {% endfor %}
+                          </ul>
+                    </div>
+                </div>
+                <div class="section">
                         <div class="row">
-                            <div class="input-field col s12 m12">
-                                {{form.des}}
-                                <label for="icon_prefix2">
-                                    <div class="row">
-                                        <div class="col s6"><i class="material-icons prefix col s3">mode_edit</i></div>
-                                        <div class="col s6">Descripción</div>
-                                    </div>
-                                </label>
+                        <div class="col s12">
+                            <div class="row">
+                                <div class="input-field col s12 m12">
+                                    {{form.des}}
+                                    <label for="icon_prefix2">
+                                        <div class="row">
+                                            <div class="col s6"><i class="material-icons prefix col s4">mode_edit</i></div>
+                                            <div class="col s6">Descripción</div>
+                                        </div>
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -88,49 +80,49 @@
                 </div>
                 <div id="icon-matrix">
                 <div class="row ">
-                    <input class="with-gap" name="icon-button" type="radio" id="test1" value='_bread'/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test1" value='bread'/>
                     <label for="test1"><img style="max-width: 50px;" src="{% static 'img/bread.png' %}"></label>
-                    <input class="with-gap" name="icon-button" type="radio" id="test2"/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test2" value='breakfast'/>
                     <label for="test2"><img style="max-width: 50px;" src="{% static 'img/breakfast.png' %}"></label>
-                    <input class="with-gap" name="icon-button" type="radio" id="test3"/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test3" value='burger'/>
                     <label for="test3"><img style="max-width: 50px;" src="{% static 'img/burger.png' %}"></label>
-                    <input class="with-gap" name="icon-button" type="radio" id="test4"/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test4" value='chicken'/>
                     <label for="test4"><img style="max-width: 50px;" src="{% static 'img/chicken.png' %}"></label>
-                    <input class="with-gap" name="icon-button" type="radio" id="test5"/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test5" value='chicken2'/>
                     <label for="test5"><img style="max-width: 50px;" src="{% static 'img/chicken2.png' %}"></label>
                 </div>
                 <div class="row">
-                    <input class="with-gap" name="icon-button" type="radio" id="test6"/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test6" value='chocolate'/>
                     <label for="test6"><img style="max-width: 50px;" src="{% static 'img/chocolate.png' %}"></label>
-                    <input class="with-gap" name="icon-button" type="radio" id="test7"/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test7" value='coke'/>
                     <label for="test7"><img style="max-width: 50px;" src="{% static 'img/coke.png' %}"></label>
-                    <input class="with-gap" name="icon-button" type="radio" id="test8"/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test8" value='cupcake'/>
                     <label for="test8"><img style="max-width: 50px;" src="{% static 'img/cupcake.png' %}"></label>
-                    <input class="with-gap" name="icon-button" type="radio" id="test9"/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test9" value='donut'/>
                     <label for="test9"><img style="max-width: 50px;" src="{% static 'img/donut.png' %}"></label>
-                    <input class="with-gap" name="icon-button" type="radio" id="test10"/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test10" value='jelly'/>
                     <label for="test10"><img style="max-width: 50px;" src="{% static 'img/jelly.png' %}"></label>
                 </div>
                 <div class="row ">
-                    <input class="with-gap" name=name="icon-button" type="radio" id="test11"/>
+                    <input class="with-gap" name=name="icon-button" type="radio" id="test11" value='fish'/>
                     <label for="test11"><img style="max-width: 50px;" src="{% static 'img/fish.png' %}"></label>
-                    <input class="with-gap" name="icon-button" type="radio" id="test12"/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test12" value='fries'/>
                     <label for="test12"><img style="max-width: 50px;" src="{% static 'img/fries.png' %}"></label>
-                    <input class="with-gap" name="icon-button" type="radio" id="test13"/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test13" value='hot-dog'/>
                     <label for="test13"><img style="max-width: 50px;" src="{% static 'img/hot-dog.png' %}"></label>
-                    <input class="with-gap" name="icon-button" type="radio" id="test14"/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test14" value='icecream'/>
                     <label for="test14"><img style="max-width: 50px;" src="{% static 'img/icecream.png' %}"></label>
-                    <input class="with-gap" name="icon-button" type="radio" id="test15"/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test15" value='juice'/>
                     <label for="test15"><img style="max-width: 50px;" src="{% static 'img/juice.png' %}"></label>
                 </div>
                 <div class="row ">
-                    <input class="with-gap" name=name="icon-button" type="radio" id="test16"/>
+                    <input class="with-gap" name=name="icon-button" type="radio" id="test16" value='lettuce'/>
                     <label for="test16"><img style="max-width: 50px;" src="{% static 'img/lettuce.png' %}"></label>
-                    <input class="with-gap" name="icon-button" type="radio" id="test17"/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test17" value='pizza'/>
                     <label for="test17"><img style="max-width: 50px;" src="{% static 'img/pizza.png' %}"></label>
-                    <input class="with-gap" name="icon-button" type="radio" id="test18"/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test18" value='spaguetti'/>
                     <label for="test18"><img style="max-width: 50px;" src="{% static 'img/spaguetti.png' %}"></label>
-                    <input class="with-gap" name="icon-button" type="radio" id="test19"/>
+                    <input class="with-gap" name="icon-button" type="radio" id="test19" value='rice'/>
                     <label for="test19"><img style="max-width: 50px;" src="{% static 'img/rice.png' %}"></label>
 
                 </div>
@@ -173,9 +165,9 @@
 
                 </div>
                 <div class='row'>
-                    <a class='col l5 offset-l4 btn btn-large waves-effect button teal'
+                    <button class='col l5 offset-l4 btn btn-large waves-effect button teal'
                        href="{% url 'home' %}" type ="submit">Agregar<i
-                            class="material-icons right">send</i></a>
+                            class="material-icons right">send</i></button>
                 </div>
             </form>
         </div>

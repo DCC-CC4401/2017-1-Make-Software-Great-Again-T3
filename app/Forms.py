@@ -1,6 +1,6 @@
 from django import forms
 
-from app.models import AppUser, Vendor, Product, PaymentMethod
+from app.models import AppUser, Vendor, Product, PaymentMethod, Category
 
 
 class LoginForm(forms.Form):
@@ -11,13 +11,23 @@ class LoginForm(forms.Form):
         model = AppUser
         # email.widget.attrs.update({'class': 'validate', 'placeholder': 'email'})
 
+def get_categories():
+    choices_list = Category.objects.all().name
+    return choices_list
+
 class AddProductForm(forms.Form):
+ #   def __init__(self, *args, **kwargs):
+ #       super(AddProductForm, self).__init__(*args, **kwargs)
+
+#    self.fields['category'] = forms.ChoiceField(
+ #       choices=get_categories())
+    category = forms.ModelChoiceField(queryset=Category.objects.all().order_by('name'),required=False)
     name = forms.CharField(max_length=255, required=True)
     price = forms.IntegerField(min_value=0, required=True)
     stock = forms.IntegerField(min_value=0, required=True)
+
     des = forms.CharField(required=True, widget=forms.Textarea(attrs={'class': 'materialize-textarea'}))
     photo = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': 'dropify'}))
-    #form = forms.ImageField(required=True, widget=forms.FileInput(attrs={'class': 'dropify'}))
     class Meta:
         model = Product
 

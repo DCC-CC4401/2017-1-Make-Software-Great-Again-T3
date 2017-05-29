@@ -55,6 +55,7 @@ def add_product(data):
     for i in data['category']:
         p.category.add(Category.objects.get(name=i))
     p.save()
+    print "Product saved"
 
 
 def add_category(cat):
