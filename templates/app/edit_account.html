@@ -1,0 +1,136 @@
+{% extends 'app/base_vendor.html' %}
+{% load static %}
+{% block content %}
+    <script>
+        $(document).ready(function () {
+            $('select').material_select();
+        });
+
+    </script>
+    <script>
+        $ajaxSetup();
+
+        function borrar_cuenta() {
+            console.log('click');
+            $.ajax({
+                type: "POST",
+                url: '/ajax/delete_account/',
+                dataType: 'json',
+                success: function () {
+                    $(location).attr('href', '/app')
+                }
+
+            });
+        }
+    </script>
+    <div class="section"></div>
+
+    <h4 class="teal-text" style="text-align: center;">Editar Perfil</h4>
+    <div class="section"></div>
+
+    <div class="container">
+        <div class="z-depth-1 grey lighten-4 row"
+             style="margin-left: 5%; margin-right: 5%; padding: 32px 48px 0 48px; border: 1px solid #EEE;">
+
+            <form class="col s12 m12" method="post" enctype=multipart/form-data>{% csrf_token %}
+                <div class='row'>
+                    <div class='col s12 m12'>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <div class='input-field col s12 m12'>
+                        &ensp;Nombre :
+                        <div class="input-field inline ">
+                            {{ form.name }}
+                            <label style="text-align: center" for='name'></label>
+                        </div>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='input-field col s12 m12'>
+                        &ensp;Apellido :
+                        <div class="input-field inline ">
+                            {{ form.last_name }}
+                            <label style="text-align: center" for='last_name'></label>
+                        </div>
+                    </div>
+                </div>
+                {% if is_vendor %}
+                    <div class='row'>
+                        <div class='input-field col s12 m12'>
+                            &ensp;Métodos de pago :
+                            {{ form.payment }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if is_static and is_vendor %}
+                    <div class='row'>
+                        <div class='input-field col s12 m12'>
+                            &ensp;Hora de Inicio :
+                            {{ form.t_init }}
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='input-field col s12 m12'>
+                            &ensp;Hora de Termino :
+                            {{ form.t_finish }}
+                        </div>
+                    </div>
+                {% endif %}
+                <div>
+                    <div class="col s12">
+                        <p>Foto de Perfil</p>
+                    </div>
+                </div>
+                <div id="file-upload" class="row">
+                    <!--Default version-->
+
+                    <div class="col s12">
+                        <div class="dropify-wrapper touch-fallback">
+                            <div class="dropify-message">
+                                <div class="row">
+                                    <div class="col s4"></div>
+                                    <div class="col s4">
+                                        <i class="material-icons tiny">cloud_upload</i>
+                                    </div>
+                                    <div class="col s4"></div>
+                                </div>
+                                <p class="center-align">Arrastre y suelte un archivo aquí o haga click</p>
+                                <p class="dropify-error center-align">Sorry, this file is too large</p>
+                            </div>
+                            <!--<input type="file" id="input-file-now" class="dropify" data-default-file="">-->
+                            {{ form.photo }}
+                            <button type="button" class="dropify-clear">Remove</button>
+                            <div class="dropify-preview"><span class="dropify-render"></span>
+                                <div class="dropify-infos">
+                                    <div class="dropify-infos-inner">
+                                        <p class="dropify-filename">
+
+                                            <!--<span class="file-icon"></span>-->
+                                            <span class="dropify-filename-inner"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class='row'>
+                    <a class='col m4 btn btn-large waves-effect button red'
+                       onclick="borrar_cuenta()">Borrar Cuenta<i
+                            class="material-icons right">delete</i></a>
+                    <a class='col m4 btn btn-large waves-effect button teal red'
+                       href="{% url 'home' %}">Cancelar<i
+                            class="material-icons right">not_interested</i></a>
+                    <button class='col m4 btn btn-large waves-effect button teal green' type="submit">Modificar<i
+                            class="material-icons right">done</i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}

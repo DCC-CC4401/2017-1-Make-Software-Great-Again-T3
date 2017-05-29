@@ -1,5 +1,37 @@
-{% extends 'app/base_vendor.html' %}
+{% extends 'app/base.html' %}
 {% load static %}
+
+{% block profile_info %}
+    <div class="userView">
+        <i class="material-icons right grey-text text-lighten-2"
+           style="position: absolute; bottom: -0.5em; right: 0.5em; padding: 0 0 !important;">settings</i>
+        <div class="background" style="height:175px;">
+            <img src="{% static 'img/background4.png' %}">
+        </div>
+        {% if auth %}
+            <a href="#"><img style="margin-top: 16%;" class="circle"
+                             src="/media/{{ u_image }}" height="42" width="42"></a>
+            <a href="#"><span style="margin-left: 5%;" class="white-text name">{{ user }}</span></a>
+        {% else %}
+            <a href="#"><img style="margin-top: 16%;" class="circle"
+                             src="{% static 'img/AvatarPenguin.png' %}"></a>
+            <a href="#"><span style="margin-left: 5%;" class="white-text name">Invitado</span></a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block side %}
+    {% if auth %}
+        <li><a href="{% url 'home' %}"><i class="material-icons">home</i>Inicio</a></li>
+        <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
+    {% else %}
+        <li><a href="{% url 'index' %}"><i class="material-icons">home</i>Inicio</a></li>
+        <li><a href="{% url 'login' %}"><i class="material-icons">account_circle</i>Iniciar Sesión</a></li>
+    {% endif %}
+    <li>
+        <div class="divider"></div>
+    </li>
+{% endblock %}
 
 {% block content %}
 
@@ -8,6 +40,32 @@
             $('.modal').modal();
         });
 
+        $ajaxSetup();
+
+        function like() {
+            console.log('click');
+            $.ajax({
+                type: "POST",
+                url: '/ajax/like/',
+                data: {
+                    id: {{ id }}
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response['is_fav_now']){
+                        $('#star0').addClass('amber-text');
+                        $('#star1').addClass('amber-text')
+                    }
+                    else{
+                        $('#star0').removeClass('amber-text');
+                        $('#star1').removeClass('amber-text')
+                    }
+                    let fav = response['favorites'];
+                    $('#like0').text(fav);
+                    $('#like1').text(fav);
+                }
+            });
+        }
     </script>
 
     <div class="row">
@@ -33,11 +91,9 @@
                         <div class="col s3 offset-s2 hide-on-med-and-down">
                             <h4 class="card-title grey-text flow-text text-darken-4 center-align">{{ name }} &ensp;{{ last_name }}</h4>
                             <p class="medium-small flow-text grey-text center-align">{{ type }}</p>
-                            {% if is_static %}
-                                <p class="flow-text text-darken-4 center-align" style="font-size: 0.88rem;">
-                                    Horario: <a class="light-green-text center-align">{{ schedule }}</a>
-                                </p>
-                            {% endif %}
+                            <p class="flow-text text-darken-4 center-align" style="font-size: 0.88rem;">
+                                Horario: <a class="light-green-text center-align">{{ schedule }}</a>
+                            </p>
                         </div>
                         <div class="col s3 l2 hide-on-med-and-down">
                             <h4 class="card-title flow-text text-darken-4">Estado</h4>
@@ -52,20 +108,21 @@
                             <div class="switch" style="margin-left: 10px;">
                                 <label>
                                     <h4 class="card-title grey-text flow-text text-darken-4">Favorito</h4>
-                                    <h6><i class="material-icons amber-text">grade</i>
-                                        <span class=" grey-text flow-text text-darken-4"
-                                              style="font-size:24px; line-height:35px;">{{ fav }}</span>
-                                    </h6>
+                                    {% if is_fav %}
+                                        <h6 onclick="like()"><i class="material-icons amber-text" id="star0">grade</i>
+                                            <span class=" grey-text flow-text text-darken-4"
+                                                  style="font-size:24px; line-height:35px;" id="like0">{{ fav }}</span>
+                                        </h6>
+                                    {% else %}
+                                        <h6 onclick="like()"><i class="material-icons" id="star0">grade</i>
+                                            <span class=" grey-text flow-text text-darken-4"
+                                                  style="font-size:24px; line-height:35px;" id="like0">{{ fav }}</span>
+                                        </h6>
+                                    {% endif %}
+
                                 </label>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="col s3 l2 hide-on-med-and-down right-align">
-                        <a href="{% url 'edit_account' %}"
-                           class="btn-floating activator waves-effect waves-light darken-2">
-                            <i class="material-icons">mode_edit</i>
-                        </a>
                     </div>
                 </div>
 
@@ -73,20 +130,26 @@
                     <div class="col s4 offset-s2">
                         <h4 class="card-title grey-text flow-text text-darken-4">{{ name }} &ensp;{{ last_name }}</h4>
                         <p class="medium-small flow-text grey-text">{{ type }}</p>
-                        {% if is_static %}
-                            <p class="flow-text text-darken-4" style="font-size: 0.88rem;">
-                                Horario: <a class="light-green-text">{{ schedule }}</a>
-                            </p>
-                        {% endif %}
+                        <p class="flow-text text-darken-4" style="font-size: 0.88rem;">
+                            Horario: <a class="light-green-text">{{ schedule }}</a>
+                        </p>
                         <div class="switch" style="margin-left: 10px;">
                             <label>
                                 <p class="card-title grey-text flow-text text-darken-4" style="font-size: 1.3rem;">
                                     Favorito</p>
                                 <!--<input type="checkbox"><span class="lever"></span>-->
-                                <h6><i class="material-icons amber-text">grade</i>
-                                    <span class=" grey-text flow-text text-darken-4"
-                                          style="font-size:22px; line-height:25px;">{{ fav }}</span>
-                                </h6>
+                                {% if is_fav %}
+                                    <h6 onclick="like()"><i class="material-icons amber-text" id="star1">grade</i>
+                                        <span class=" grey-text flow-text text-darken-4"
+                                              style="font-size:22px; line-height:25px;" id="like1">{{ fav }}</span>
+                                    </h6>
+                                {% else %}
+                                    <h6 onclick="like()"><i class="material-icons" id="star1">grade</i>
+                                        <span class=" grey-text flow-text text-darken-4"
+                                              style="font-size:22px; line-height:25px;" id="like1">{{ fav }}</span>
+                                    </h6>
+                                {% endif %}
+
                             </label>
                         </div>
                     </div>
@@ -149,8 +212,6 @@
                                         <li>Stock: {{ product.stock }}</li>
                                         <li>Descripción: {{ product.desc }}
                                             <div class="row">
-                                                <p class="left-align col m6"><a class="waves-effect waves-light"
-                                                                                href="{% url 'edit_products' pid=product.pid %}">Editar</a>
                                                 <p class="right-align col m6"><a class="waves-effect waves-light"
                                                                                  href="#{{ product.id }}">Ver imagen</a>
                                                 </p>
@@ -169,10 +230,6 @@
 
         </div>
 
-    </div>
-    <div class='row'>
-        <a class='col l5 offset-l4 btn btn-large waves-effect button teal'
-           href="{% url 'products_administration' %}">Agregar Item</a>
     </div>
 
 {% endblock %}

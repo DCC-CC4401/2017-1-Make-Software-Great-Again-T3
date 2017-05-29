@@ -1,0 +1,61 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block profile_info %}
+    <div class="userView">
+        <i class="material-icons right grey-text text-lighten-2"
+           style="position: absolute; bottom: -0.5em; right: 0.5em; padding: 0 0 !important;">settings</i>
+        <div class="background" style="height:175px;">
+            <img src="{% static 'img/background4.png' %}">
+        </div>
+        <a href="#"><img style="margin-top: 16%;" class="circle"
+                         src="/media/{{ image }}" height="42" width="42"></a>
+        <a href="#"><span style="margin-left: 5%;" class="white-text name">{{ user }}</span></a>
+    </div>
+{% endblock %}
+
+{% block side %}
+    <li><a href="{% url 'home' %}"><i class="material-icons">home</i>Inicio</a></li>
+    <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
+    {% if is_vendor %}
+        <li><a href="{% url 'stock' %}"><i class="material-icons">list</i>Editar Stock</a></li>
+        <li><a href="{% url 'stats' %}"><i class="material-icons">trending_up</i>Estadísticas</a></li>
+    {% endif %}
+    <li>
+        <div class="divider"></div>
+    </li>
+    {% if not is_static and is_vendor%}
+        <li><a class="subheader">Activo</a></li>
+        <li>
+            <script>
+                $ajaxSetup();
+                function check_in() {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/ajax/check_in/',
+                        dataType: 'json',
+                        success: function () {
+                            location.reload();
+                        },
+                        /* revert lever if request fails */
+                        error: function () {
+                            const $checkbox = $('.check_in');
+                            $checkbox.prop('checked', !$checkbox.prop('checked'));
+                        }
+                    })
+                }
+
+                $(function () {
+                    $('.check_in').click(check_in);
+                });
+
+            </script>
+            <div class="switch" style="margin-left: 80px;">
+                <label>
+                    No<input type="checkbox" class="check_in" {% if is_active %} checked {% endif %}><span
+                        class="lever"></span>Sí
+                </label>
+            </div>
+        </li>
+    {% endif %}
+
+{% endblock %}
