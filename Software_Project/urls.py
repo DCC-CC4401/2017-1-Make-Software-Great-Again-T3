@@ -25,7 +25,10 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^app/', include('app.urls')),
     url(r'^ajax/like/$', views.like, name='like'),
-    url(r'^ajax/check_in/$', views.check_in, name='check_in')
+    url(r'^ajax/check_in/$', views.check_in, name='check_in'),
+    url(r'^ajax/delete_product/$', views.delete_product, name='del_p'),
+    url(r'^ajax/delete_account/$', views.delete_account, name='del_a'),
+    url(r'^ajax/stock/$', views.adm_stock, name='adm_stock'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

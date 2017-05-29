@@ -31,8 +31,8 @@
 
                         <tbody>
                         <tr>
-                            <td>$10000</td>
-                            <td>Pizza</td>
+                            <td>${{ amount }}</td>
+                            <td>{{ win_product }}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -48,9 +48,10 @@
             bindto: '#chart',
             data: {
                 x: 'x',
+                xFormat: '%d-%m-%Y',
                 columns: [
-                    ['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06', '2013-01-07', '2013-01-08', '2013-01-09', '2013-01-10', '2013-01-11', '2013-01-12'],
-                    ['Ganancias los ultimos 7 dias', 30, 200, 100, 400, 150, 250, 30, 200, 100, 400, 150, 250]
+                    {{ xaxis | safe}},
+                    {{ yaxis | safe}}
                 ],
                 type: 'bar'
             },
@@ -58,7 +59,7 @@
                 x: {
                     type: 'timeseries',
                     tick: {
-                        format: '%Y-%m-%d'
+                        format: '%d-%m-%Y'
                     }
                 }
             },

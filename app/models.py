@@ -15,6 +15,7 @@ from Software_Project import settings
         last_name
 '''
 
+
 # User extension to add usertype
 class AppUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -23,8 +24,10 @@ class AppUser(models.Model):
     user_type_dicc = (('C', 'Comprador'), ('VF', 'Vendedor Fijo'), ('VA', 'Vendedor Ambulante'))
     user_type = models.CharField(max_length=2, choices=user_type_dicc)
 
+
 class PaymentMethod(models.Model):
     name = models.CharField(max_length=30)
+
 
 # Abstract base class for both vendor types
 class Vendor(models.Model):
@@ -92,4 +95,6 @@ class Product(models.Model):
 
 class Statistics(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
-    stat_file = models.FileField()
+    date = models.DateTimeField()
+    amount = models.IntegerField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)

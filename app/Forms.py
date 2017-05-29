@@ -1,15 +1,7 @@
 from django import forms
-from django.forms import ModelForm
 
-from app.models import AppUser, Vendor, Product, PaymentMethod, Category
+from app.models import AppUser, Product, Category
 
-def get_payment_choices():
-   # ******** DESCOMENTAR LUEGO DE MIGRAR *********#
-    #payment = PaymentMethod.objects.all().order_by('name').values_list('name', flat=True)
-    list = []
-    #for pay in payment:
-    #    list.append((pay,pay))
-    return list
 
 class SignUpForm(forms.Form):
     username = forms.CharField(max_length=255, required=True)
@@ -17,20 +9,15 @@ class SignUpForm(forms.Form):
     repassword = forms.CharField(widget=forms.PasswordInput, required=False)
     type_choices = (('C', 'Comprador'), ('VF', 'Vendedor Fijo'), ('VA', 'Vendedor Ambulante'))
     user_type = forms.ChoiceField(widget=forms.Select(attrs={'class': 'multiple'}),
-                                          choices=type_choices, required=False)
+                                  choices=type_choices, required=False)
     name = forms.CharField(max_length=255, required=True)
     last_name = forms.CharField(max_length=255, required=True)
     email = forms.EmailField(required=True)
     photo = forms.ImageField(required=False, widget=forms.FileInput(attrs={'class': 'dropify'}))
-    payment = forms.MultipleChoiceField(choices=get_payment_choices(),
-    widget = forms.SelectMultiple(attrs={'class': 'multiple'}), required = False)
+    payment = forms.MultipleChoiceField(choices=[],
+                                        widget=forms.SelectMultiple(attrs={'class': 'multiple'}), required=False)
     t_init = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}), required=False)
     t_finish = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}), required=False)
-    def __init__(self, *args, **kwargs):
-        super(SignUpForm, self).__init__(*args, **kwargs)
-        self.fields['payment'] = forms.MultipleChoiceField(choices=get_payment_choices(),
-    widget = forms.SelectMultiple(attrs={'class': 'multiple'}), required = False)
-
 
 
 class LoginForm(forms.Form):
