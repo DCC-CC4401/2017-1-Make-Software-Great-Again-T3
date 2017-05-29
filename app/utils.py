@@ -7,7 +7,7 @@ import datetime
 
 
 def add_user(data):
-    user = User.objects.create_user(data['username'], data['email'], data['password'])
+    user = User.objects.create_user(username=data['username'],email=data['email'],password=data['password'])
     user.first_name = data['name']
     user.last_name = data['last_name']
     user.save()
@@ -18,6 +18,7 @@ def add_app_user(data):
     user = User.objects.get(username=data['username'])
     p = AppUser(user=user, photo=data['photo'], user_type=data['type'])
     p.save()
+    print "App user saved"
 
 
 def add_S_vendor(data):
@@ -26,14 +27,16 @@ def add_S_vendor(data):
 
     t_start = datetime.datetime.strptime(data['schedule'][0], '%H:%M').time()
     t_finish = datetime.datetime.strptime(data['schedule'][1], '%H:%M').time()
+
     p = StaticVendor(user=user, has_stock=data['stack'], state=data['state'],
                      times_favorited=data['fav'], lat=data['lan'], lng=data['lng'],
                      t_start=t_start, t_finish=t_finish)
     p.save()
+    print data['payment']
     for i in data['payment']:
         p.payment.add(PaymentMethod.objects.get(name=i))
     p.save()
-
+    print "S.Vendor saved"
 
 def add_A_vendor(data):
     add_app_user(data)
@@ -44,7 +47,7 @@ def add_A_vendor(data):
     for i in data['payment']:
         p.payment.add(PaymentMethod.objects.get(name=i))
     p.save()
-
+    print "A.Vendor saved"
 
 def add_product(data):
     user = Vendor.objects.get(user=AppUser.objects.get(user=User.objects.get(username=data['username'])))

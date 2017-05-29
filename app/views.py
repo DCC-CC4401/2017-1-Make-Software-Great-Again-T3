@@ -6,12 +6,61 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
-from app.Forms import LoginForm, EditVendorForm, EditProductForm, AddProductForm
+from app.Forms import LoginForm, EditVendorForm, EditProductForm, AddProductForm, SignUpForm
 from app.models import AppUser, StaticVendor, Product, Vendor, Buyer, PaymentMethod, ProductIcon, Category
 
 
 def index(req):
     return render(req, 'app/index.html', {})
+
+
+def signup(request):
+    from utils import add_S_vendor, add_A_vendor, add_buyer
+    form = SignUpForm(request.POST, request.FILES)
+    try:
+        print request.method
+        if request.method == 'POST':
+            if form.is_valid():
+                password1 = form.cleaned_data.get('password')
+                password2 = form.cleaned_data.get('repassword')
+                if not password2:
+                    return render(request, 'app/signup.html',
+                                  {'signup_message': 'You must confirm your password', 'form': form})
+                if password1 != password2:
+                    return render(request, 'app/signup.html',
+                                  {'signup_message': 'Your passwords do not match', 'form': form})
+                user_type = request.POST.get('user_type')
+                data = form.cleaned_data
+                if user_type == 'C':
+                    data['type'] = data['user_type']
+                    add_buyer(data)
+                    return HttpResponseRedirect('login')
+                if user_type == 'VF':
+                    data['type'] = data['user_type']
+                    data['schedule'] = [data['t_init'].strftime('%H:%M'), data['t_finish'].strftime('%H:%M')]
+                    data['state'] = 'I'
+                    data['lan'] = 0.0
+                    data['lng'] = 0.0
+                    data['stack'] = False
+                    data['fav'] = 0
+                    add_S_vendor(data)
+                    return HttpResponseRedirect('login')
+                if user_type == 'VA':
+                    data['type'] = data['user_type']
+                    data['state'] = 'I'
+                    data['lan'] = 0.0
+                    data['lng'] = 0.0
+                    data['stack'] = False
+                    data['fav'] = 0
+                    add_A_vendor(data)
+                    return HttpResponseRedirect('login')
+            else:
+                form = SignUpForm()
+            return render(request, 'app/signup.html', {'form': form})
+    except:
+        print "exception"
+        form = SignUpForm()
+    return render(request, 'app/signup.html', {'form': form})
 
 
 def login(request):
@@ -37,10 +86,6 @@ def login(request):
     return render(request, 'app/login.html', {
         'form': form,
     })
-
-
-def signup(req):
-    return render(req, 'app/signup.html', {})
 
 def products_administration(request):
     from app.utils import add_product
@@ -84,7 +129,7 @@ def products_administration(request):
                             'name': cat.name,
                         }
                         categories.append(tmp)
-                    return render(request, 'app/gestion-productos.html', {'form':form,'categories': categories})
+                    return render(request, 'app/gestion-productos.html', {'form': form, 'categories': categories})
 
             except:
                 print "exception: product save failed"
@@ -369,7 +414,7 @@ def check_in(request):
     vendor.save()
 
     return JsonResponse({
-       'is_active': vendor.state == 'A'
+        'is_active': vendor.state == 'A'
     })
 
 
