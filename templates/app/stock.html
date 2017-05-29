@@ -7,10 +7,31 @@
         $(document).ready(function () {
             $('.modal').modal();
         });
+        $ajaxSetup();
 
     </script>
     <div class="section"></div>
+    <script>
+        $ajaxSetup();
 
+        function stock(action, pid) {
+            console.log('click');
+            $.ajax({
+                type: "POST",
+                url: '/ajax/stock/',
+                dataType: 'json',
+                data: {
+                    action: action, // true para suma y false para resta
+                    id: pid
+                },
+                success: function (response) {
+                    let new_stock = response['new_stock'];
+                    $('#stock_'.concat(pid)).text(new_stock);
+                }
+
+            });
+        }
+    </script>
     <h4 class="teal-text" style="text-align: center;">Editar Stock</h4>
     <div class="section"></div>
     <div id="profile-page-content" class="row">
@@ -18,6 +39,7 @@
             <div class="z-depth-1 section">
                 <div class="row" style="flex-wrap: wrap">
                     {% for product in products %}
+
                         <div class="col m6 l4">
                             <div class="card">
                                 <div class="teal lighten-2 card-image waves-effect waves-block waves-light">
@@ -32,10 +54,15 @@
                                     </div>
 
                                     <div class="row ">
-                                        <a class="waves-effect waves-teal btn-flat stock-button col m4" style="font-size: 32px;
+                                        <a onclick="stock(false,{{ product.pid }})"
+                                           class="waves-effect waves-teal btn-flat stock-button col m4" style="font-size: 32px;
     font-weight: 600; padding: 0 1.5rem!important; text-align: center">&ndash;</a>
-                                        <p class="col m4" style="text-align: center"><a class="teal-text" style="font-size: 20px;">{{ product.stock }}</a></p>
-                                        <a class="waves-effect waves-teal btn-flat stock-button col m4" style="font-size: 32px;
+                                        <p class="col m4" style="text-align: center"><a id="stock_{{ product.pid }}"
+                                                                                        class="teal-text"
+                                                                                        style="font-size: 20px;">{{ product.stock }}</a>
+                                        </p>
+                                        <a onclick="stock(true, {{ product.pid }})"
+                                           class="waves-effect waves-teal btn-flat stock-button col m4" style="font-size: 32px;
     font-weight: 600; padding: 0 1.5rem!important; text-align: center">+</a>
                                     </div>
 

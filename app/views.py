@@ -402,7 +402,8 @@ def stats(request):
         order_by = raw_data_with_date_filter.values('product_id').annotate(Count('product_id')).order_by(
             '-product_id__count')
 
-        id_win = raw_data_with_date_filter.values('product_id').annotate(Count('product_id')).order_by(
+        with_out_neg = raw_data_with_date_filter.filter(amount__lte=0)
+        id_win = with_out_neg.values('product_id').annotate(Count('product_id')).order_by(
             '-product_id__count').first()['product_id'] if order_by.count() > 0 else '-'
         product_win_name = Product.objects.get(id=id_win).name if order_by.count() > 0 else '-'
 
@@ -448,3 +449,25 @@ def delete_account(request):
     auth.logout(request)
     user.delete()
     return JsonResponse({'success': True})
+
+
+def adm_stock(request):
+    user = AppUser.objects.get(user=request.user)
+    pid = request.POST.get('id')
+    vendor = Vendor.objects.get(user=user)
+    product = Product.objects.get(id=pid)
+    action = request.POST.get('action')
+    print type(action)
+    if action == u'true':  # suma
+        product.stock += 1
+        p = Statistics.objects.create(vendor=vendor, date=datetime.datetime.now(), amount=-product.price,
+                                      product=product)
+        p.save()
+    elif product.stock > 0:
+        product.stock -= 1
+        p = Statistics.objects.create(vendor=vendor, date=datetime.datetime.now(), amount=product.price,
+                                      product=product)
+        p.save()
+
+    product.save()
+    return JsonResponse({'new_stock': product.stock})
