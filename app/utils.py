@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from django.contrib.auth.models import User
-from app.models import AppUser, AmbulantVendor, Vendor, Category, PaymentMethod, Buyer
+from app.models import AppUser, AmbulantVendor, Vendor, Category, PaymentMethod, Buyer, Statistics
 from app.models import StaticVendor, Product, ProductIcon
 import datetime
 
@@ -77,6 +77,16 @@ def add_buyer(data):
     user = AppUser.objects.get(user=User.objects.get(username=data['username']))
     p = Buyer.objects.create(user=user)
     p.save()
+
+
+def add_stat(data):
+    user = AppUser.objects.get(user=User.objects.get(username=data['username']))
+    vendor = Vendor.objects.get(user=user)
+    products = Product.objects.filter(vendor=vendor).filter(name=data['product_name'])
+    if products.count() != 0:
+        product = Product.objects.filter(vendor=vendor).filter(name=data['product_name']).first()
+        p = Statistics.objects.create(vendor=vendor, date=data['date'], amount=data['amount'], product=product)
+        p.save()
 
 
 def test():
@@ -199,3 +209,33 @@ def test():
     add_product(product_1)
     add_product(product_2)
     add_product(product_3)
+
+    stat1 = {
+        'username': 'vendor1',
+        'product_name': 'Pizza',
+        'date': datetime.datetime(year=2017, month=5, day=26, hour=13, minute=42, second=40),
+        'amount': 1300
+    }
+    stat2 = {
+        'username': 'vendor1',
+        'product_name': 'Pizza',
+        'date': datetime.datetime(year=2017, month=5, day=26, hour=12, minute=42, second=40),
+        'amount': 1300
+    }
+    stat3 = {
+        'username': 'vendor1',
+        'product_name': 'Pizza',
+        'date': datetime.datetime(year=2017, month=5, day=25, hour=13, minute=42, second=40),
+        'amount': 1300
+    }
+    stat4 = {
+        'username': 'vendor1',
+        'product_name': 'Jugo',
+        'date': datetime.datetime(year=2017, month=5, day=25, hour=12, minute=42, second=40),
+        'amount': 400
+    }
+
+    add_stat(stat1)
+    add_stat(stat2)
+    add_stat(stat3)
+    add_stat(stat4)

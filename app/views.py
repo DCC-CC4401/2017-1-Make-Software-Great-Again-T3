@@ -1,13 +1,16 @@
 import datetime
+
+from dateutil.relativedelta import relativedelta
 from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from django.db.models import Count, Sum
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
 from app.Forms import LoginForm, EditVendorForm, EditProductForm, AddProductForm
-from app.models import AppUser, StaticVendor, Product, Vendor, Buyer, PaymentMethod, ProductIcon
+from app.models import AppUser, StaticVendor, Product, Vendor, Buyer, PaymentMethod, ProductIcon, Statistics
 
 
 def index(req):
@@ -359,9 +362,60 @@ def check_in(request):
     vendor.save()
 
     return JsonResponse({
-       'is_active': vendor.state == 'A'
+        'is_active': vendor.state == 'A'
     })
 
 
 def stats(request):
-    return render(request, 'app/stats.html')
+    if request.user.is_authenticated():
+        user = User.objects.get(username=request.user.username)
+        app_user = AppUser.objects.get(user=user)
+        if app_user.user_type == u'C':
+            return HttpResponseRedirect(reverse('home'))
+        vendor = Vendor.objects.get(user=app_user)
+        data = {'username': user.username, 'image': app_user.photo,
+                'is_active': True if vendor.state == 'A' else False}
+
+        raw_data = Statistics.objects.filter(vendor=vendor)
+        current_date = datetime.datetime.now().replace(microsecond=0).date()
+        delta = relativedelta(day=+6)
+        newday = current_date - delta
+
+        raw_data_with_date_filter = raw_data.filter(date__gte=newday)
+        amount = raw_data_with_date_filter.values('amount').aggregate(sum=Sum('amount'))['sum']
+
+        order_by = raw_data_with_date_filter.values('product_id').annotate(Count('product_id')).order_by(
+            '-product_id__count')
+
+        id_win = raw_data_with_date_filter.values('product_id').annotate(Count('product_id')).order_by(
+            '-product_id__count').first()['product_id'] if order_by.count() > 0 else '-'
+        product_win_name = Product.objects.get(id=id_win).name if order_by.count() > 0 else '-'
+
+        amount_by_day = {}
+        trans = raw_data_with_date_filter.extra({'date': "date(date)"}).values('date', 'amount')
+
+        xaxis = ['x']
+        for i in range(6, -1, -1):
+            delta_tmp = datetime.timedelta(days=+i)
+            new_day = current_date - delta_tmp
+            amount_by_day[unicode(new_day.strftime("%Y-%m-%d"))] = 0
+
+        for i in trans:
+            #print i
+            amount_by_day[i['date']] += i['amount']
+
+        res = map(lambda x: (datetime.datetime.strptime(x[0], '%Y-%m-%d').date(), x[1]), amount_by_day.iteritems())
+        res.sort(key=lambda x: x[1])
+
+        yaxis = ['Ganancias los ultimos 7 dias']
+        xaxis += map(lambda x: x[0].strftime("%d-%m-%Y"), res)
+        yaxis += map(lambda x: x[1], res)
+
+        data['amount'] = amount if amount is not None else 0
+        data['xaxis'] = xaxis
+        data['yaxis'] = yaxis
+        data['win_product'] = product_win_name
+
+        return render(request, 'app/stats.html', data)
+    else:
+        return HttpResponseRedirect(reverse('index'))
