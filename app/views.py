@@ -8,9 +8,10 @@ from django.db.models import Count, Sum
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
+import time
 
 from app.Forms import LoginForm, EditVendorForm, EditProductForm, AddProductForm
-from app.models import AppUser, StaticVendor, Product, Vendor, Buyer, PaymentMethod, ProductIcon, Statistics, Category
+from app.models import AppUser, StaticVendor, Product, Vendor, Buyer, PaymentMethod, Statistics, Category
 
 
 def index(req):
@@ -45,6 +46,7 @@ def login(request):
 def signup(req):
     return render(req, 'app/signup.html', {})
 
+
 def products_administration(request):
     from app.utils import add_product
     if request.user.is_authenticated():
@@ -53,7 +55,7 @@ def products_administration(request):
         # Only vendors can add products
         if app_user.user_type != 'C':
             try:
-
+                vendor = Vendor.objects.get(user=app_user)
                 # Check form
                 form = AddProductForm(request.POST, request.FILES)
                 if request.method == 'POST' and form.is_valid():
@@ -87,7 +89,10 @@ def products_administration(request):
                             'name': cat.name,
                         }
                         categories.append(tmp)
-                    return render(request, 'app/gestion-productos.html', {'form':form,'categories': categories})
+                    return render(request, 'app/gestion-productos.html',
+                                  {'form': form, 'categories': categories, 'username': user.username,
+                                   'image': app_user.photo,
+                                   'is_active': True if vendor.state == 'A' else False})
 
             except:
                 print "exception: product save failed"
@@ -141,7 +146,7 @@ def home(request):
             }
             return render(request, 'app/vendedor-profile-page.html', data)
     else:
-        return HttpResponseRedirect('login.html')
+        return HttpResponseRedirect(reverse('login'))
 
 
 def logout(request):
@@ -202,7 +207,7 @@ def edit_account(request):
                                            })
             form.fields['payment'].choices = choices
         data = {'form': form, 'image': app_user.photo, 'is_static': True if app_user.user_type == 'VF' else False,
-                'is_active': True if vendor.state == 'A' else False}
+                'is_active': True if vendor.state == 'A' else False, 'id': app_user.user.id}
         return render(request, 'app/edit_account.html', data)
     else:
         return HttpResponseRedirect(reverse('index'))
@@ -242,7 +247,7 @@ def stock(request):
             }
             return render(request, 'app/stock.html', data)
     else:
-        return HttpResponseRedirect('login.html')
+        return HttpResponseRedirect(reverse('login'))
 
 
 def edit_products(request, pid):
@@ -269,7 +274,7 @@ def edit_products(request, pid):
                     form = EditProductForm(initial={'name': product.name, 'price': product.price,
                                                     'stock': product.stock, 'des': product.description})
                     data = {'form': form, 'photo': product.photo, 'image': app_user.photo,
-                            'is_active': True if vendor.state == 'A' else False}
+                            'is_active': True if vendor.state == 'A' else False, 'id': pid}
                     return render(request, 'app/edit_product.html', data)
             except:
                 return HttpResponseRedirect(reverse('home'))
@@ -411,7 +416,7 @@ def stats(request):
             amount_by_day[unicode(new_day.strftime("%Y-%m-%d"))] = 0
 
         for i in trans:
-            #print i
+            # print i
             amount_by_day[i['date']] += i['amount']
 
         res = map(lambda x: (datetime.datetime.strptime(x[0], '%Y-%m-%d').date(), x[1]), amount_by_day.iteritems())
@@ -429,3 +434,17 @@ def stats(request):
         return render(request, 'app/stats.html', data)
     else:
         return HttpResponseRedirect(reverse('index'))
+
+
+def delete_product(request):
+    pid = request.POST.get('id')
+    Product.objects.get(id=pid).delete()
+    time.sleep(100)
+    return JsonResponse({'success': True})
+
+
+def delete_account(request):
+    user = AppUser.objects.get(user=request.user).user
+    auth.logout(request)
+    user.delete()
+    return JsonResponse({'success': True})
