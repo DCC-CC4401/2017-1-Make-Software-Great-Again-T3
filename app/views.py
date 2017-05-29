@@ -10,7 +10,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from app.Forms import LoginForm, EditVendorForm, EditProductForm, AddProductForm
-from app.models import AppUser, StaticVendor, Product, Vendor, Buyer, PaymentMethod, ProductIcon, Statistics
+from app.models import AppUser, StaticVendor, Product, Vendor, Buyer, PaymentMethod, ProductIcon, Statistics, Category
 
 
 def index(req):
@@ -45,7 +45,6 @@ def login(request):
 def signup(req):
     return render(req, 'app/signup.html', {})
 
-
 def products_administration(request):
     from app.utils import add_product
     if request.user.is_authenticated():
@@ -54,14 +53,17 @@ def products_administration(request):
         # Only vendors can add products
         if app_user.user_type != 'C':
             try:
+
                 # Check form
                 form = AddProductForm(request.POST, request.FILES)
-
                 if request.method == 'POST' and form.is_valid():
                     name = form.cleaned_data['name']
                     price = form.cleaned_data['price']
                     stock = form.cleaned_data['stock']
-                    # icon = request.Post.get('icon-button')
+                    icon = request.POST.get('icon-button')
+                    if icon is None:
+                        # Set default
+                        icon = 'bread'
                     category = None
                     description = form.cleaned_data['des']
                     photo = None
@@ -71,16 +73,24 @@ def products_administration(request):
                         'username': request.user.username,
                         'name': name, 'price': price,
                         'stock': stock, 'des': description,
-                        'icon': 'bread', 'photo': photo,
+                        'icon': icon, 'photo': photo,
                         'category': ['Almuerzos']
                     }
                     add_product(data)
                     return HttpResponseRedirect(reverse('home'))
                 else:
-                    form = AddProductForm()
-                    data = {'form': form}  # , 'photo': product.photo, 'image': app_user.photo}
-                    return render(request, 'app/gestion-productos.html', data)
+                    categories = []
+                    raw_cat = Category.objects.all()
+                    print "categories"
+                    for cat in raw_cat:
+                        tmp = {
+                            'name': cat.name,
+                        }
+                        categories.append(tmp)
+                    return render(request, 'app/gestion-productos.html', {'form':form,'categories': categories})
+
             except:
+                print "exception: product save failed"
                 return HttpResponseRedirect(reverse('home'))
 
     else:
