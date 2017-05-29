@@ -45,7 +45,13 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row" style="margin-bottom: 0">
+    <script>
+        function to_vendor() {
+            $(location).attr('href', '/app/vendor/1')
+        }
+    </script>
+    <img src="{% static 'img/mapa.png' %}" onclick="to_vendor()" style="width: 100%; height: 40em">
+    <!--<div class="row" style="margin-bottom: 0">
         <div id="map"></div>
     </div>
 
@@ -138,5 +144,5 @@
     </script>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFZg-UjSTaZ7H_mRYH6bSdoCacLTsppQU&callback=initMap">
-    </script>
+    </script>-->
 {% endblock %}

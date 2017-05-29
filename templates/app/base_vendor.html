@@ -16,12 +16,14 @@
 {% block side %}
     <li><a href="{% url 'home' %}"><i class="material-icons">home</i>Inicio</a></li>
     <li><a href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
-    <li><a href="{% url 'stock' %}"><i class="material-icons">list</i>Editar Stock</a></li>
-    <li><a href="{% url 'stats' %}"><i class="material-icons">trending_up</i>Estadísticas</a></li>
+    {% if is_vendor %}
+        <li><a href="{% url 'stock' %}"><i class="material-icons">list</i>Editar Stock</a></li>
+        <li><a href="{% url 'stats' %}"><i class="material-icons">trending_up</i>Estadísticas</a></li>
+    {% endif %}
     <li>
         <div class="divider"></div>
     </li>
-    {% if not is_static %}
+    {% if not is_static and is_vendor%}
         <li><a class="subheader">Activo</a></li>
         <li>
             <script>
@@ -31,6 +33,9 @@
                         type: 'POST',
                         url: '/ajax/check_in/',
                         dataType: 'json',
+                        success: function () {
+                            location.reload();
+                        },
                         /* revert lever if request fails */
                         error: function () {
                             const $checkbox = $('.check_in');
@@ -40,13 +45,14 @@
                 }
 
                 $(function () {
-                   $('.check_in').click(check_in);
+                    $('.check_in').click(check_in);
                 });
 
             </script>
             <div class="switch" style="margin-left: 80px;">
                 <label>
-                    No<input type="checkbox" class="check_in" {% if is_active %} checked {% endif %}><span class="lever"></span>Sí
+                    No<input type="checkbox" class="check_in" {% if is_active %} checked {% endif %}><span
+                        class="lever"></span>Sí
                 </label>
             </div>
         </li>

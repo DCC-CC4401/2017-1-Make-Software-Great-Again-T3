@@ -17,7 +17,7 @@
                 url: '/ajax/delete_account/',
                 dataType: 'json',
                 success: function () {
-                    $(location).attr('href','/app')
+                    $(location).attr('href', '/app')
                 }
 
             });
@@ -56,13 +56,16 @@
                         </div>
                     </div>
                 </div>
-                <div class='row'>
-                    <div class='input-field col s12 m12'>
-                        &ensp;Métodos de pago :
-                        {{ form.payment }}
+                {% if is_vendor %}
+                    <div class='row'>
+                        <div class='input-field col s12 m12'>
+                            &ensp;Métodos de pago :
+                            {{ form.payment }}
+                        </div>
                     </div>
-                </div>
-                {% if is_static %}
+                {% endif %}
+
+                {% if is_static and is_vendor %}
                     <div class='row'>
                         <div class='input-field col s12 m12'>
                             &ensp;Hora de Inicio :
@@ -117,7 +120,7 @@
                 </div>
                 <div class='row'>
                     <a class='col m4 btn btn-large waves-effect button red'
-                      onclick="borrar_cuenta()">Borrar Cuenta<i
+                       onclick="borrar_cuenta()">Borrar Cuenta<i
                             class="material-icons right">delete</i></a>
                     <a class='col m4 btn btn-large waves-effect button teal red'
                        href="{% url 'home' %}">Cancelar<i

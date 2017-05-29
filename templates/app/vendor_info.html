@@ -31,31 +31,6 @@
     <li>
         <div class="divider"></div>
     </li>
-    <li><a class="subheader">Filtros</a></li>
-    {% if auth and is_ambulant %}
-        <li>
-            <div class="switch" style="margin-left: 10px;">
-                <label>
-                    <input type="checkbox"><span class="lever"></span>Sólo mostrar favoritos
-                </label>
-            </div>
-        </li>
-    {% endif %}
-    <li>
-        <div class="switch" style="margin-left: 10px;">
-            <label>
-                <input type="checkbox"><span class="lever"></span>Snacks
-            </label>
-        </div>
-    </li>
-    <li>
-        <div class="switch" style="margin-left: 10px;">
-            <label>
-                <input type="checkbox"><span class="lever"></span>Almuerzos
-            </label>
-        </div>
-    </li>
-
 {% endblock %}
 
 {% block content %}

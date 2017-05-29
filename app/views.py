@@ -146,7 +146,7 @@ def products_administration(request):
                     return render(request, 'app/gestion-productos.html',
                                   {'form': form, 'categories': categories, 'username': user.username,
                                    'image': app_user.photo,
-                                   'is_active': True if vendor.state == 'A' else False})
+                                   'is_active': True if vendor.state == 'A' else False, 'is_vendor': True})
             except:
                 print "exception: product save failed"
                 return HttpResponseRedirect(reverse('home'))
@@ -161,7 +161,7 @@ def home(request):
         app_user = AppUser.objects.get(user=request.user)
         # print app_user[0].user_type, type(app_user[0].user_type)
         if app_user.user_type == u'C':
-            return render(request, 'app/home.html', {'user': username})
+            return render(request, 'app/home.html', {'user': username, 'image': app_user.photo, 'is_vendor': False})
         else:
             vendor = Vendor.objects.get(user=app_user)
             update(vendor)
@@ -186,6 +186,7 @@ def home(request):
                 'user': username,
                 'image': app_user.photo,
                 'name': app_user.user.first_name,
+                'is_vendor': True,
                 'is_static': True if vendor.user.user_type == 'VF' else False,
                 'last_name': app_user.user.last_name,
                 'state': 'Activo' if vendor.state == 'A' else 'Inactivo',
@@ -218,15 +219,15 @@ def edit_account(request):
         user = User.objects.get(username=request.user.username)
         app_user = AppUser.objects.get(user=user)
 
-        if app_user.user_type == u'C':
-            return HttpResponseRedirect(reverse('home'))
-
         if form.is_valid() and request.method == 'POST':
             user.first_name = request.POST['name']
             user.last_name = request.POST['last_name']
             if form.cleaned_data['photo'] is not None:
                 app_user.photo = form.cleaned_data['photo']
                 app_user.save()
+            if app_user.user_type == u'C':
+                user.save()
+                return HttpResponseRedirect(reverse('home'))
             vendor = Vendor.objects.get(user=app_user)
             if app_user.user_type == 'VF':
                 svendor = StaticVendor.objects.get(user=app_user)
@@ -248,11 +249,15 @@ def edit_account(request):
                 ven = StaticVendor.objects.get(user=app_user)
                 t_init = ven.t_start
                 t_finish = ven.t_finish
-            vendor = Vendor.objects.get(user=app_user)
-            pay = vendor.payment.values()
+
             payment = {}
-            for i in pay:
-                payment[i['name']] = i['name']
+            active = False
+            if app_user.user_type != u'C':
+                vendor = Vendor.objects.get(user=app_user)
+                pay = vendor.payment.values()
+                for i in pay:
+                    payment[i['name']] = i['name']
+                active = True if vendor.state == 'A' else False
 
             form = EditVendorForm(initial={'name': request.user.first_name, 'last_name': request.user.last_name,
                                            'payment': payment, 't_init': t_init,
@@ -260,7 +265,8 @@ def edit_account(request):
                                            })
             form.fields['payment'].choices = choices
         data = {'form': form, 'image': app_user.photo, 'is_static': True if app_user.user_type == 'VF' else False,
-                'is_active': True if vendor.state == 'A' else False, 'id': app_user.user.id}
+                'is_active': active, 'id': app_user.user.id,
+                'is_vendor': True if app_user.user_type != u'C' else False}
         return render(request, 'app/edit_account.html', data)
     else:
         return HttpResponseRedirect(reverse('index'))
@@ -293,6 +299,7 @@ def stock(request):
 
             data = {
                 'user': username,
+                'is_vendor': True,
                 'is_active': True if vendor.state == 'A' else False,
                 'image': app_user.photo,
                 'is_static': True if app_user.user_type == 'VF' else False,
@@ -327,7 +334,7 @@ def edit_products(request, pid):
                     form = EditProductForm(initial={'name': product.name, 'price': product.price,
                                                     'stock': product.stock, 'des': product.description})
                     data = {'form': form, 'photo': product.photo, 'image': app_user.photo,
-                            'is_active': True if vendor.state == 'A' else False, 'id': pid}
+                            'is_active': True if vendor.state == 'A' else False, 'id': pid, 'is_vendor': True}
                     return render(request, 'app/edit_product.html', data)
             except:
                 return HttpResponseRedirect(reverse('home'))
@@ -443,7 +450,7 @@ def stats(request):
         vendor = Vendor.objects.get(user=app_user)
         data = {'username': user.username, 'image': app_user.photo,
                 'is_active': True if vendor.state == 'A' else False, 'is_static':
-                    True if app_user.user_type == 'VF' else False}
+                    True if app_user.user_type == 'VF' else False, 'is_vendor': True}
 
         raw_data = Statistics.objects.filter(vendor=vendor)
         current_date = datetime.datetime.now().replace(microsecond=0).date()
