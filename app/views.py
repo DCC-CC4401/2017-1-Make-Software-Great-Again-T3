@@ -402,7 +402,7 @@ def stats(request):
         order_by = raw_data_with_date_filter.values('product_id').annotate(Count('product_id')).order_by(
             '-product_id__count')
 
-        with_out_neg = raw_data_with_date_filter.filter(amount__lte=0)
+        with_out_neg = raw_data_with_date_filter.filter(amount__gte=0)
         id_win = with_out_neg.values('product_id').annotate(Count('product_id')).order_by(
             '-product_id__count').first()['product_id'] if order_by.count() > 0 else '-'
         product_win_name = Product.objects.get(id=id_win).name if order_by.count() > 0 else '-'
