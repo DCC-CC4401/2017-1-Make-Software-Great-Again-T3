@@ -29,7 +29,7 @@ def signup(request):
     form = SignUpForm(request.POST, request.FILES)
     form.fields['payment'].choices = choices
     try:
-        print request.method
+        # print request.method
         if request.method == 'POST':
             if form.is_valid():
                 password1 = form.cleaned_data.get('password')
@@ -70,7 +70,7 @@ def signup(request):
                 form.fields['payment'].choices = choices
             return render(request, 'app/signup.html', {'form': form})
     except:
-        print "exception"
+        # print "exception"
         form = SignUpForm()
         form.fields['payment'].choices = choices
     return render(request, 'app/signup.html', {'form': form})
@@ -137,7 +137,7 @@ def products_administration(request):
                 else:
                     categories = []
                     raw_cat = Category.objects.all()
-                    print "categories"
+                    # print "categories"
                     for cat in raw_cat:
                         tmp = {
                             'name': cat.name,
@@ -168,7 +168,7 @@ def home(request):
             products = []
             raw_products = Product.objects.filter(vendor=vendor)
             for i, p in enumerate(raw_products):
-                print p.icon.icon.url
+                # print p.icon.icon.url
                 tmp = {
                     'icon': p.icon.icon.url[13:],
                     'name': p.name,
@@ -405,7 +405,7 @@ def update(ven):
 
 
 def like(request):
-    print "aqui"
+    # print "aqui"
     data = {'is_fav_now': False}
     pid = request.POST.get('id', None)
     vendor = Vendor.objects.get(id=pid)
@@ -428,7 +428,7 @@ def like(request):
 
 
 def check_in(request):
-    print("check in")
+    # print("check in")
 
     user = AppUser.objects.get(user=request.user)
     vendor = Vendor.objects.get(user=user)
@@ -518,7 +518,7 @@ def adm_stock(request):
     vendor = Vendor.objects.get(user=user)
     product = Product.objects.get(id=pid)
     action = request.POST.get('action')
-    print type(action)
+    # print type(action)
     if action == u'true':  # suma
         product.stock += 1
         p = Statistics.objects.create(vendor=vendor, date=datetime.datetime.now(), amount=-product.price,
