@@ -1,13 +1,22 @@
 import datetime
+
+from dateutil.relativedelta import relativedelta
 from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from django.db.models import Count, Sum
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
+import time
 
+<<<<<<< HEAD
 from app.Forms import LoginForm, EditVendorForm, EditProductForm, AddProductForm, SignUpForm
 from app.models import AppUser, StaticVendor, Product, Vendor, Buyer, PaymentMethod, ProductIcon, Category
+=======
+from app.Forms import LoginForm, EditVendorForm, EditProductForm, AddProductForm
+from app.models import AppUser, StaticVendor, Product, Vendor, Buyer, PaymentMethod, Statistics, Category
+>>>>>>> 3d4db7d894e465aa0e5ed845032210a2b0ff6fd7
 
 
 def index(req):
@@ -87,6 +96,14 @@ def login(request):
         'form': form,
     })
 
+<<<<<<< HEAD
+=======
+
+def signup(req):
+    return render(req, 'app/signup.html', {})
+
+
+>>>>>>> 3d4db7d894e465aa0e5ed845032210a2b0ff6fd7
 def products_administration(request):
     from app.utils import add_product
     if request.user.is_authenticated():
@@ -95,7 +112,7 @@ def products_administration(request):
         # Only vendors can add products
         if app_user.user_type != 'C':
             try:
-
+                vendor = Vendor.objects.get(user=app_user)
                 # Check form
                 form = AddProductForm(request.POST, request.FILES)
                 if request.method == 'POST' and form.is_valid():
@@ -129,7 +146,14 @@ def products_administration(request):
                             'name': cat.name,
                         }
                         categories.append(tmp)
+<<<<<<< HEAD
                     return render(request, 'app/gestion-productos.html', {'form': form, 'categories': categories})
+=======
+                    return render(request, 'app/gestion-productos.html',
+                                  {'form': form, 'categories': categories, 'username': user.username,
+                                   'image': app_user.photo,
+                                   'is_active': True if vendor.state == 'A' else False})
+>>>>>>> 3d4db7d894e465aa0e5ed845032210a2b0ff6fd7
 
             except:
                 print "exception: product save failed"
@@ -183,7 +207,7 @@ def home(request):
             }
             return render(request, 'app/vendedor-profile-page.html', data)
     else:
-        return HttpResponseRedirect('login.html')
+        return HttpResponseRedirect(reverse('login'))
 
 
 def logout(request):
@@ -244,7 +268,7 @@ def edit_account(request):
                                            })
             form.fields['payment'].choices = choices
         data = {'form': form, 'image': app_user.photo, 'is_static': True if app_user.user_type == 'VF' else False,
-                'is_active': True if vendor.state == 'A' else False}
+                'is_active': True if vendor.state == 'A' else False, 'id': app_user.user.id}
         return render(request, 'app/edit_account.html', data)
     else:
         return HttpResponseRedirect(reverse('index'))
@@ -284,7 +308,7 @@ def stock(request):
             }
             return render(request, 'app/stock.html', data)
     else:
-        return HttpResponseRedirect('login.html')
+        return HttpResponseRedirect(reverse('login'))
 
 
 def edit_products(request, pid):
@@ -311,7 +335,7 @@ def edit_products(request, pid):
                     form = EditProductForm(initial={'name': product.name, 'price': product.price,
                                                     'stock': product.stock, 'des': product.description})
                     data = {'form': form, 'photo': product.photo, 'image': app_user.photo,
-                            'is_active': True if vendor.state == 'A' else False}
+                            'is_active': True if vendor.state == 'A' else False, 'id': pid}
                     return render(request, 'app/edit_product.html', data)
             except:
                 return HttpResponseRedirect(reverse('home'))
@@ -419,4 +443,92 @@ def check_in(request):
 
 
 def stats(request):
-    return render(request, 'app/stats.html')
+    if request.user.is_authenticated():
+        user = User.objects.get(username=request.user.username)
+        app_user = AppUser.objects.get(user=user)
+        if app_user.user_type == u'C':
+            return HttpResponseRedirect(reverse('home'))
+        vendor = Vendor.objects.get(user=app_user)
+        data = {'username': user.username, 'image': app_user.photo,
+                'is_active': True if vendor.state == 'A' else False}
+
+        raw_data = Statistics.objects.filter(vendor=vendor)
+        current_date = datetime.datetime.now().replace(microsecond=0).date()
+        delta = relativedelta(day=+6)
+        newday = current_date - delta
+
+        raw_data_with_date_filter = raw_data.filter(date__gte=newday)
+        amount = raw_data_with_date_filter.values('amount').aggregate(sum=Sum('amount'))['sum']
+
+        order_by = raw_data_with_date_filter.values('product_id').annotate(Count('product_id')).order_by(
+            '-product_id__count')
+
+        with_out_neg = raw_data_with_date_filter.filter(amount__gte=0)
+        id_win = with_out_neg.values('product_id').annotate(Count('product_id')).order_by(
+            '-product_id__count').first()['product_id'] if order_by.count() > 0 else '-'
+        product_win_name = Product.objects.get(id=id_win).name if order_by.count() > 0 else '-'
+
+        amount_by_day = {}
+        trans = raw_data_with_date_filter.extra({'date': "date(date)"}).values('date', 'amount')
+
+        xaxis = ['x']
+        for i in range(6, -1, -1):
+            delta_tmp = datetime.timedelta(days=+i)
+            new_day = current_date - delta_tmp
+            amount_by_day[unicode(new_day.strftime("%Y-%m-%d"))] = 0
+
+        for i in trans:
+            # print i
+            amount_by_day[i['date']] += i['amount']
+
+        res = map(lambda x: (datetime.datetime.strptime(x[0], '%Y-%m-%d').date(), x[1]), amount_by_day.iteritems())
+        res.sort(key=lambda x: x[1])
+
+        yaxis = ['Ganancias los ultimos 7 dias']
+        xaxis += map(lambda x: x[0].strftime("%d-%m-%Y"), res)
+        yaxis += map(lambda x: x[1], res)
+
+        data['amount'] = amount if amount is not None else 0
+        data['xaxis'] = xaxis
+        data['yaxis'] = yaxis
+        data['win_product'] = product_win_name
+
+        return render(request, 'app/stats.html', data)
+    else:
+        return HttpResponseRedirect(reverse('index'))
+
+
+def delete_product(request):
+    pid = request.POST.get('id')
+    Product.objects.get(id=pid).delete()
+    time.sleep(100)
+    return JsonResponse({'success': True})
+
+
+def delete_account(request):
+    user = AppUser.objects.get(user=request.user).user
+    auth.logout(request)
+    user.delete()
+    return JsonResponse({'success': True})
+
+
+def adm_stock(request):
+    user = AppUser.objects.get(user=request.user)
+    pid = request.POST.get('id')
+    vendor = Vendor.objects.get(user=user)
+    product = Product.objects.get(id=pid)
+    action = request.POST.get('action')
+    print type(action)
+    if action == u'true':  # suma
+        product.stock += 1
+        p = Statistics.objects.create(vendor=vendor, date=datetime.datetime.now(), amount=-product.price,
+                                      product=product)
+        p.save()
+    elif product.stock > 0:
+        product.stock -= 1
+        p = Statistics.objects.create(vendor=vendor, date=datetime.datetime.now(), amount=product.price,
+                                      product=product)
+        p.save()
+
+    product.save()
+    return JsonResponse({'new_stock': product.stock})

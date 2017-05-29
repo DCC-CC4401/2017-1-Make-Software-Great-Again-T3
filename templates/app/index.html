@@ -8,7 +8,7 @@
             <img src="{% static 'img/background4.png' %}">
         </div>
         <a href="#"><img style="margin-top: 16%;" class="circle"
-                              src="{% static 'img/AvatarPenguin.png' %}"></a>
+                         src="{% static 'img/AvatarPenguin.png' %}"></a>
         <a href="#"><span style="margin-left: 5%;" class="white-text name">Invitado</span></a>
     </div>
 {% endblock %}
@@ -19,6 +19,29 @@
     <li>
         <div class="divider"></div>
     </li>
+    <li><a class="subheader">Filtros</a></li>
+    <li>
+        <div class="switch" style="margin-left: 10px;">
+            <label>
+                <input type="checkbox"><span class="lever"></span>Sólo mostrar favoritos
+            </label>
+        </div>
+    </li>
+    <li>
+        <div class="switch" style="margin-left: 10px;">
+            <label>
+                <input type="checkbox"><span class="lever"></span>Snacks
+            </label>
+        </div>
+    </li>
+    <li>
+        <div class="switch" style="margin-left: 10px;">
+            <label>
+                <input type="checkbox"><span class="lever"></span>Almuerzos
+            </label>
+        </div>
+    </li>
+
 {% endblock %}
 
 {% block content %}

@@ -92,4 +92,6 @@ class Product(models.Model):
 
 class Statistics(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
-    stat_file = models.FileField()
+    date = models.DateTimeField()
+    amount = models.IntegerField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
